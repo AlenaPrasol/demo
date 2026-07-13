@@ -1,0 +1,991 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Лендинг по прототипу Figma — Веб-студия</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --dark: #0f1117;
+    --mid: #1c2033;
+    --card: #232840;
+    --light: #f4f6ff;
+    --muted: #8891b0;
+    --accent: #7c5cfc;
+    --accent2: #c084fc;
+    --white: #ffffff;
+    --green: #22d3a5;
+    --radius: 16px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    background: var(--dark);
+    color: var(--light);
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  /* DEMO BANNER */
+  .demo-banner {
+    background: linear-gradient(90deg, #7c5cfc, #c084fc);
+    text-align: center;
+    padding: 8px 16px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+
+  /* NAV */
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .logo {
+    font-size: 20px;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--accent), var(--green));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color .2s;
+  }
+
+  .nav-links a:hover { color: var(--white); }
+
+  .nav-cta {
+    background: var(--accent);
+    color: #fff !important;
+    padding: 10px 22px;
+    border-radius: 50px;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+  }
+
+  /* BTN */
+  .btn {
+    display: inline-block;
+    padding: 16px 36px;
+    border-radius: 50px;
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform .2s, box-shadow .2s;
+    border: none;
+  }
+
+  .btn:hover { transform: translateY(-2px); }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #fff;
+    box-shadow: 0 8px 30px rgba(124,92,252,.4);
+  }
+
+  .btn-primary:hover { box-shadow: 0 12px 40px rgba(124,92,252,.6); }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--light);
+    border: 2px solid rgba(255,255,255,.2);
+  }
+
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* HERO */
+  .hero {
+    text-align: center;
+    padding: 80px 24px 100px;
+    max-width: 860px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(124,92,252,.2) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(124,92,252,.15);
+    border: 1px solid rgba(124,92,252,.3);
+    color: var(--accent2);
+    padding: 6px 16px;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 28px;
+  }
+
+  .hero h1 {
+    font-size: clamp(36px, 6vw, 64px);
+    font-weight: 900;
+    line-height: 1.15;
+    margin-bottom: 24px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero h1 span {
+    background: linear-gradient(135deg, var(--accent), var(--green));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero p {
+    font-size: 18px;
+    color: var(--muted);
+    max-width: 600px;
+    margin: 0 auto 40px;
+    line-height: 1.7;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 48px;
+    justify-content: center;
+    margin-top: 64px;
+    padding-top: 48px;
+    border-top: 1px solid rgba(255,255,255,.06);
+    flex-wrap: wrap;
+    gap: 32px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .stat-item { text-align: center; }
+  .stat-num { font-size: 36px; font-weight: 900; color: var(--white); }
+  .stat-label { font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+  /* MOCKUP */
+  .mockup-wrap {
+    max-width: 900px;
+    margin: 0 auto 80px;
+    padding: 0 24px;
+    position: relative;
+  }
+
+  .mockup-frame {
+    background: var(--mid);
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,.08);
+    overflow: hidden;
+    box-shadow: 0 40px 80px rgba(0,0,0,.5), 0 0 0 1px rgba(124,92,252,.1);
+  }
+
+  .mockup-bar {
+    background: rgba(255,255,255,.05);
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+  }
+
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .d-red { background: #ff5f57; }
+  .d-yel { background: #febc2e; }
+  .d-grn { background: #28c840; }
+
+  .mockup-url {
+    flex: 1;
+    background: rgba(255,255,255,.06);
+    border-radius: 6px;
+    padding: 6px 14px;
+    font-size: 12px;
+    color: var(--muted);
+    text-align: center;
+  }
+
+  .mockup-content {
+    padding: 32px;
+    min-height: 280px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .mock-line {
+    height: 12px;
+    border-radius: 6px;
+    background: linear-gradient(90deg, rgba(124,92,252,.2), rgba(192,132,252,.15), rgba(34,211,165,.1));
+  }
+
+  .mock-line.short { width: 40%; }
+  .mock-line.mid { width: 65%; }
+  .mock-line.full { width: 100%; }
+  .mock-line.accent-line {
+    height: 48px;
+    width: 180px;
+    border-radius: 50px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+  }
+
+  .mock-blocks {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 8px;
+  }
+
+  .mock-block {
+    height: 80px;
+    border-radius: 12px;
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.06);
+  }
+
+  /* SECTION */
+  section { padding: 80px 24px; }
+
+  .section-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 900;
+    line-height: 1.2;
+    margin-bottom: 16px;
+  }
+
+  .section-subtitle {
+    font-size: 17px;
+    color: var(--muted);
+    max-width: 560px;
+    line-height: 1.7;
+    margin-bottom: 56px;
+  }
+
+  /* FEATURES */
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+  }
+
+  .feature-card {
+    background: var(--mid);
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: var(--radius);
+    padding: 32px;
+    transition: border-color .3s, transform .3s;
+  }
+
+  .feature-card:hover {
+    border-color: rgba(124,92,252,.4);
+    transform: translateY(-4px);
+  }
+
+  .feature-icon {
+    font-size: 36px;
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  .feature-card h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: var(--white);
+  }
+
+  .feature-card p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  /* PROCESS */
+  .process-section {
+    background: var(--mid);
+    border-top: 1px solid rgba(255,255,255,.05);
+    border-bottom: 1px solid rgba(255,255,255,.05);
+  }
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0;
+    position: relative;
+  }
+
+  .steps::before {
+    content: '';
+    position: absolute;
+    top: 28px;
+    left: 5%;
+    right: 5%;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--green));
+    opacity: .25;
+    pointer-events: none;
+  }
+
+  .step {
+    padding: 0 24px 0 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .step-num {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 900;
+    color: #fff;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 20px rgba(124,92,252,.35);
+  }
+
+  .step h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--white);
+  }
+
+  .step p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* PACKAGES */
+  .packages-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    align-items: start;
+  }
+
+  .pkg-card {
+    background: var(--mid);
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: var(--radius);
+    padding: 36px 32px;
+    position: relative;
+  }
+
+  .pkg-card.popular {
+    border-color: var(--accent);
+    box-shadow: 0 0 40px rgba(124,92,252,.2);
+  }
+
+  .popular-badge {
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #fff;
+    padding: 4px 18px;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .pkg-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    margin-bottom: 12px;
+  }
+
+  .pkg-price {
+    font-size: 40px;
+    font-weight: 900;
+    color: var(--white);
+    margin-bottom: 4px;
+  }
+
+  .pkg-price span {
+    font-size: 16px;
+    color: var(--muted);
+    font-weight: 400;
+  }
+
+  .pkg-desc {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 24px;
+    line-height: 1.5;
+  }
+
+  .pkg-list {
+    list-style: none;
+    margin-bottom: 32px;
+  }
+
+  .pkg-list li {
+    font-size: 14px;
+    color: var(--light);
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,.05);
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .pkg-list li::before {
+    content: '✓';
+    color: var(--green);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .pkg-list li.dim { color: var(--muted); }
+  .pkg-list li.dim::before { content: '—'; color: var(--muted); }
+
+  /* TESTIMONIAL */
+  .testimonial-wrap {
+    background: linear-gradient(135deg, rgba(124,92,252,.12), rgba(34,211,165,.06));
+    border: 1px solid rgba(124,92,252,.2);
+    border-radius: 24px;
+    padding: 56px;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .stars { font-size: 24px; margin-bottom: 24px; }
+
+  .testimonial-text {
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 1.6;
+    color: var(--white);
+    margin-bottom: 32px;
+    font-style: italic;
+  }
+
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    justify-content: center;
+  }
+
+  .author-avatar {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--green));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+  }
+
+  .author-name { font-weight: 700; color: var(--white); font-size: 15px; }
+  .author-role { font-size: 13px; color: var(--muted); }
+
+  /* FORM */
+  .form-section { background: var(--dark); }
+
+  .form-wrap {
+    max-width: 680px;
+    margin: 0 auto;
+    background: var(--mid);
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: 24px;
+    padding: 56px;
+  }
+
+  .form-title {
+    font-size: 32px;
+    font-weight: 900;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  .form-sub {
+    color: var(--muted);
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 15px;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+  }
+
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    width: 100%;
+    background: rgba(255,255,255,.05);
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 12px;
+    padding: 14px 18px;
+    color: var(--light);
+    font-size: 15px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color .2s;
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus,
+  .form-group select:focus {
+    border-color: var(--accent);
+  }
+
+  .form-group select { appearance: none; cursor: pointer; }
+
+  .form-group textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+
+  .form-group input::placeholder,
+  .form-group textarea::placeholder {
+    color: rgba(255,255,255,.25);
+  }
+
+  .form-submit {
+    width: 100%;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #fff;
+    padding: 18px;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    transition: opacity .2s, transform .2s;
+    box-shadow: 0 8px 30px rgba(124,92,252,.4);
+    margin-top: 8px;
+  }
+
+  .form-submit:hover { opacity: .9; transform: translateY(-2px); }
+
+  .form-note {
+    text-align: center;
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 16px;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--mid);
+    border-top: 1px solid rgba(255,255,255,.06);
+    padding: 48px 24px;
+  }
+
+  .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+
+  .footer-left .logo { font-size: 22px; }
+  .footer-tagline { font-size: 13px; color: var(--muted); margin-top: 6px; }
+
+  .footer-contacts {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    text-align: right;
+  }
+
+  .footer-contacts a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color .2s;
+  }
+
+  .footer-contacts a:hover { color: var(--accent); }
+
+  .footer-copy {
+    width: 100%;
+    text-align: center;
+    font-size: 12px;
+    color: rgba(255,255,255,.2);
+    padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,.04);
+    margin-top: 12px;
+  }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    nav { padding: 16px 20px; }
+    .nav-links { display: none; }
+    section { padding: 56px 20px; }
+    .form-wrap { padding: 32px 24px; }
+    .form-row { grid-template-columns: 1fr; }
+    .testimonial-wrap { padding: 36px 24px; }
+    .steps { gap: 32px; }
+    .steps::before { display: none; }
+    .step { padding: 0; }
+    .hero-stats { gap: 24px; }
+    .footer-contacts { text-align: left; }
+    .mock-blocks { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- DEMO BANNER -->
+<div class="demo-banner">
+  ✦ Демо-набросок · studio Алёны · не финал — черновик для согласования концепции ✦
+</div>
+
+<!-- NAV -->
+<header>
+  <nav>
+    <div class="logo">DesignLab ✦</div>
+    <ul class="nav-links">
+      <li><a href="#features">Что входит</a></li>
+      <li><a href="#process">Как работаем</a></li>
+      <li><a href="#packages">Тарифы</a></li>
+      <li><a href="#form" class="nav-cta">Заказать</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">🎨 Дизайн по прототипу Figma</div>
+  <h1>Превращаем ваш<br><span>прототип в продающий</span><br>лендинг</h1>
+  <p>Делаем дизайн лендинга под ключ на основе вашего прототипа. Быстро, аккуратно, с вниманием к каждой детали — от типографики до адаптива.</p>
+  <div class="hero-btns">
+    <a href="#form" class="btn btn-primary">Обсудить проект →</a>
+    <a href="#process" class="btn btn-outline">Посмотреть процесс</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-item">
+      <div class="stat-num">___+</div>
+      <div class="stat-label">лендингов сделано</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">4 дня</div>
+      <div class="stat-label">средний срок</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">2 правки</div>
+      <div class="stat-label">в любом тарифе</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">100%</div>
+      <div class="stat-label">по вашему прототипу</div>
+    </div>
+  </div>
+</div>
+
+<!-- MOCKUP -->
+<div class="mockup-wrap">
+  <div class="mockup-frame">
+    <div class="mockup-bar">
+      <div class="dot d-red"></div>
+      <div class="dot d-yel"></div>
+      <div class="dot d-grn"></div>
+      <div class="mockup-url">🔒 ваш-сайт.ru</div>
+    </div>
+    <div class="mockup-content">
+      <div class="mock-line short" style="height:8px;opacity:.5"></div>
+      <div class="mock-line" style="width:75%;height:28px;border-radius:6px;"></div>
+      <div class="mock-line mid" style="height:14px;opacity:.4"></div>
+      <div class="mock-line short" style="height:14px;opacity:.3;width:55%"></div>
+      <div class="mock-line accent-line"></div>
+      <div class="mock-blocks">
+        <div class="mock-block"></div>
+        <div class="mock-block"></div>
+        <div class="mock-block"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="section-inner">
+    <div class="section-label">Что вы получите</div>
+    <h2 class="section-title">Дизайн, который не нужно<br>переделывать</h2>
+    <p class="section-subtitle">Берём ваш прототип из Figma и превращаем в готовый, живой дизайн — без пропастей в логике, без вопросов «а как это должно выглядеть».</p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <span class="feature-icon">🎯</span>
+        <h3>Строго по прототипу</h3>
+        <p>Чётко следуем вашей структуре, не придумываем лишнего. Все блоки — как вы задумали, только красивее.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">📱</span>
+        <h3>Мобильная версия в комплекте</h3>
+        <p>Адаптив под все экраны — от iPhone SE до широкого монитора. Отдельно не нужно заказывать и доплачивать.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">⚡</span>
+        <h3>Быстрая сдача</h3>
+        <p>Лендинг из ~20 экранов — от 4 до 7 рабочих дней. Никаких «скоро-скоро» и пропавших исполнителей.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🔄</span>
+        <h3>Правки без торга</h3>
+        <p>Два раунда правок входят в стоимость. Говорите конкретно — вносим. Всё фиксируем письменно.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">📦</span>
+        <h3>Готовый файл для верстальщика</h3>
+        <p>Финальный Figma-файл с Auto Layout, подписанными слоями и дизайн-токенами. Верстальщику будет удобно.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">💬</span>
+        <h3>Связь без задержек</h3>
+        <p>Отвечаю в тот же день. Вопросы уточняю до начала, а не «в процессе». Статус — по запросу в любой момент.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process" class="process-section">
+  <div class="section-inner">
+    <div class="section-label">Как работаем</div>
+    <h2 class="section-title">Понятный процесс<br>от старта до сдачи</h2>
+    <p class="section-subtitle" style="margin-bottom:64px;">Никаких сюрпризов на середине — всё прозрачно и по шагам.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Бриф и прототип</h3>
+        <p>Вы присылаете Figma-прототип, описываете задачу и целевую аудиторию. Задаю уточняющие вопросы, если что-то не ясно.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>Концепция и палитра</h3>
+        <p>Предлагаю 2 варианта визуального направления: цвета, шрифты, стиль. Вы выбираете — иду в работу.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>Дизайн всех экранов</h3>
+        <p>Делаю все блоки по прототипу. По готовности — показываю экранами на ваш фидбек ещё до финального файла.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <h3>Правки и сдача</h3>
+        <p>Вносим правки по вашему списку. После согласования — передаю Figma-файл и все ассеты в нужных форматах.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PACKAGES -->
+<section id="packages">
+  <div class="section-inner">
+    <div class="section-label">Тарифы</div>
+    <h2 class="section-title">Выберите подходящий<br>формат работы</h2>
+    <p class="section-subtitle">Всё зависит от объёма и срочности. Цены — ориентировочные, финальная стоимость после изучения прототипа.</p>
+    <div class="packages-grid">
+      <div class="pkg-card">
+        <div class="pkg-name">Стандарт</div>
+        <div class="pkg-price">от ___ ₽<span> / проект</span></div>
+        <div class="pkg-desc">До 10 экранов, срок 4–5 дней</div>
+        <ul class="pkg-list">
+          <li>Дизайн по вашему прототипу</li>
+          <li>Мобильная версия</li>
+          <li>2 раунда правок</li>
+          <li>Figma-файл с компонентами</li>
+          <li class="dim">Срочное выполнение</li>
+          <li class="dim">Анимации и micro-UX</li>
+        </ul>
+        <a href="#form" class="btn btn-outline" style="width:100%;text-align:center;">Обсудить →</a>
+      </div>
+      <div class="pkg-card popular">
+        <div class="popular-badge">⚡ Популярный</div>
+        <div class="pkg-name">Профи</div>
+        <div class="pkg-price">от ___ ₽<span> / проект</span></div>
+        <div class="pkg-desc">До 20 экранов, срок 5–7 дней</div>
+        <ul class="pkg-list">
+          <li>Дизайн по вашему прототипу</li>
+          <li>Мобильная + планшетная версия</li>
+          <li>3 раунда правок</li>
+          <li>Figma с Auto Layout и токенами</li>
+          <li>Дизайн-система (базовая)</li>
+          <li class="dim">Анимации и micro-UX</li>
+        </ul>
+        <a href="#form" class="btn btn-primary" style="width:100%;text-align:center;">Заказать →</a>
+      </div>
+      <div class="pkg-card">
+        <div class="pkg-name">Максимум</div>
+        <div class="pkg-price">от ___ ₽<span> / проект</span></div>
+        <div class="pkg-desc">20+ экранов или срочно</div>
+        <ul class="pkg-list">
+          <li>Дизайн по вашему прототипу</li>
+          <li>Все брейкпоинты</li>
+          <li>Неограниченные правки</li>
+          <li>Полная дизайн-система</li>
+          <li>Анимации и micro-UX</li>
+          <li>Приоритет в очереди</li>
+        </ul>
+        <a href="#form" class="btn btn-outline" style="width:100%;text-align:center;">Обсудить →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<section>
+  <div class="section-inner">
+    <div class="section-label">Отзыв</div>
+    <div class="testimonial-wrap">
+      <div class="stars">⭐⭐⭐⭐⭐</div>
+      <p class="testimonial-text">«Отдал прототип в пятницу вечером — во вторник уже получил готовый Figma-файл. Всё чётко по структуре, ничего лишнего, сразу ушло в верстку без единого вопроса. Именно такой подход и нужен.»</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">👤</div>
+        <div>
+          <div class="author-name">___ [имя клиента]</div>
+          <div class="author-role">Основатель ___ [название проекта]</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORM -->
+<section id="form" class="form-section">
+  <div class="section-inner">
+    <div class="form-wrap">
+      <h2 class="form-title">Давайте обсудим<br>ваш проект</h2>
+      <p class="form-sub">Оставьте заявку — отвечу в течение нескольких часов и уточню детали перед стартом.</p>
+      <form onsubmit="return false;">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Ваше имя</label>
+            <input type="text" placeholder="Иван Петров">
+          </div>
+          <div class="form-group">
+            <label>Телефон / мессенджер</label>
+            <input type="text" placeholder="+7 ___ ___ __ __">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Ссылка на прототип Figma</label>
+          <input type="text" placeholder="figma.com/file/...">
+        </div>
+        <div class="form-group">
+          <label>Сколько экранов примерно?</label>
+          <select>
+            <option value="" disabled selected>Выберите объём</option>
+            <option>До 10 экранов</option>
+            <option>10–20 экранов</option>
+            <option>Больше 20 экранов</option>
+            <option>Пока не знаю</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Срочность и пожелания</label>
+          <textarea placeholder="Нужно к дате... / особые требования к стилю..."></textarea>
+        </div>
+        <button type="submit" class="form-submit">Отправить заявку →</button>
+        <p class="form-note">Нажимая кнопку, вы соглашаетесь на обработку данных. Спам не шлём.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-left">
+      <div class="logo">DesignLab ✦</div>
+      <div class="footer-tagline">Дизайн лендингов по Figma-прототипу</div>
+    </div>
+    <div class="footer-contacts">
+      <a href="#">Telegram: @___</a>
+      <a href="#">WhatsApp: +7 ___</a>
+      <a href="#">E-mail: ___@___.ru</a>
+    </div>
+    <div class="footer-copy">
+      © 2026 DesignLab · Демо-версия для согласования концепции · studio Алёны
+    </div>
+  </div>
+</footer>
+
+<div style="position:fixed;inset:0;z-index:99998;pointer-events:none;opacity:.10;background-image:url(&quot;data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='420' height='300'><text x='0' y='150' transform='rotate(-28 210 150)' font-family='sans-serif' font-size='22' font-weight='700' fill='%23808080' fill-opacity='0.5'>%D0%94%D0%95%D0%9C%D0%9E%20%C2%B7%20%D0%90%D0%9B%D0%81%D0%9D%D0%90%20%D0%9F%D0%A0%D0%90%D0%A1%D0%9E%D0%9B%D0%9E%D0%92%D0%90%20%C2%B7%20%D0%9E%D0%91%D0%A0%D0%90%D0%97%D0%95%D0%A6</text></svg>&quot;);background-repeat:repeat"></div><div style="position:fixed;left:0;right:0;bottom:0;z-index:99999;pointer-events:none;text-align:center;font:600 12px/1.4 sans-serif;color:#fff;background:rgba(20,24,33,.88);padding:7px 12px">Демо-набросок для оценки · © Алёна Прасолова · не для коммерческого использования · рабочая версия и чистовой дизайн — после старта работы</div></body>
+</html>
