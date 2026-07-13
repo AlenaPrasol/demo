@@ -3,49 +3,47 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Графика для вашего сайта — демо</title>
+<title>Графика для сайта — иконки, баннеры, шапки</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --dark: #14142b;
-    --mid: #2d2d5e;
-    --accent: #ff5c35;
-    --accent2: #ffb347;
-    --light: #f7f7fb;
-    --white: #ffffff;
-    --text: #2a2a3d;
-    --muted: #7a7a9a;
-    --radius: 16px;
+    --ink:    #1a1a2e;
+    --paper:  #f5f4f0;
+    --mid:    #4a4a6a;
+    --accent: #7c3aed;
+    --accent2:#a78bfa;
+    --light:  #ede9fe;
+    --white:  #ffffff;
   }
 
   html { scroll-behavior: smooth; }
 
   body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-    background: var(--light);
-    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    background: var(--paper);
+    color: var(--ink);
     line-height: 1.6;
     font-size: 16px;
   }
 
-  /* === DEMO BADGE === */
-  .demo-badge {
-    background: var(--dark);
-    color: rgba(255,255,255,0.7);
+  /* ── DEMO BANNER ── */
+  .demo-bar {
+    background: var(--ink);
+    color: var(--accent2);
     text-align: center;
     font-size: 12px;
     letter-spacing: 0.08em;
-    padding: 7px 16px;
+    padding: 8px 16px;
     position: sticky;
     top: 0;
     z-index: 100;
   }
-  .demo-badge span { color: var(--accent2); }
+  .demo-bar span { opacity: 0.6; color: #aaa; }
 
-  /* === HERO === */
+  /* ── HEADER / HERO ── */
   .hero {
-    background: linear-gradient(135deg, var(--dark) 0%, var(--mid) 60%, #3a1a5e 100%);
+    background: var(--ink);
     color: var(--white);
     padding: 80px 24px 90px;
     text-align: center;
@@ -55,648 +53,525 @@
   .hero::before {
     content: '';
     position: absolute;
-    top: -80px; right: -80px;
-    width: 360px; height: 360px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(255,92,53,0.18) 0%, transparent 70%);
-    pointer-events: none;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 20% 30%, rgba(124,58,237,.35) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 60% at 80% 70%, rgba(167,139,250,.2) 0%, transparent 70%);
   }
-  .hero::after {
-    content: '';
-    position: absolute;
-    bottom: -60px; left: -60px;
-    width: 280px; height: 280px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(255,179,71,0.12) 0%, transparent 70%);
-    pointer-events: none;
-  }
+  .hero-inner { position: relative; max-width: 720px; margin: 0 auto; }
 
   .hero-tag {
     display: inline-block;
-    background: rgba(255,92,53,0.18);
-    border: 1px solid rgba(255,92,53,0.4);
+    background: rgba(124,58,237,.25);
+    border: 1px solid rgba(167,139,250,.4);
     color: var(--accent2);
     font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
     padding: 5px 14px;
-    border-radius: 50px;
+    border-radius: 20px;
     margin-bottom: 24px;
   }
 
-  .hero h1 {
-    font-size: clamp(28px, 5vw, 54px);
+  h1 {
+    font-size: clamp(28px, 6vw, 52px);
     font-weight: 800;
-    line-height: 1.2;
-    max-width: 700px;
-    margin: 0 auto 20px;
+    line-height: 1.15;
+    margin-bottom: 20px;
     letter-spacing: -0.02em;
   }
-  .hero h1 em {
+  h1 em {
     font-style: normal;
-    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    background: linear-gradient(90deg, #a78bfa, #c4b5fd);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
   .hero p {
-    font-size: clamp(15px, 2.5vw, 18px);
-    color: rgba(255,255,255,0.72);
-    max-width: 520px;
+    font-size: 18px;
+    color: rgba(255,255,255,.75);
+    max-width: 540px;
     margin: 0 auto 36px;
   }
 
-  .hero-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
-
-  .btn-primary {
-    background: linear-gradient(135deg, var(--accent), #ff8c35);
+  .btn {
+    display: inline-block;
+    background: var(--accent);
     color: var(--white);
     font-size: 16px;
     font-weight: 700;
-    padding: 15px 34px;
+    padding: 16px 40px;
     border-radius: 50px;
+    text-decoration: none;
+    transition: transform .2s, box-shadow .2s;
+    cursor: pointer;
     border: none;
-    cursor: pointer;
-    text-decoration: none;
-    display: inline-block;
-    box-shadow: 0 8px 28px rgba(255,92,53,0.35);
-    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 24px rgba(124,58,237,.45);
   }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(255,92,53,0.45); }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(124,58,237,.6); }
 
-  .btn-ghost {
-    background: transparent;
-    color: rgba(255,255,255,0.82);
-    font-size: 16px;
-    font-weight: 600;
-    padding: 15px 30px;
-    border-radius: 50px;
-    border: 1.5px solid rgba(255,255,255,0.25);
-    cursor: pointer;
-    text-decoration: none;
-    display: inline-block;
-    transition: border-color 0.2s, color 0.2s;
-  }
-  .btn-ghost:hover { border-color: rgba(255,255,255,0.6); color: var(--white); }
-
-  .hero-stats {
+  .hero-meta {
+    margin-top: 32px;
     display: flex;
-    gap: 40px;
     justify-content: center;
+    gap: 32px;
     flex-wrap: wrap;
-    margin-top: 52px;
-    padding-top: 40px;
-    border-top: 1px solid rgba(255,255,255,0.1);
-  }
-  .stat { text-align: center; }
-  .stat-num {
-    font-size: 28px;
-    font-weight: 800;
-    color: var(--white);
-    display: block;
-  }
-  .stat-label {
+    color: rgba(255,255,255,.5);
     font-size: 13px;
-    color: rgba(255,255,255,0.5);
-    letter-spacing: 0.04em;
   }
+  .hero-meta strong { color: rgba(255,255,255,.85); }
 
-  /* === SECTIONS === */
-  section { padding: 72px 24px; }
-  .container { max-width: 1000px; margin: 0 auto; }
-
+  /* ── SECTION COMMONS ── */
+  section { padding: 80px 24px; }
+  .container { max-width: 1040px; margin: 0 auto; }
   .section-label {
-    display: inline-block;
-    background: rgba(255,92,53,0.1);
-    color: var(--accent);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.14em;
+    font-size: 12px;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    padding: 5px 13px;
-    border-radius: 50px;
-    margin-bottom: 14px;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 10px;
   }
-
   h2 {
-    font-size: clamp(22px, 4vw, 36px);
+    font-size: clamp(24px, 4vw, 38px);
     font-weight: 800;
+    line-height: 1.2;
     letter-spacing: -0.02em;
-    line-height: 1.25;
-    color: var(--dark);
     margin-bottom: 14px;
   }
-  .subtitle {
-    font-size: 16px;
-    color: var(--muted);
-    max-width: 520px;
-    margin-bottom: 48px;
+  .lead {
+    font-size: 17px;
+    color: var(--mid);
+    max-width: 540px;
+    margin-bottom: 56px;
   }
 
-  /* === BENEFITS === */
-  .benefits { background: var(--white); }
-
-  .benefits-grid {
+  /* ── WHAT WE DO ── */
+  .what { background: var(--white); }
+  .cards {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 24px;
   }
+  .card {
+    background: var(--paper);
+    border-radius: 20px;
+    padding: 32px 28px;
+    border: 1px solid rgba(124,58,237,.08);
+    transition: transform .25s, box-shadow .25s;
+  }
+  .card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(124,58,237,.1); }
 
-  .benefit-card {
-    background: var(--light);
-    border-radius: var(--radius);
-    padding: 32px 24px;
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.2s, box-shadow 0.2s;
+  .card-icon {
+    width: 56px; height: 56px;
+    border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px;
+    margin-bottom: 20px;
   }
-  .benefit-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(20,20,43,0.1); }
-  .benefit-card::after {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, var(--accent), var(--accent2));
-    border-radius: var(--radius) var(--radius) 0 0;
-  }
+  .c1 .card-icon { background: #ede9fe; }
+  .c2 .card-icon { background: #fce7f3; }
+  .c3 .card-icon { background: #d1fae5; }
+  .c4 .card-icon { background: #fef3c7; }
 
-  .benefit-icon {
-    font-size: 36px;
-    margin-bottom: 16px;
-    display: block;
-  }
-  .benefit-card h3 {
-    font-size: 17px;
-    font-weight: 700;
-    color: var(--dark);
-    margin-bottom: 8px;
-  }
-  .benefit-card p {
-    font-size: 14px;
-    color: var(--muted);
-    line-height: 1.6;
-  }
+  .card h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+  .card p  { font-size: 14px; color: var(--mid); line-height: 1.55; }
 
-  /* === SERVICES === */
-  .services { background: var(--light); }
-
-  .services-grid {
+  /* ── WHY US ── */
+  .why { background: var(--light); }
+  .why-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 20px;
   }
-
-  .service-item {
-    background: var(--white);
-    border-radius: var(--radius);
-    padding: 28px;
+  .why-item {
     display: flex;
-    gap: 20px;
+    gap: 16px;
     align-items: flex-start;
-    transition: box-shadow 0.2s;
+    background: var(--white);
+    border-radius: 16px;
+    padding: 24px;
   }
-  .service-item:hover { box-shadow: 0 8px 32px rgba(20,20,43,0.08); }
-
-  .service-num {
-    width: 44px;
-    height: 44px;
-    border-radius: 12px;
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
+  .why-num {
+    min-width: 40px; height: 40px;
+    background: var(--accent);
     color: var(--white);
-    font-size: 15px;
-    font-weight: 800;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; font-weight: 800;
   }
+  .why-item h4 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+  .why-item p  { font-size: 13px; color: var(--mid); }
 
-  .service-text h3 {
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--dark);
-    margin-bottom: 6px;
-  }
-  .service-text p {
-    font-size: 14px;
-    color: var(--muted);
-    line-height: 1.55;
-  }
-  .service-price {
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--accent);
-    margin-top: 8px;
-  }
-
-  /* === HOW WE WORK === */
-  .process { background: var(--dark); color: var(--white); }
+  /* ── HOW WE WORK ── */
+  .process { background: var(--ink); color: var(--white); }
   .process h2 { color: var(--white); }
-  .process .subtitle { color: rgba(255,255,255,0.55); }
-
-  .process-steps {
+  .process .lead { color: rgba(255,255,255,.6); }
+  .steps {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 2px;
-    background: rgba(255,255,255,0.06);
-    border-radius: var(--radius);
-    overflow: hidden;
+    position: relative;
   }
-
   .step {
-    background: rgba(255,255,255,0.03);
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: 20px;
     padding: 32px 24px;
     position: relative;
   }
-  .step:not(:last-child)::after {
-    content: '→';
-    position: absolute;
-    right: -10px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 18px;
-    color: rgba(255,179,71,0.4);
-    z-index: 1;
-  }
-
-  .step-num {
-    font-size: 42px;
+  .step-n {
+    font-size: 40px;
     font-weight: 900;
-    color: rgba(255,92,53,0.2);
+    color: rgba(124,58,237,.4);
     line-height: 1;
     margin-bottom: 12px;
-    letter-spacing: -0.04em;
   }
-  .step h3 {
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--white);
-    margin-bottom: 8px;
-  }
-  .step p {
-    font-size: 13px;
-    color: rgba(255,255,255,0.5);
-    line-height: 1.55;
-  }
+  .step h3 { font-size: 16px; font-weight: 700; color: var(--white); margin-bottom: 8px; }
+  .step p  { font-size: 13px; color: rgba(255,255,255,.5); }
 
-  /* === PORTFOLIO PREVIEW === */
-  .portfolio { background: var(--white); }
-
-  .portfolio-grid {
+  /* ── PRICE ── */
+  .price-section { background: var(--white); }
+  .price-cards {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 16px;
+    gap: 24px;
+    margin-top: 0;
+  }
+  .price-card {
+    border: 2px solid rgba(124,58,237,.15);
+    border-radius: 24px;
+    padding: 36px 28px;
+    position: relative;
+  }
+  .price-card.featured {
+    border-color: var(--accent);
+    background: var(--light);
+  }
+  .price-badge {
+    position: absolute;
+    top: -12px; left: 28px;
+    background: var(--accent);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 20px;
+  }
+  .price-title { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+  .price-amount {
+    font-size: 32px;
+    font-weight: 900;
+    color: var(--accent);
+    margin: 16px 0;
+  }
+  .price-amount sup { font-size: 16px; }
+  .price-list { list-style: none; margin-bottom: 28px; }
+  .price-list li {
+    font-size: 14px;
+    color: var(--mid);
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(0,0,0,.05);
+    padding-left: 20px;
+    position: relative;
+  }
+  .price-list li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: 700;
   }
 
-  .portfolio-card {
-    border-radius: var(--radius);
-    overflow: hidden;
-    position: relative;
-    height: 180px;
+  /* ── REVIEW ── */
+  .review-section { background: var(--paper); }
+  .review-card {
+    max-width: 680px;
+    margin: 0 auto;
+    background: var(--white);
+    border-radius: 24px;
+    padding: 40px 44px;
+    box-shadow: 0 4px 32px rgba(0,0,0,.06);
+    text-align: center;
+  }
+  .stars { font-size: 22px; margin-bottom: 20px; letter-spacing: 2px; }
+  .review-text {
+    font-size: 18px;
+    line-height: 1.65;
+    color: var(--ink);
+    margin-bottom: 24px;
+    font-style: italic;
+  }
+  .reviewer {
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
-    gap: 8px;
+    gap: 14px;
   }
-
-  .pc-1 { background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); }
-  .pc-2 { background: linear-gradient(135deg, #360033, #0b8793); }
-  .pc-3 { background: linear-gradient(135deg, #1d4350, #a43931); }
-  .pc-4 { background: linear-gradient(135deg, #134e5e, #71b280); }
-
-  .portfolio-card span {
-    font-size: 36px;
-    filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
-  }
-  .portfolio-card p {
-    font-size: 13px;
-    color: rgba(255,255,255,0.65);
-    font-weight: 500;
-    letter-spacing: 0.04em;
-  }
-  .portfolio-tag {
-    position: absolute;
-    top: 12px; left: 12px;
-    background: rgba(0,0,0,0.4);
-    color: rgba(255,255,255,0.8);
-    font-size: 11px;
-    padding: 3px 9px;
-    border-radius: 50px;
-    backdrop-filter: blur(8px);
-  }
-
-  /* === REVIEW === */
-  .review-section { background: var(--light); }
-
-  .review-card {
-    background: var(--white);
-    border-radius: var(--radius);
-    padding: 40px;
-    max-width: 680px;
-    margin: 0 auto;
-    position: relative;
-    box-shadow: 0 4px 32px rgba(20,20,43,0.07);
-  }
-  .review-card::before {
-    content: '"';
-    font-size: 100px;
-    color: rgba(255,92,53,0.12);
-    position: absolute;
-    top: 0; left: 24px;
-    line-height: 1;
-    font-family: Georgia, serif;
-  }
-
-  .review-stars { color: #ffc107; font-size: 20px; margin-bottom: 16px; }
-
-  .review-text {
-    font-size: 16px;
-    color: var(--text);
-    line-height: 1.7;
-    font-style: italic;
-    margin-bottom: 24px;
-    position: relative;
-    z-index: 1;
-  }
-
-  .review-author { display: flex; align-items: center; gap: 14px; }
-  .review-avatar {
-    width: 46px; height: 46px;
+  .reviewer-avatar {
+    width: 48px; height: 48px;
     border-radius: 50%;
     background: linear-gradient(135deg, var(--accent), var(--accent2));
     display: flex; align-items: center; justify-content: center;
     font-size: 20px;
-    flex-shrink: 0;
+    color: #fff;
   }
-  .review-name { font-weight: 700; font-size: 15px; color: var(--dark); }
-  .review-role { font-size: 13px; color: var(--muted); }
+  .reviewer-name { font-weight: 700; font-size: 15px; }
+  .reviewer-role { font-size: 13px; color: var(--mid); }
 
-  /* === FORM === */
-  .form-section { background: var(--white); }
-
-  .form-wrap {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 48px;
-    align-items: center;
+  /* ── FORM ── */
+  .form-section {
+    background: linear-gradient(135deg, var(--accent) 0%, #5b21b6 100%);
+    color: var(--white);
+    text-align: center;
   }
-
-  .form-info h2 { margin-bottom: 16px; }
-  .form-info p { color: var(--muted); font-size: 15px; line-height: 1.7; margin-bottom: 24px; }
-
-  .form-perks { display: flex; flex-direction: column; gap: 10px; }
-  .perk { display: flex; gap: 10px; align-items: center; font-size: 14px; color: var(--text); }
-  .perk-icon { font-size: 18px; }
-
-  form {
-    background: var(--light);
-    border-radius: var(--radius);
-    padding: 36px;
+  .form-section h2 { color: var(--white); }
+  .form-section .lead { color: rgba(255,255,255,.75); margin-left: auto; margin-right: auto; }
+  .form-box {
+    max-width: 520px;
+    margin: 0 auto;
+    background: rgba(255,255,255,.1);
+    backdrop-filter: blur(8px);
+    border-radius: 24px;
+    padding: 40px 36px;
+    border: 1px solid rgba(255,255,255,.2);
   }
-
-  .form-group { margin-bottom: 18px; }
-  label {
-    display: block;
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--dark);
-    margin-bottom: 6px;
-    letter-spacing: 0.03em;
-  }
-  input, textarea, select {
+  .form-row { margin-bottom: 16px; text-align: left; }
+  .form-row label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: rgba(255,255,255,.8); }
+  .form-row input,
+  .form-row textarea,
+  .form-row select {
     width: 100%;
     padding: 13px 16px;
-    border: 1.5px solid #e0e0ef;
-    border-radius: 10px;
-    font-size: 15px;
-    color: var(--text);
-    background: var(--white);
-    transition: border-color 0.2s, box-shadow 0.2s;
-    font-family: inherit;
-    outline: none;
-    -webkit-appearance: none;
-  }
-  input:focus, textarea:focus, select:focus {
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px rgba(255,92,53,0.12);
-  }
-  textarea { resize: vertical; min-height: 90px; }
-
-  .form-submit {
-    width: 100%;
-    background: linear-gradient(135deg, var(--accent), #ff8c35);
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,.25);
+    background: rgba(255,255,255,.15);
     color: var(--white);
-    border: none;
-    border-radius: 50px;
-    padding: 16px;
-    font-size: 16px;
-    font-weight: 700;
-    cursor: pointer;
-    margin-top: 6px;
-    box-shadow: 0 8px 24px rgba(255,92,53,0.3);
-    transition: transform 0.2s, box-shadow 0.2s;
+    font-size: 15px;
+    outline: none;
     font-family: inherit;
+    transition: border .2s;
   }
-  .form-submit:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(255,92,53,0.4); }
+  .form-row input::placeholder,
+  .form-row textarea::placeholder { color: rgba(255,255,255,.45); }
+  .form-row input:focus,
+  .form-row textarea:focus,
+  .form-row select:focus { border-color: rgba(255,255,255,.6); }
+  .form-row textarea { resize: vertical; min-height: 90px; }
+  .form-row select option { color: var(--ink); background: var(--white); }
+  .btn-white {
+    width: 100%;
+    background: var(--white);
+    color: var(--accent);
+    font-size: 16px;
+    font-weight: 800;
+    padding: 16px;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: transform .2s, box-shadow .2s;
+    box-shadow: 0 4px 20px rgba(0,0,0,.2);
+  }
+  .btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,0,0,.3); }
+  .form-note { font-size: 12px; color: rgba(255,255,255,.5); margin-top: 14px; }
 
-  .form-note { font-size: 12px; color: var(--muted); text-align: center; margin-top: 12px; }
-
-  /* === FOOTER === */
+  /* ── FOOTER ── */
   footer {
-    background: var(--dark);
-    color: rgba(255,255,255,0.55);
+    background: var(--ink);
+    color: rgba(255,255,255,.45);
     text-align: center;
-    padding: 40px 24px;
-    font-size: 14px;
+    padding: 36px 24px;
+    font-size: 13px;
   }
-  footer strong { color: var(--white); }
-  footer a { color: var(--accent2); text-decoration: none; }
-  .footer-contact {
-    margin: 16px 0;
-    display: flex;
-    gap: 28px;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-  .footer-divider { margin: 20px auto; max-width: 60px; height: 1px; background: rgba(255,255,255,0.12); }
+  footer strong { color: rgba(255,255,255,.7); }
+  .footer-links { margin-top: 8px; }
+  .footer-links a { color: var(--accent2); text-decoration: none; margin: 0 10px; }
 
-  /* === RESPONSIVE === */
-  @media (max-width: 680px) {
-    section { padding: 52px 20px; }
-    .hero { padding: 64px 20px 72px; }
-    .form-wrap { grid-template-columns: 1fr; }
-    .step:not(:last-child)::after { display: none; }
-    .hero-stats { gap: 24px; }
-    form { padding: 24px 20px; }
-    .review-card { padding: 28px 24px; }
+  /* ── MOBILE ── */
+  @media (max-width: 600px) {
+    section { padding: 56px 16px; }
+    .hero   { padding: 60px 16px 70px; }
+    .review-card { padding: 28px 20px; }
+    .form-box    { padding: 28px 20px; }
+    .steps { gap: 12px; }
+    .hero-meta { gap: 16px; }
   }
 </style>
 </head>
 <body>
 
-<div class="demo-badge">Демо-набросок · <span>studio Алёны</span> · не финал — покажет уровень работы</div>
+<!-- DEMO BAR -->
+<div class="demo-bar">
+  ✏️ Демо-набросок · <strong>studio Алёны</strong> · не финал &nbsp;<span>| правки после согласования</span>
+</div>
 
 <!-- HERO -->
-<section class="hero">
-  <div class="container">
+<header class="hero">
+  <div class="hero-inner">
     <div class="hero-tag">Графический дизайн для сайтов</div>
-    <h1>Иконки, баннеры и графика, которые <em>продают</em></h1>
-    <p>Полный комплект графики для вашего сайта — от иконок до шапок страниц. Единый стиль, быстро, без правок в никуда.</p>
-    <div class="hero-btns">
-      <a href="#form" class="btn-primary">Обсудить проект</a>
-      <a href="#services" class="btn-ghost">Что входит →</a>
+    <h1>Иконки, баннеры и шапки —<br><em>графика, которая продаёт</em></h1>
+    <p>Доработаем текущую графику и создадим новую: от иконок разделов до баннеров и декоративных элементов в едином стиле.</p>
+    <a href="#form" class="btn">Обсудить проект →</a>
+    <div class="hero-meta">
+      <div>Срок <strong>от 5 дней</strong></div>
+      <div>Правки <strong>включены</strong></div>
+      <div>Исходники <strong>в подарок</strong></div>
     </div>
-    <div class="hero-stats">
-      <div class="stat">
-        <span class="stat-num">80+</span>
-        <span class="stat-label">сайтов оформлено</span>
+  </div>
+</header>
+
+<!-- WHAT WE DO -->
+<section class="what">
+  <div class="container">
+    <div class="section-label">Что входит в работу</div>
+    <h2>Полный пакет графики<br>для вашего сайта</h2>
+    <p class="lead">Всё необходимое — в одном заказе, без поиска разных исполнителей.</p>
+    <div class="cards">
+      <div class="card c1">
+        <div class="card-icon">🎯</div>
+        <h3>Иконки разделов и преимуществ</h3>
+        <p>Серия согласованных иконок в едином стиле. Подходят для меню, блоков с выгодами, карточек услуг.</p>
       </div>
-      <div class="stat">
-        <span class="stat-num">3–5 дн</span>
-        <span class="stat-label">срок комплекта</span>
+      <div class="card c2">
+        <div class="card-icon">🖼️</div>
+        <h3>Баннеры для страниц сайта</h3>
+        <p>Продающие баннеры с правильной композицией и призывом к действию. Форматы под любые разделы.</p>
       </div>
-      <div class="stat">
-        <span class="stat-num">2 прав.</span>
-        <span class="stat-label">в стоимость включены</span>
+      <div class="card c3">
+        <div class="card-icon">✨</div>
+        <h3>Шапки страниц (Hero-блоки)</h3>
+        <p>Первый экран, который держит внимание. Уникальная графика для главной и внутренних страниц.</p>
+      </div>
+      <div class="card c4">
+        <div class="card-icon">🎨</div>
+        <h3>Декоративные элементы</h3>
+        <p>Разделители, фоновые текстуры, акценты и оформительские детали, которые делают сайт «живым».</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- BENEFITS -->
-<section class="benefits">
+<!-- WHY US -->
+<section class="why">
   <div class="container">
     <div class="section-label">Почему выбирают нас</div>
-    <h2>Графика — это не «красивенько».<br>Это инструмент доверия.</h2>
-    <p class="subtitle">Визуал решает за 3 секунды, уйдёт пользователь или останется. Вот что мы даём.</p>
-    <div class="benefits-grid">
-      <div class="benefit-card">
-        <span class="benefit-icon">🎯</span>
-        <h3>Единый фирменный стиль</h3>
-        <p>Все элементы — иконки, баннеры, шапки — в одной цветовой гамме и сетке. Сайт выглядит как продукт, а не как набор случайных файлов.</p>
-      </div>
-      <div class="benefit-card">
-        <span class="benefit-icon">⚡</span>
-        <h3>Быстрые правки и итерации</h3>
-        <p>Работаю в векторе и передаю исходники. Изменить цвет или форму в будущем — дело 10 минут, а не нового заказа.</p>
-      </div>
-      <div class="benefit-card">
-        <span class="benefit-icon">📐</span>
-        <h3>Правильные форматы</h3>
-        <p>SVG для иконок, WebP/PNG для баннеров, ретина-версии там, где нужно. Графика не «плывёт» ни на телефоне, ни на большом мониторе.</p>
-      </div>
-      <div class="benefit-card">
-        <span class="benefit-icon">🗂</span>
-        <h3>Полный комплект с нуля</h3>
-        <p>Не нужно искать несколько исполнителей. Получаете все элементы у одного дизайнера — без несостыковок в стиле.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- SERVICES -->
-<section class="services" id="services">
-  <div class="container">
-    <div class="section-label">Что входит</div>
-    <h2>Полный графический пакет для сайта</h2>
-    <p class="subtitle">Берём задачу целиком или отдельными блоками — под ваш бюджет и приоритеты.</p>
-    <div class="services-grid">
-      <div class="service-item">
-        <div class="service-num">01</div>
-        <div class="service-text">
-          <h3>Иконки для разделов и преимуществ</h3>
-          <p>Набор векторных иконок в едином стиле: линейные, залитые или двухцветные — под ваш визуал.</p>
-          <div class="service-price">от ___ ₽ / комплект из 10 шт.</div>
+    <h2>Графика, которая вписывается<br>в ваш стиль</h2>
+    <p class="lead">Не шаблоны со стоков — авторская работа под ваш бренд и задачи.</p>
+    <div class="why-grid">
+      <div class="why-item">
+        <div class="why-num">01</div>
+        <div>
+          <h4>Изучим ваш сайт и бренд</h4>
+          <p>Перед стартом анализируем текущий стиль, цвета и шрифты — всё будет гармонично.</p>
         </div>
       </div>
-      <div class="service-item">
-        <div class="service-num">02</div>
-        <div class="service-text">
-          <h3>Баннеры для страниц сайта</h3>
-          <p>Промо-баннеры, баннеры акций, слайды для главной. С текстом или без — по вашему ТЗ.</p>
-          <div class="service-price">от ___ ₽ / баннер</div>
+      <div class="why-item">
+        <div class="why-num">02</div>
+        <div>
+          <h4>Два круга правок включены</h4>
+          <p>Не понравилось — скажите. Дорабатываем без доплат в рамках согласованного ТЗ.</p>
         </div>
       </div>
-      <div class="service-item">
-        <div class="service-num">03</div>
-        <div class="service-text">
-          <h3>Изображения для шапок страниц</h3>
-          <p>Hero-картинки и header-фоны: градиенты, паттерны, композиции — адаптив на мобилку включён.</p>
-          <div class="service-price">от ___ ₽ / страница</div>
+      <div class="why-item">
+        <div class="why-num">03</div>
+        <div>
+          <h4>Исходники в редактируемом формате</h4>
+          <p>Отдаём файлы в .ai, .fig или .psd — сможете менять сами в будущем.</p>
         </div>
       </div>
-      <div class="service-item">
-        <div class="service-num">04</div>
-        <div class="service-text">
-          <h3>Дополнительные элементы оформления</h3>
-          <p>Разделители, декоративные фоны, инфографика, блоки цитат — всё, что делает сайт «живым».</p>
-          <div class="service-price">обсуждается индивидуально</div>
+      <div class="why-item">
+        <div class="why-num">04</div>
+        <div>
+          <h4>Чёткие сроки и отчётность</h4>
+          <p>Промежуточный показ через 2–3 дня после старта. Нет сюрпризов в дедлайн.</p>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="why-num">05</div>
+        <div>
+          <h4>Работаем с любой CMS</h4>
+          <p>WordPress, Tilda, Битрикс, кастомный сайт — под любую платформу.</p>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="why-num">06</div>
+        <div>
+          <h4>Оплата по частям</h4>
+          <p>50% предоплата, остаток — после приёмки. Работаем через безопасную сделку.</p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- PORTFOLIO PREVIEW -->
-<section class="portfolio">
-  <div class="container">
-    <div class="section-label">Примеры работ</div>
-    <h2>Как это выглядит в итоге</h2>
-    <p class="subtitle">Ниже — визуальные заглушки. В реальном проекте здесь будут скриншоты ваших страниц.</p>
-    <div class="portfolio-grid">
-      <div class="portfolio-card pc-1">
-        <span class="portfolio-tag">Иконки</span>
-        <span>🔷🔸🔹</span>
-        <p>Набор из 12 иконок для услуг</p>
-      </div>
-      <div class="portfolio-card pc-2">
-        <span class="portfolio-tag">Баннер</span>
-        <span>🖼</span>
-        <p>Промо-баннер для главной</p>
-      </div>
-      <div class="portfolio-card pc-3">
-        <span class="portfolio-tag">Шапка страницы</span>
-        <span>🏔</span>
-        <p>Hero-раздел с фоном и текстом</p>
-      </div>
-      <div class="portfolio-card pc-4">
-        <span class="portfolio-tag">Декор</span>
-        <span>✦ ◈ ✦</span>
-        <p>Разделители и паттерны</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- HOW WE WORK -->
+<!-- PROCESS -->
 <section class="process">
   <div class="container">
-    <div class="section-label" style="background:rgba(255,179,71,0.15);color:var(--accent2);">Как работаем</div>
-    <h2>От брифа до финального файла</h2>
-    <p class="subtitle">Без затяжных согласований и правок в пустоту. Чёткий процесс.</p>
-    <div class="process-steps">
+    <div class="section-label" style="color:var(--accent2)">Как мы работаем</div>
+    <h2>От брифа до готовых файлов<br>за 5–10 дней</h2>
+    <p class="lead">Чёткий процесс — никакого хаоса в переписке.</p>
+    <div class="steps">
       <div class="step">
-        <div class="step-num">01</div>
-        <h3>Бриф и референсы</h3>
-        <p>Заполняете короткую форму — тема, стиль, цвета, примеры, которые нравятся. Звоним при необходимости.</p>
+        <div class="step-n">01</div>
+        <h3>Бриф и анализ</h3>
+        <p>Заполняете форму или отвечаете на наши вопросы. Изучаем сайт, конкурентов и референсы.</p>
       </div>
       <div class="step">
-        <div class="step-num">02</div>
-        <h3>Концепция за 1 день</h3>
-        <p>Показываю 2–3 варианта стиля и цветовую схему — выбираете направление до начала работ.</p>
+        <div class="step-n">02</div>
+        <h3>Концепция</h3>
+        <p>Предлагаем 2 направления стиля. Вы выбираете — продолжаем в нужном ключе.</p>
       </div>
       <div class="step">
-        <div class="step-num">03</div>
-        <h3>Разработка комплекта</h3>
-        <p>Делаю все элементы в едином стиле, веду в Figma — видите прогресс в реальном времени.</p>
+        <div class="step-n">03</div>
+        <h3>Разработка</h3>
+        <p>Делаем всю графику по согласованному стилю. Промежуточный показ на 3–4 день.</p>
       </div>
       <div class="step">
-        <div class="step-num">04</div>
-        <h3>Сдача и правки</h3>
-        <p>Передаю исходники + экспорт в нужных форматах. 2 раунда правок включены в цену.</p>
+        <div class="step-n">04</div>
+        <h3>Правки и финал</h3>
+        <p>До 2 итераций правок. Финальные файлы в нужных форматах — и готово!</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICE -->
+<section class="price-section">
+  <div class="container">
+    <div class="section-label">Стоимость</div>
+    <h2>Прозрачные цены<br>без скрытых доплат</h2>
+    <p class="lead">Окончательная стоимость зависит от объёма — уточним на брифинге.</p>
+    <div class="price-cards">
+      <div class="price-card">
+        <div class="price-title">Базовый</div>
+        <div class="price-amount">от ___ ₽</div>
+        <ul class="price-list">
+          <li>Иконки — до 8 штук</li>
+          <li>1 баннер для страницы</li>
+          <li>1 шапка (Hero)</li>
+          <li>1 круг правок</li>
+          <li>Срок: 5 дней</li>
+        </ul>
+        <a href="#form" class="btn" style="font-size:14px;padding:12px 28px;">Выбрать</a>
+      </div>
+      <div class="price-card featured">
+        <div class="price-badge">Рекомендуем</div>
+        <div class="price-title">Полный пакет</div>
+        <div class="price-amount">от 20 000 ₽</div>
+        <ul class="price-list">
+          <li>Иконки — до 20 штук</li>
+          <li>Баннеры для всех разделов</li>
+          <li>Шапки страниц (до 5)</li>
+          <li>Декоративные элементы</li>
+          <li>2 круга правок</li>
+          <li>Исходники в .fig / .ai</li>
+          <li>Срок: 8–10 дней</li>
+        </ul>
+        <a href="#form" class="btn">Обсудить детали →</a>
       </div>
     </div>
   </div>
@@ -704,17 +579,17 @@
 
 <!-- REVIEW -->
 <section class="review-section">
-  <div class="container" style="text-align:center;">
-    <div class="section-label" style="margin:0 auto 14px;">Отзывы</div>
-    <h2 style="margin-bottom:36px;">Что говорят клиенты</h2>
+  <div class="container">
+    <div class="section-label" style="text-align:center">Отзывы клиентов</div>
+    <h2 style="text-align:center;margin-bottom:40px">Что говорят заказчики</h2>
     <div class="review-card">
-      <div class="review-stars">★★★★★</div>
-      <p class="review-text">Заказывали полный графический пакет для корпоративного сайта: иконки, шапки страниц, баннеры для акций. Всё сделано в едином стиле, быстро и без лишних вопросов. Особенно понравилось, что дизайнер сама предложила, как лучше подать преимущества визуально — не просто «нарисовала по ТЗ». Рекомендуем!</p>
-      <div class="review-author">
-        <div class="review-avatar">🏢</div>
+      <div class="stars">★★★★★</div>
+      <p class="review-text">«Заказывала полный пакет графики для корпоративного сайта: иконки, баннеры, шапки разделов. Всё сделано в едином стиле, очень аккуратно. Отдельно порадовало, что исполнитель сам предложил несколько вариантов подачи — не пришлось объяснять с нуля. Сроки выдержаны точно, правки внесли быстро.»</p>
+      <div class="reviewer">
+        <div class="reviewer-avatar">М</div>
         <div>
-          <div class="review-name">Алексей М.</div>
-          <div class="review-role">маркетолог, интернет-магазин электроники</div>
+          <div class="reviewer-name">Марина К. — <span style="font-weight:400;color:var(--mid)">маркетолог</span></div>
+          <div class="reviewer-role">Интернет-магазин товаров для дома · Москва</div>
         </div>
       </div>
     </div>
@@ -724,65 +599,56 @@
 <!-- FORM -->
 <section class="form-section" id="form">
   <div class="container">
-    <div class="form-wrap">
-      <div class="form-info">
-        <div class="section-label">Обсудим проект</div>
-        <h2>Расскажите о вашем сайте — ответим с примерами</h2>
-        <p>Опишите, что нужно сделать, и мы пришлём короткое КП с ценами и сроками. Без обязательств и навязчивых звонков.</p>
-        <div class="form-perks">
-          <div class="perk"><span class="perk-icon">✅</span> Ответ в течение 2 часов в рабочее время</div>
-          <div class="perk"><span class="perk-icon">✅</span> Фиксированная цена до начала работ</div>
-          <div class="perk"><span class="perk-icon">✅</span> Оплата после согласования концепции</div>
-          <div class="perk"><span class="perk-icon">✅</span> Исходники в Figma передаются вам</div>
-        </div>
+    <div class="section-label" style="color:rgba(255,255,255,.6)">Связаться с нами</div>
+    <h2>Обсудим ваш проект</h2>
+    <p class="lead">Заполните форму — вернёмся с вопросами и примерной сметой в течение дня.</p>
+    <div class="form-box">
+      <div class="form-row">
+        <label>Ваше имя</label>
+        <input type="text" placeholder="Как вас зовут?">
       </div>
-      <div>
-        <form onsubmit="return false;">
-          <div class="form-group">
-            <label>Ваше имя</label>
-            <input type="text" placeholder="Как вас зовут?">
-          </div>
-          <div class="form-group">
-            <label>Телефон или Telegram</label>
-            <input type="text" placeholder="+7 ___ или @username">
-          </div>
-          <div class="form-group">
-            <label>Сайт (если есть)</label>
-            <input type="text" placeholder="https://...">
-          </div>
-          <div class="form-group">
-            <label>Что нужно сделать?</label>
-            <select>
-              <option value="">Выберите основную задачу</option>
-              <option>Иконки для разделов / преимуществ</option>
-              <option>Баннеры для страниц</option>
-              <option>Шапки страниц (hero-секции)</option>
-              <option>Полный графический пакет</option>
-              <option>Дополнительные элементы оформления</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>Комментарий / референсы</label>
-            <textarea placeholder="Опишите стиль, цвета, пример сайтов, которые нравятся..."></textarea>
-          </div>
-          <button type="submit" class="form-submit">Отправить заявку →</button>
-          <p class="form-note">Нажимая кнопку, вы соглашаетесь с обработкой данных для связи по проекту.</p>
-        </form>
+      <div class="form-row">
+        <label>Мессенджер / Телефон</label>
+        <input type="text" placeholder="Telegram, WhatsApp или +7 ___">
       </div>
+      <div class="form-row">
+        <label>Ссылка на сайт</label>
+        <input type="text" placeholder="https://ваш-сайт.ru">
+      </div>
+      <div class="form-row">
+        <label>Что нужно сделать?</label>
+        <select>
+          <option value="">— выберите пакет —</option>
+          <option>Только иконки</option>
+          <option>Только баннеры / шапки</option>
+          <option>Полный пакет графики</option>
+          <option>Доработка существующей графики</option>
+          <option>Другое — опишу ниже</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label>Комментарий (референсы, пожелания)</label>
+        <textarea placeholder="Опишите стиль, прикрепите ссылки на примеры или объясните задачу…"></textarea>
+      </div>
+      <button class="btn-white">Отправить заявку →</button>
+      <p class="form-note">Нажимая кнопку, вы соглашаетесь на обработку персональных данных. Спам не пишем.</p>
     </div>
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <strong>Студия веб-графики</strong> — дизайн для сайтов
-  <div class="footer-contact">
-    <span>📞 +7 ___</span>
-    <span>✉ ___@___.ru</span>
-    <span>💬 Telegram: @___</span>
+  <div>
+    <strong>Графический дизайн для сайтов</strong> · +7 ___ ___ __ __ · info@_____.ru
   </div>
-  <div class="footer-divider"></div>
-  <span>© 2026 · Это демо-набросок, подготовленный <a href="#">studio Алёны</a> · Финальный сайт будет ещё лучше 🙂</span>
+  <div class="footer-links">
+    <a href="#">Портфолио</a>
+    <a href="#">Условия работы</a>
+    <a href="#form">Связаться</a>
+  </div>
+  <div style="margin-top:16px;font-size:11px;opacity:.4;">
+    Демо-набросок · studio Алёны Прасоловой · не является публичной офертой
+  </div>
 </footer>
 
 </body>
