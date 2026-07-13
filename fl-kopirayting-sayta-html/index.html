@@ -1,0 +1,655 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Тексты для сайта — копирайтинг под ключ</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --dark: #1a1a2e;
+    --light: #f7f5f0;
+    --accent: #e8630a;
+    --accent2: #ff8c3a;
+    --mid: #4a4a6a;
+    --border: #e0ddd6;
+    --font: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font);
+    background: var(--light);
+    color: var(--dark);
+    line-height: 1.6;
+    font-size: 16px;
+  }
+
+  /* DEMO BANNER */
+  .demo-bar {
+    background: var(--dark);
+    color: #aaa8c0;
+    text-align: center;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    padding: 7px 16px;
+  }
+  .demo-bar span { color: var(--accent2); font-weight: 600; }
+
+  /* NAV */
+  nav {
+    background: var(--light);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .logo {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--dark);
+    letter-spacing: -0.03em;
+  }
+  .logo em { color: var(--accent); font-style: normal; }
+  .nav-links { display: flex; gap: 28px; }
+  .nav-links a {
+    text-decoration: none;
+    color: var(--mid);
+    font-size: 14px;
+    font-weight: 500;
+    transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-cta {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 22px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .2s;
+  }
+  .nav-cta:hover { background: var(--accent2); }
+
+  @media (max-width: 640px) {
+    .nav-links { display: none; }
+  }
+
+  /* HERO */
+  .hero {
+    background: var(--dark);
+    color: #fff;
+    padding: 80px 24px 90px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 60% at 60% 40%, #2d1a4e 0%, transparent 70%),
+                radial-gradient(ellipse 50% 40% at 20% 80%, #1a2e1a 0%, transparent 60%);
+  }
+  .hero-inner { position: relative; max-width: 720px; margin: 0 auto; }
+  .hero-tag {
+    display: inline-block;
+    background: rgba(232,99,10,.2);
+    color: var(--accent2);
+    border: 1px solid rgba(232,99,10,.4);
+    border-radius: 100px;
+    padding: 5px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    margin-bottom: 28px;
+  }
+  .hero h1 {
+    font-size: clamp(28px, 6vw, 54px);
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin-bottom: 22px;
+  }
+  .hero h1 .acc { color: var(--accent2); }
+  .hero p {
+    font-size: clamp(15px, 2.5vw, 19px);
+    color: #b8b5cc;
+    max-width: 560px;
+    margin: 0 auto 38px;
+  }
+  .hero-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 15px 34px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background .2s, transform .1s;
+  }
+  .btn-primary:hover { background: var(--accent2); transform: translateY(-2px); }
+  .btn-ghost {
+    background: transparent;
+    color: #fff;
+    border: 1.5px solid rgba(255,255,255,.3);
+    border-radius: 10px;
+    padding: 15px 34px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: border-color .2s;
+  }
+  .btn-ghost:hover { border-color: rgba(255,255,255,.7); }
+
+  .hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 48px;
+    margin-top: 56px;
+    flex-wrap: wrap;
+  }
+  .stat { text-align: center; }
+  .stat-num {
+    font-size: 32px;
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: -0.03em;
+  }
+  .stat-num span { color: var(--accent2); }
+  .stat-label { font-size: 13px; color: #888aaa; margin-top: 2px; }
+
+  /* SECTION BASE */
+  section { padding: 80px 24px; }
+  .section-inner { max-width: 960px; margin: 0 auto; }
+  .section-tag {
+    display: inline-block;
+    background: rgba(232,99,10,.1);
+    color: var(--accent);
+    border-radius: 100px;
+    padding: 4px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .section-title {
+    font-size: clamp(22px, 4vw, 38px);
+    font-weight: 900;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin-bottom: 14px;
+  }
+  .section-sub {
+    font-size: 17px;
+    color: var(--mid);
+    max-width: 560px;
+    margin-bottom: 56px;
+  }
+
+  /* BENEFITS */
+  .benefits { background: #fff; }
+  .benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 28px;
+  }
+  .benefit-card {
+    background: var(--light);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 30px 26px;
+    transition: transform .2s, box-shadow .2s;
+  }
+  .benefit-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,.07); }
+  .benefit-icon { font-size: 32px; margin-bottom: 18px; }
+  .benefit-card h3 {
+    font-size: 17px;
+    font-weight: 800;
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
+  }
+  .benefit-card p { font-size: 14px; color: var(--mid); line-height: 1.65; }
+
+  /* HOW WE WORK */
+  .how { background: var(--light); }
+  .steps { display: flex; flex-direction: column; gap: 0; }
+  .step {
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    gap: 24px;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: start;
+  }
+  .step:last-child { border-bottom: none; }
+  .step-num {
+    width: 48px;
+    height: 48px;
+    background: var(--dark);
+    color: #fff;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 900;
+    flex-shrink: 0;
+  }
+  .step-body h3 {
+    font-size: 18px;
+    font-weight: 800;
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+  }
+  .step-body p { font-size: 14px; color: var(--mid); line-height: 1.7; }
+
+  /* SERVICES */
+  .services { background: var(--dark); color: #fff; }
+  .services .section-title { color: #fff; }
+  .services .section-sub { color: #8888aa; }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+  }
+  .service-card {
+    background: rgba(255,255,255,.05);
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 16px;
+    padding: 28px 24px;
+    transition: background .2s;
+  }
+  .service-card:hover { background: rgba(255,255,255,.09); }
+  .service-card h3 {
+    font-size: 16px;
+    font-weight: 800;
+    margin-bottom: 10px;
+    color: #fff;
+  }
+  .service-card p { font-size: 13px; color: #8888aa; line-height: 1.7; margin-bottom: 18px; }
+  .service-price {
+    font-size: 20px;
+    font-weight: 900;
+    color: var(--accent2);
+  }
+  .service-price small { font-size: 12px; font-weight: 400; color: #666688; }
+
+  /* TESTIMONIAL */
+  .testimonial { background: #fff; }
+  .testi-wrap {
+    background: linear-gradient(135deg, #1a1a2e 0%, #2d1a4e 100%);
+    border-radius: 24px;
+    padding: 48px 40px;
+    color: #fff;
+    max-width: 720px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .testi-quote {
+    font-size: 64px;
+    line-height: 1;
+    color: var(--accent);
+    font-family: Georgia, serif;
+    margin-bottom: 8px;
+  }
+  .testi-text {
+    font-size: clamp(16px, 2.5vw, 20px);
+    line-height: 1.6;
+    color: #d0cce8;
+    margin-bottom: 28px;
+    font-style: italic;
+  }
+  .testi-author {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .testi-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  .testi-name { font-weight: 700; font-size: 15px; }
+  .testi-role { font-size: 13px; color: #8888aa; }
+  .testi-stars { color: #ffd700; font-size: 16px; margin-top: 4px; }
+
+  /* FORM */
+  .form-section { background: var(--light); }
+  .form-wrap {
+    max-width: 600px;
+    margin: 0 auto;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 48px 40px;
+  }
+  .form-wrap h2 {
+    font-size: 28px;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+  }
+  .form-wrap p { color: var(--mid); font-size: 15px; margin-bottom: 32px; }
+  .form-row { margin-bottom: 18px; }
+  .form-row label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--mid);
+    margin-bottom: 6px;
+    letter-spacing: 0.02em;
+  }
+  .form-row input,
+  .form-row textarea,
+  .form-row select {
+    width: 100%;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 13px 16px;
+    font-size: 15px;
+    font-family: var(--font);
+    color: var(--dark);
+    background: var(--light);
+    transition: border-color .2s;
+    outline: none;
+    resize: vertical;
+  }
+  .form-row input:focus,
+  .form-row textarea:focus,
+  .form-row select:focus {
+    border-color: var(--accent);
+    background: #fff;
+  }
+  .form-row textarea { min-height: 110px; }
+  .form-submit {
+    width: 100%;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 16px;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: background .2s;
+  }
+  .form-submit:hover { background: var(--accent2); }
+  .form-note { font-size: 12px; color: #aaa; text-align: center; margin-top: 14px; }
+
+  /* FOOTER */
+  footer {
+    background: var(--dark);
+    color: #666688;
+    padding: 40px 24px;
+    text-align: center;
+  }
+  .footer-inner { max-width: 960px; margin: 0 auto; }
+  .footer-logo {
+    font-size: 22px;
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: -0.03em;
+    margin-bottom: 12px;
+  }
+  .footer-logo em { color: var(--accent2); font-style: normal; }
+  footer p { font-size: 14px; line-height: 1.7; }
+  .footer-contacts {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    flex-wrap: wrap;
+    margin: 18px 0;
+    font-size: 14px;
+  }
+  .footer-contacts a { color: #8888aa; text-decoration: none; }
+  .footer-contacts a:hover { color: var(--accent2); }
+  .footer-divider { border: none; border-top: 1px solid rgba(255,255,255,.07); margin: 20px 0; }
+
+  @media (max-width: 540px) {
+    .testi-wrap { padding: 32px 22px; }
+    .form-wrap { padding: 32px 20px; }
+    .hero-stats { gap: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="demo-bar">Демо-набросок · <span>studio Алёны</span> · не финал — только для согласования концепции</div>
+
+<nav>
+  <div class="logo">Слово<em>Точно</em></div>
+  <div class="nav-links">
+    <a href="#benefits">Почему мы</a>
+    <a href="#how">Как работаем</a>
+    <a href="#services">Услуги</a>
+    <a href="#form">Заявка</a>
+  </div>
+  <button class="nav-cta" onclick="document.getElementById('form').scrollIntoView({behavior:'smooth'})">Обсудить проект</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-tag">✍️ Копирайтинг под ключ</div>
+    <h1>Тексты, которые<br><span class="acc">продают — а не просто заполняют экран</span></h1>
+    <p>Изучаем конкурентов, находим вашу точку отличия и пишем слоганы и страницы, после которых клиенты хотят купить.</p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="document.getElementById('form').scrollIntoView({behavior:'smooth'})">Получить тексты для сайта</button>
+      <button class="btn-ghost" onclick="document.getElementById('how').scrollIntoView({behavior:'smooth'})">Как это работает?</button>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">___ <span>+</span></div>
+        <div class="stat-label">сайтов написано</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">___ <span>дн</span></div>
+        <div class="stat-label">до готового текста</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">___ <span>%</span></div>
+        <div class="stat-label">клиентов возвращаются</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BENEFITS -->
+<section class="benefits" id="benefits">
+  <div class="section-inner">
+    <div class="section-tag">Почему это работает</div>
+    <h2 class="section-title">Четыре причины,<br>почему стоит начать с нас</h2>
+    <p class="section-sub">Мы не пишем «воду» — каждое слово несёт смысл и двигает читателя к действию.</p>
+    <div class="benefits-grid">
+      <div class="benefit-card">
+        <div class="benefit-icon">🔍</div>
+        <h3>Анализ конкурентов в основе</h3>
+        <p>Перед тем как написать хоть строчку — изучаем топ-конкурентов в вашей нише и находим то, чего нет у других.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">🎯</div>
+        <h3>Слоганы, которые запоминаются</h3>
+        <p>Разрабатываем уникальное торговое предложение, главный заголовок и слоганы под каждый блок сайта.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">📱</div>
+        <h3>Тексты для всех страниц</h3>
+        <p>Главная, о компании, услуги, FAQ — пишем весь сайт в едином стиле и под один голос бренда.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">🔄</div>
+        <h3>Правки включены</h3>
+        <p>Правим тексты до тех пор, пока они не будут звучать именно так, как вы хотите — без доплаты.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW WE WORK -->
+<section class="how" id="how">
+  <div class="section-inner">
+    <div class="section-tag">Процесс</div>
+    <h2 class="section-title">Как мы работаем</h2>
+    <p class="section-sub">Прозрачный процесс: от первого брифа до финального файла с текстами.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h3>Бриф и созвон</h3>
+          <p>Заполняете короткую анкету о бизнесе, целевой аудитории и конкурентах. При необходимости проводим 15-минутный созвон, чтобы уточнить нюансы.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h3>Анализ рынка и конкурентов</h3>
+          <p>Изучаем 5–10 сайтов конкурентов: структуру, тон, офферы. Находим незанятые ниши в позиционировании — там будет жить ваше отличие.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h3>Разработка концепции и слоганов</h3>
+          <p>Предлагаем 2–3 варианта главного слогана, УТП и стиль голоса бренда. Согласовываем с вами направление.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h3>Написание всех текстов</h3>
+          <p>Пишем весь сайт целиком по согласованной концепции. Сдаём в Google Docs с комментариями — почему именно так.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <h3>Правки и финальный файл</h3>
+          <p>Вносим правки по вашей обратной связи. Передаём финальный документ, готовый к передаче верстальщику.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="section-inner">
+    <div class="section-tag">Услуги и стоимость</div>
+    <h2 class="section-title">Что входит и сколько стоит</h2>
+    <p class="section-sub">Выбирайте пакет под задачу — или берите сразу под ключ.</p>
+    <div class="services-grid">
+      <div class="service-card">
+        <h3>💡 Анализ + УТП</h3>
+        <p>Конкурентный анализ, формулировка уникального торгового предложения и 3 варианта главного слогана.</p>
+        <div class="service-price">от ___ ₽ <small>/ разово</small></div>
+      </div>
+      <div class="service-card">
+        <h3>📄 Одна страница</h3>
+        <p>Полный текст одной страницы сайта (главная, о компании или услуга) по готовой концепции.</p>
+        <div class="service-price">от ___ ₽ <small>/ страница</small></div>
+      </div>
+      <div class="service-card">
+        <h3>🌐 Сайт под ключ</h3>
+        <p>Анализ конкурентов + концепция + тексты всех страниц сайта. Всё в одном, один подрядчик, один голос.</p>
+        <div class="service-price">от ___ ₽ <small>/ весь сайт</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<section class="testimonial">
+  <div class="section-inner">
+    <div class="section-tag">Отзывы</div>
+    <h2 class="section-title" style="margin-bottom:40px">Что говорят клиенты</h2>
+    <div class="testi-wrap">
+      <div class="testi-quote">"</div>
+      <p class="testi-text">Раньше у нас на главной стояло что-то вроде «качество и доступные цены» — как у всех. После работы с копирайтером появился конкретный слоган, заявки стали приходить уже с пониманием, что мы делаем. Разница ощутима.</p>
+      <div class="testi-author">
+        <div class="testi-avatar">👤</div>
+        <div>
+          <div class="testi-name">— Имя Фамилия</div>
+          <div class="testi-role">Владелец компании · Город [заглушка-отзыв]</div>
+          <div class="testi-stars">★★★★★</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORM -->
+<section class="form-section" id="form">
+  <div class="section-inner">
+    <div class="form-wrap">
+      <h2>Давайте обсудим ваш проект</h2>
+      <p>Заполните форму — отвечаю в течение нескольких часов и предлагаю конкретный план.</p>
+
+      <div class="form-row">
+        <label>Ваше имя</label>
+        <input type="text" placeholder="Как вас зовут?">
+      </div>
+      <div class="form-row">
+        <label>Сайт или ниша</label>
+        <input type="text" placeholder="Ссылка на сайт или опишите бизнес">
+      </div>
+      <div class="form-row">
+        <label>Что нужно сделать?</label>
+        <select>
+          <option value="">Выберите услугу...</option>
+          <option>Анализ конкурентов + слоган</option>
+          <option>Тексты для одной страницы</option>
+          <option>Сайт целиком под ключ</option>
+          <option>Другое — уточню в комментарии</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label>Комментарий (необязательно)</label>
+        <textarea placeholder="Расскажите подробнее: что уже есть, что не нравится, какой результат хотите..."></textarea>
+      </div>
+      <div class="form-row">
+        <label>Как с вами связаться?</label>
+        <input type="text" placeholder="Телефон, Telegram или email">
+      </div>
+
+      <button class="form-submit">Отправить заявку →</button>
+      <p class="form-note">Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности. Спам не рассылаем.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">Слово<em>Точно</em></div>
+    <div class="footer-contacts">
+      <a href="#">+7 ___ ___ __ __</a>
+      <a href="#">yourmail@example.com</a>
+      <a href="#">Telegram: @___</a>
+    </div>
+    <hr class="footer-divider">
+    <p style="font-size:13px">© 2026 · Копирайтинг и тексты для сайтов · Работаем по всей России онлайн</p>
+  </div>
+</footer>
+
+<div style="position:fixed;inset:0;z-index:99998;pointer-events:none;opacity:.10;background-image:url(&quot;data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='420' height='300'><text x='0' y='150' transform='rotate(-28 210 150)' font-family='sans-serif' font-size='22' font-weight='700' fill='%23808080' fill-opacity='0.5'>%D0%94%D0%95%D0%9C%D0%9E%20%C2%B7%20%D0%90%D0%9B%D0%81%D0%9D%D0%90%20%D0%9F%D0%A0%D0%90%D0%A1%D0%9E%D0%9B%D0%9E%D0%92%D0%90%20%C2%B7%20%D0%9E%D0%91%D0%A0%D0%90%D0%97%D0%95%D0%A6</text></svg>&quot;);background-repeat:repeat"></div><div style="position:fixed;left:0;right:0;bottom:0;z-index:99999;pointer-events:none;text-align:center;font:600 12px/1.4 sans-serif;color:#fff;background:rgba(20,24,33,.88);padding:7px 12px">Демо-набросок для оценки · © Алёна Прасолова · не для коммерческого использования · рабочая версия и чистовой дизайн — после старта работы</div></body>
+</html>
