@@ -8,83 +8,66 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --dark: #1b2a47;
-    --light: #f4f6fb;
-    --accent: #f47c20;
-    --accent2: #e56810;
-    --text: #2d3a52;
-    --muted: #7a8ba8;
+    --dark: #1a1f2e;
+    --mid: #2d3450;
+    --light: #f5f6fa;
     --white: #ffffff;
-    --border: #dde3ef;
+    --accent: #e8a020;
+    --accent2: #f0bc55;
+    --text: #3a3f5c;
+    --muted: #7a809e;
+    --radius: 14px;
   }
-
-  html { scroll-behavior: smooth; }
 
   body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    background: var(--light);
     color: var(--text);
-    background: var(--white);
     line-height: 1.6;
     font-size: 16px;
   }
 
   /* DEMO BANNER */
   .demo-bar {
-    background: #2d3a52;
-    color: #a8b8d8;
+    background: var(--dark);
+    color: var(--accent);
     text-align: center;
     font-size: 12px;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.08em;
     padding: 7px 16px;
+    font-weight: 500;
   }
-  .demo-bar span { color: var(--accent); font-weight: 600; }
 
   /* NAV */
   nav {
     background: var(--white);
-    border-bottom: 1px solid var(--border);
-    padding: 18px 24px;
+    padding: 16px 24px;
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e8eaf2;
     position: sticky;
     top: 0;
     z-index: 100;
   }
   .logo {
-    font-weight: 800;
     font-size: 18px;
+    font-weight: 700;
     color: var(--dark);
-    display: flex;
-    align-items: center;
-    gap: 8px;
   }
-  .logo-icon {
-    width: 32px; height: 32px;
-    background: var(--accent);
-    border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 16px;
-  }
-  .nav-cta {
-    background: var(--accent);
-    color: var(--white);
-    border: none;
-    border-radius: 8px;
-    padding: 10px 20px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
+  .logo span { color: var(--accent); }
+  nav a {
+    color: var(--text);
     text-decoration: none;
-    transition: background 0.2s;
+    font-size: 14px;
+    font-weight: 500;
   }
-  .nav-cta:hover { background: var(--accent2); }
 
   /* HERO */
   .hero {
-    background: linear-gradient(135deg, #1b2a47 0%, #243460 60%, #1e3a6e 100%);
+    background: linear-gradient(135deg, var(--dark) 0%, var(--mid) 60%, #3d4570 100%);
     color: var(--white);
-    padding: 80px 24px 90px;
+    padding: 80px 24px 72px;
     text-align: center;
     position: relative;
     overflow: hidden;
@@ -93,158 +76,131 @@
     content: '';
     position: absolute;
     top: -60px; right: -60px;
-    width: 340px; height: 340px;
-    background: radial-gradient(circle, rgba(244,124,32,0.18) 0%, transparent 70%);
+    width: 300px; height: 300px;
     border-radius: 50%;
+    background: radial-gradient(circle, rgba(232,160,32,0.18) 0%, transparent 70%);
   }
   .hero::after {
     content: '';
     position: absolute;
     bottom: -80px; left: -40px;
-    width: 280px; height: 280px;
-    background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
+    width: 250px; height: 250px;
     border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
   }
   .hero-badge {
     display: inline-block;
-    background: rgba(244,124,32,0.2);
-    border: 1px solid rgba(244,124,32,0.5);
-    color: #f9a95a;
-    border-radius: 20px;
-    padding: 5px 14px;
+    background: rgba(232,160,32,0.2);
+    border: 1px solid rgba(232,160,32,0.4);
+    color: var(--accent2);
     font-size: 13px;
     font-weight: 600;
+    padding: 6px 16px;
+    border-radius: 20px;
     margin-bottom: 24px;
-    letter-spacing: 0.03em;
+    letter-spacing: 0.04em;
   }
   .hero h1 {
-    font-size: clamp(26px, 5vw, 48px);
+    font-size: clamp(28px, 5vw, 48px);
     font-weight: 800;
     line-height: 1.2;
     margin-bottom: 20px;
-    max-width: 720px;
+    max-width: 680px;
     margin-left: auto;
     margin-right: auto;
   }
   .hero h1 em {
     font-style: normal;
-    color: var(--accent);
+    color: var(--accent2);
   }
   .hero p {
     font-size: clamp(15px, 2.5vw, 18px);
-    color: rgba(255,255,255,0.75);
+    color: rgba(255,255,255,0.78);
     max-width: 540px;
     margin: 0 auto 36px;
   }
-  .hero-btns {
-    display: flex;
-    gap: 14px;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-  .btn-primary {
-    background: var(--accent);
-    color: var(--white);
-    border: none;
-    border-radius: 10px;
-    padding: 15px 32px;
-    font-size: 16px;
+  .hero-cta {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: var(--dark);
     font-weight: 700;
-    cursor: pointer;
-    text-decoration: none;
-    transition: all 0.2s;
-    box-shadow: 0 4px 20px rgba(244,124,32,0.4);
-  }
-  .btn-primary:hover { background: var(--accent2); transform: translateY(-1px); }
-  .btn-ghost {
-    background: transparent;
-    color: rgba(255,255,255,0.85);
-    border: 1.5px solid rgba(255,255,255,0.3);
-    border-radius: 10px;
-    padding: 14px 28px;
     font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
+    padding: 16px 36px;
+    border-radius: 50px;
     text-decoration: none;
-    transition: all 0.2s;
+    box-shadow: 0 8px 28px rgba(232,160,32,0.35);
+    transition: transform 0.2s, box-shadow 0.2s;
   }
-  .btn-ghost:hover { border-color: rgba(255,255,255,0.7); color: var(--white); }
-
+  .hero-cta:hover { transform: translateY(-2px); box-shadow: 0 12px 36px rgba(232,160,32,0.45); }
   .hero-stats {
     display: flex;
+    gap: 32px;
     justify-content: center;
-    gap: 40px;
-    margin-top: 56px;
+    margin-top: 52px;
     flex-wrap: wrap;
   }
   .stat {
     text-align: center;
-    position: relative;
-    z-index: 1;
   }
-  .stat-num {
-    font-size: 30px;
+  .stat strong {
+    display: block;
+    font-size: 28px;
     font-weight: 800;
-    color: var(--accent);
+    color: var(--accent2);
   }
-  .stat-label {
+  .stat span {
     font-size: 13px;
     color: rgba(255,255,255,0.6);
-    margin-top: 2px;
   }
 
-  /* SECTION COMMONS */
+  /* SECTIONS */
   section { padding: 72px 24px; }
   .container { max-width: 960px; margin: 0 auto; }
   .section-label {
+    display: inline-block;
     font-size: 12px;
     font-weight: 700;
-    text-transform: uppercase;
     letter-spacing: 0.1em;
+    text-transform: uppercase;
     color: var(--accent);
-    margin-bottom: 10px;
+    margin-bottom: 12px;
   }
-  .section-title {
-    font-size: clamp(22px, 4vw, 34px);
+  h2 {
+    font-size: clamp(24px, 4vw, 36px);
     font-weight: 800;
     color: var(--dark);
     line-height: 1.25;
     margin-bottom: 16px;
   }
-  .section-sub {
+  .subtitle {
     font-size: 17px;
     color: var(--muted);
     max-width: 560px;
     margin-bottom: 48px;
-    line-height: 1.7;
   }
 
   /* BENEFITS */
-  .benefits { background: var(--light); }
+  .benefits { background: var(--white); }
   .benefits-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 24px;
-    margin-top: 48px;
   }
   .benefit-card {
-    background: var(--white);
-    border-radius: 16px;
-    padding: 28px 24px;
-    border: 1px solid var(--border);
-    transition: box-shadow 0.2s, transform 0.2s;
+    background: var(--light);
+    border-radius: var(--radius);
+    padding: 32px 24px;
+    border: 1px solid #e8eaf2;
+    transition: transform 0.2s, box-shadow 0.2s;
   }
-  .benefit-card:hover { box-shadow: 0 8px 32px rgba(27,42,71,0.1); transform: translateY(-2px); }
+  .benefit-card:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(26,31,46,0.08); }
   .benefit-icon {
-    width: 48px; height: 48px;
-    background: linear-gradient(135deg, #fff3e8, #ffe0c0);
-    border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 22px;
+    font-size: 36px;
     margin-bottom: 16px;
+    display: block;
   }
   .benefit-card h3 {
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 700;
     color: var(--dark);
     margin-bottom: 8px;
@@ -255,385 +211,262 @@
     line-height: 1.6;
   }
 
-  /* SERVICES */
-  .services-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
-    margin-top: 48px;
-  }
-  .service-item {
-    border: 1.5px solid var(--border);
-    border-radius: 14px;
-    padding: 24px;
-    position: relative;
-    transition: border-color 0.2s;
-  }
-  .service-item:hover { border-color: var(--accent); }
-  .service-item.featured {
-    border-color: var(--accent);
-    background: linear-gradient(135deg, #fff8f2, #fff);
-  }
-  .featured-badge {
-    position: absolute;
-    top: -10px; right: 16px;
-    background: var(--accent);
-    color: var(--white);
-    font-size: 11px;
-    font-weight: 700;
-    padding: 3px 10px;
-    border-radius: 10px;
-    letter-spacing: 0.04em;
-  }
-  .service-item h3 {
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--dark);
-    margin-bottom: 10px;
-  }
-  .service-item ul {
-    list-style: none;
-    margin-bottom: 18px;
-  }
-  .service-item ul li {
-    font-size: 14px;
-    color: var(--muted);
-    padding: 4px 0;
-    display: flex;
-    align-items: flex-start;
-    gap: 8px;
-  }
-  .service-item ul li::before { content: '✓'; color: var(--accent); font-weight: 700; flex-shrink: 0; }
-  .price-tag {
-    font-size: 20px;
-    font-weight: 800;
-    color: var(--dark);
-  }
-  .price-tag span { font-size: 14px; font-weight: 400; color: var(--muted); }
-
-  /* HOW WE WORK */
+  /* HOW IT WORKS */
   .how { background: var(--light); }
   .steps {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    display: flex;
+    flex-direction: column;
     gap: 0;
-    margin-top: 48px;
     position: relative;
   }
   .steps::before {
     content: '';
     position: absolute;
-    top: 28px; left: 0; right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, var(--border) 15%, var(--border) 85%, transparent);
-    z-index: 0;
+    left: 28px;
+    top: 40px;
+    bottom: 40px;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--accent), transparent);
   }
   .step {
-    text-align: center;
-    padding: 0 16px 24px;
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+    padding: 24px 0;
     position: relative;
     z-index: 1;
   }
   .step-num {
-    width: 56px; height: 56px;
-    background: var(--white);
-    border: 2.5px solid var(--border);
+    flex-shrink: 0;
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, var(--dark), var(--mid));
     border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent2);
     font-weight: 800;
-    color: var(--dark);
-    margin: 0 auto 16px;
-    position: relative;
-    z-index: 1;
+    font-size: 18px;
+    border: 3px solid var(--light);
+    box-shadow: 0 0 0 2px var(--accent);
   }
-  .step.active .step-num {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: var(--white);
-    box-shadow: 0 0 0 6px rgba(244,124,32,0.15);
-  }
-  .step h4 {
-    font-size: 15px;
+  .step-body h3 {
+    font-size: 18px;
     font-weight: 700;
     color: var(--dark);
-    margin-bottom: 8px;
+    margin-bottom: 6px;
+    margin-top: 10px;
   }
-  .step p { font-size: 13px; color: var(--muted); line-height: 1.55; }
+  .step-body p {
+    font-size: 15px;
+    color: var(--muted);
+  }
 
-  /* PREVIEW MOCKUP */
-  .preview { background: var(--dark); padding: 72px 24px; }
-  .preview .section-title { color: var(--white); }
-  .preview .section-sub { color: rgba(255,255,255,0.55); }
-  .catalog-mockup {
+  /* SERVICES */
+  .services { background: var(--dark); color: var(--white); }
+  .services h2 { color: var(--white); }
+  .services .subtitle { color: rgba(255,255,255,0.6); }
+  .service-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+  }
+  .service-card {
     background: rgba(255,255,255,0.06);
     border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 18px;
-    padding: 24px;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 16px;
-    margin-top: 40px;
+    border-radius: var(--radius);
+    padding: 28px;
+    transition: background 0.2s, border-color 0.2s;
   }
-  .card-mock {
-    background: rgba(255,255,255,0.08);
-    border-radius: 12px;
-    overflow: hidden;
-    border: 1px solid rgba(255,255,255,0.06);
+  .service-card:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(232,160,32,0.4);
   }
-  .card-img {
-    height: 110px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 36px;
-  }
-  .card-img.c1 { background: linear-gradient(135deg, #2a3f6e, #1e5080); }
-  .card-img.c2 { background: linear-gradient(135deg, #3a2a6e, #5020a0); }
-  .card-img.c3 { background: linear-gradient(135deg, #1e5040, #2a7060); }
-  .card-img.c4 { background: linear-gradient(135deg, #5e2a20, #8e4030); }
-  .card-body { padding: 12px; }
-  .card-name {
-    font-size: 12px;
-    font-weight: 600;
-    color: rgba(255,255,255,0.85);
-    margin-bottom: 4px;
-    line-height: 1.4;
-  }
-  .card-art {
-    font-size: 11px;
-    color: rgba(255,255,255,0.35);
+  .service-card h3 {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--white);
     margin-bottom: 8px;
   }
-  .card-price {
+  .service-card p {
     font-size: 14px;
+    color: rgba(255,255,255,0.58);
+    margin-bottom: 16px;
+  }
+  .price-tag {
+    font-size: 20px;
     font-weight: 800;
-    color: var(--accent);
+    color: var(--accent2);
   }
-  .card-btn {
-    margin-top: 8px;
-    background: rgba(244,124,32,0.15);
-    border: 1px solid rgba(244,124,32,0.3);
-    color: #f9a95a;
-    border-radius: 6px;
-    padding: 5px 0;
-    font-size: 11px;
-    font-weight: 600;
-    text-align: center;
-    cursor: pointer;
-  }
-  .mockup-note {
-    text-align: center;
-    margin-top: 20px;
+  .price-tag span {
     font-size: 13px;
-    color: rgba(255,255,255,0.3);
+    color: rgba(255,255,255,0.5);
+    font-weight: 400;
   }
 
   /* REVIEW */
-  .review-section { background: var(--white); }
+  .review { background: var(--white); }
   .review-card {
-    background: var(--light);
+    background: linear-gradient(135deg, var(--light) 0%, #eef0f8 100%);
     border-radius: 20px;
-    padding: 40px;
+    padding: 40px 40px 36px;
+    border-left: 4px solid var(--accent);
     max-width: 680px;
-    margin: 48px auto 0;
-    position: relative;
-    border: 1px solid var(--border);
-  }
-  .quote-icon {
-    font-size: 64px;
-    color: var(--accent);
-    opacity: 0.15;
-    position: absolute;
-    top: 12px; left: 24px;
-    line-height: 1;
-    font-family: Georgia, serif;
+    margin: 0 auto;
+    text-align: center;
   }
   .review-text {
-    font-size: 17px;
-    line-height: 1.75;
-    color: var(--text);
+    font-size: 18px;
+    font-style: italic;
+    color: var(--dark);
+    line-height: 1.7;
     margin-bottom: 24px;
-    position: relative;
-    z-index: 1;
-    padding-top: 8px;
   }
-  .reviewer {
+  .review-text::before { content: '«'; color: var(--accent); font-size: 32px; font-style: normal; font-weight: 800; }
+  .review-text::after { content: '»'; color: var(--accent); font-size: 32px; font-style: normal; font-weight: 800; }
+  .review-author {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 14px;
   }
-  .reviewer-avatar {
-    width: 44px; height: 44px;
+  .avatar {
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #4a6fa5, #2d4a7a);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 18px;
-    color: var(--white);
-    font-weight: 700;
+    background: linear-gradient(135deg, var(--mid), var(--accent));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
   }
-  .reviewer-name { font-weight: 700; color: var(--dark); font-size: 15px; }
-  .reviewer-role { font-size: 13px; color: var(--muted); }
-  .stars { color: #f4b320; font-size: 15px; letter-spacing: 1px; }
+  .author-info strong {
+    display: block;
+    font-weight: 700;
+    color: var(--dark);
+    font-size: 15px;
+  }
+  .author-info span {
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .stars { color: var(--accent); font-size: 18px; margin-bottom: 6px; }
 
   /* FORM */
-  .form-section { background: linear-gradient(135deg, #1b2a47 0%, #243460 100%); }
-  .form-section .section-title { color: var(--white); }
-  .form-section .section-sub { color: rgba(255,255,255,0.6); }
-  .form-box {
-    background: var(--white);
+  .form-section { background: linear-gradient(135deg, var(--mid) 0%, var(--dark) 100%); }
+  .form-section h2 { color: var(--white); }
+  .form-section .subtitle { color: rgba(255,255,255,0.65); }
+  .form-wrap {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.14);
     border-radius: 20px;
     padding: 40px;
     max-width: 560px;
-    margin: 40px auto 0;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
-  }
-  .form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
+    margin: 0 auto;
   }
   .form-group { margin-bottom: 18px; }
-  .form-group label {
+  label {
     display: block;
     font-size: 13px;
     font-weight: 600;
-    color: var(--text);
+    color: rgba(255,255,255,0.75);
     margin-bottom: 6px;
+    letter-spacing: 0.03em;
   }
-  .form-group input,
-  .form-group select,
-  .form-group textarea {
+  input, textarea, select {
     width: 100%;
-    padding: 12px 14px;
-    border: 1.5px solid var(--border);
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
     border-radius: 10px;
+    padding: 13px 16px;
     font-size: 15px;
-    color: var(--text);
-    background: var(--white);
-    outline: none;
-    transition: border-color 0.2s;
-    font-family: inherit;
-  }
-  .form-group input:focus,
-  .form-group select:focus,
-  .form-group textarea:focus { border-color: var(--accent); }
-  .form-group textarea { resize: vertical; min-height: 80px; }
-  .form-submit {
-    width: 100%;
-    background: var(--accent);
     color: var(--white);
-    border: none;
-    border-radius: 10px;
-    padding: 16px;
-    font-size: 16px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: background 0.2s;
-    margin-top: 4px;
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+    font-family: inherit;
+    -webkit-appearance: none;
   }
-  .form-submit:hover { background: var(--accent2); }
+  input::placeholder, textarea::placeholder { color: rgba(255,255,255,0.35); }
+  input:focus, textarea:focus, select:focus {
+    border-color: var(--accent);
+    background: rgba(255,255,255,0.14);
+  }
+  textarea { resize: vertical; min-height: 100px; }
+  select option { background: var(--dark); color: var(--white); }
+  .submit-btn {
+    width: 100%;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: var(--dark);
+    font-weight: 800;
+    font-size: 16px;
+    padding: 16px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: opacity 0.2s, transform 0.2s;
+    letter-spacing: 0.02em;
+  }
+  .submit-btn:hover { opacity: 0.9; transform: translateY(-1px); }
   .form-note {
     text-align: center;
     font-size: 12px;
-    color: var(--muted);
-    margin-top: 12px;
+    color: rgba(255,255,255,0.4);
+    margin-top: 14px;
   }
 
   /* FOOTER */
   footer {
     background: var(--dark);
-    color: rgba(255,255,255,0.55);
-    padding: 40px 24px;
-    text-align: center;
-  }
-  .footer-logo {
-    font-size: 20px;
-    font-weight: 800;
-    color: var(--white);
-    margin-bottom: 10px;
-  }
-  .footer-tagline {
-    font-size: 14px;
-    color: rgba(255,255,255,0.4);
-    margin-bottom: 24px;
-  }
-  .footer-contacts {
-    display: flex;
-    justify-content: center;
-    gap: 32px;
-    flex-wrap: wrap;
-    margin-bottom: 24px;
-  }
-  .footer-contacts a {
     color: rgba(255,255,255,0.5);
-    text-decoration: none;
+    text-align: center;
+    padding: 36px 24px;
+    border-top: 1px solid rgba(255,255,255,0.08);
     font-size: 14px;
-    transition: color 0.2s;
   }
-  .footer-contacts a:hover { color: var(--accent); }
-  .footer-copy {
-    font-size: 12px;
-    color: rgba(255,255,255,0.25);
-    border-top: 1px solid rgba(255,255,255,0.07);
-    padding-top: 20px;
-    margin-top: 4px;
+  footer strong { color: var(--white); }
+  footer .contacts {
+    margin-top: 10px;
+    font-size: 14px;
   }
+  footer a { color: var(--accent); text-decoration: none; }
 
-  /* RESPONSIVE */
+  /* MOBILE */
   @media (max-width: 600px) {
-    section { padding: 52px 18px; }
-    .hero { padding: 56px 18px 64px; }
-    .hero-stats { gap: 24px; }
-    .steps::before { display: none; }
-    .form-row { grid-template-columns: 1fr; }
-    .form-box { padding: 28px 20px; }
-    .review-card { padding: 28px 22px; }
-    nav { padding: 14px 18px; }
-    .catalog-mockup { grid-template-columns: repeat(2, 1fr); }
-  }
-  @media (max-width: 380px) {
-    .catalog-mockup { grid-template-columns: 1fr; }
+    section { padding: 52px 16px; }
+    .hero { padding: 56px 16px 52px; }
+    .hero-stats { gap: 20px; }
+    .form-wrap { padding: 28px 20px; }
+    .review-card { padding: 28px 20px; }
+    .steps::before { left: 22px; }
+    .step-num { width: 44px; height: 44px; font-size: 15px; }
   }
 </style>
 </head>
 <body>
 
-<!-- DEMO BAR -->
-<div class="demo-bar">
-  Демо-набросок &nbsp;·&nbsp; <span>studio Алёны</span> &nbsp;·&nbsp; не финал — сделано за час для оценки уровня
-</div>
+<!-- DEMO BANNER -->
+<div class="demo-bar">Демо-набросок · studio Алёны · не финал</div>
 
 <!-- NAV -->
 <nav>
-  <div class="logo">
-    <div class="logo-icon">🗂</div>
-    КаталогПро
-  </div>
-  <a href="#form" class="nav-cta">Оставить заявку</a>
+  <div class="logo">Контент<span>Мастер</span></div>
+  <a href="#order">Оставить заявку →</a>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
   <div class="container">
-    <div class="hero-badge">✦ Контент-менеджер для интернет-магазинов</div>
-    <h1>Заполним каталог<br>товарными карточками —<br><em>быстро и без ошибок</em></h1>
-    <p>Перенесём описания, характеристики и фотографии с сайта производителя прямо в ваш каталог. Без пересортицы, дублей и потери данных.</p>
-    <div class="hero-btns">
-      <a href="#form" class="btn-primary">Обсудить задачу →</a>
-      <a href="#services" class="btn-ghost">Посмотреть услуги</a>
-    </div>
+    <div class="hero-badge">📦 Наполнение каталога под ключ</div>
+    <h1>Заполним карточки товаров<br><em>быстро, аккуратно и без брака</em></h1>
+    <p>Скопируем описания и фотографии с сайта производителя, оформим каждую позицию по вашему шаблону — вы получите готовый живой каталог.</p>
+    <a href="#order" class="hero-cta">Обсудить задачу бесплатно</a>
     <div class="hero-stats">
-      <div class="stat">
-        <div class="stat-num">200+</div>
-        <div class="stat-label">карточек в день</div>
-      </div>
-      <div class="stat">
-        <div class="stat-num">3 года</div>
-        <div class="stat-label">работы с каталогами</div>
-      </div>
-      <div class="stat">
-        <div class="stat-num">99%</div>
-        <div class="stat-label">точность переноса</div>
-      </div>
+      <div class="stat"><strong>100+</strong><span>карточек в день</span></div>
+      <div class="stat"><strong>0</strong><span>опечаток после проверки</span></div>
+      <div class="stat"><strong>1–3</strong><span>дня на запуск</span></div>
     </div>
   </div>
 </section>
@@ -641,177 +474,116 @@
 <!-- BENEFITS -->
 <section class="benefits">
   <div class="container">
-    <div class="section-label">Почему выбирают нас</div>
-    <h2 class="section-title">Ваш каталог заработает<br>в полную силу</h2>
-    <p class="section-sub">Пустые карточки товаров — это потерянные продажи. Мы заполняем их так, чтобы покупатель получил всё нужное с первого взгляда.</p>
-
+    <div class="section-label">Почему со мной удобно</div>
+    <h2>Каталог, который<br>работает на продажи</h2>
+    <p class="subtitle">Не просто «скопировал-вставил», а структурированный контент, который понятен покупателю.</p>
     <div class="benefits-grid">
       <div class="benefit-card">
-        <div class="benefit-icon">📋</div>
-        <h3>Точный перенос данных</h3>
-        <p>Копируем описание, характеристики, артикулы и фото напрямую с сайта производителя — ничего лишнего, ничего не потеряем.</p>
+        <span class="benefit-icon">🔍</span>
+        <h3>Точное копирование</h3>
+        <p>Беру информацию строго с официального сайта производителя: характеристики, описание, габариты — без искажений.</p>
       </div>
       <div class="benefit-card">
-        <div class="benefit-icon">⚡</div>
-        <h3>Быстрый старт</h3>
-        <p>Приступаем в день согласования. Не нужно объяснять по часу — достаточно дать доступ и список источников.</p>
+        <span class="benefit-icon">🖼️</span>
+        <h3>Все фотографии на месте</h3>
+        <p>Загружаю качественные фото в нужном формате, называю файлы по вашей системе, расставляю в правильном порядке.</p>
       </div>
       <div class="benefit-card">
-        <div class="benefit-icon">🔍</div>
-        <h3>Проверка на дубли</h3>
-        <p>Перед добавлением проверяем, нет ли уже такой позиции в каталоге. Экономим вам деньги и порядок в базе.</p>
+        <span class="benefit-icon">✅</span>
+        <h3>Проверка каждой карточки</h3>
+        <p>Перед сдачей прохожу по каждой позиции: нет пустых полей, нет «обрезанных» текстов, ссылки на фото работают.</p>
       </div>
       <div class="benefit-card">
-        <div class="benefit-icon">🛒</div>
-        <h3>Знание CMS-платформ</h3>
-        <p>Работаем с 1С-Битрикс, WooCommerce, OpenCart, InSales и другими популярными движками интернет-магазинов.</p>
+        <span class="benefit-icon">⚡</span>
+        <h3>Чёткие сроки</h3>
+        <p>Согласовываем объём и дедлайн до старта. Если что-то меняется — сразу говорю, не тяну до последнего.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how">
+  <div class="container">
+    <div class="section-label">Как мы работаем</div>
+    <h2>Четыре шага<br>от «пустого каталога» до «всё готово»</h2>
+    <p class="subtitle">Никаких долгих согласований — работаем по понятной схеме.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h3>Получаю доступ и ТЗ</h3>
+          <p>Вы даёте логин в CMS и ссылку на сайт производителя. Уточняем шаблон карточки: какие поля нужны, как оформлять описание.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h3>Делаю тестовую партию</h3>
+          <p>Заполняю 5–10 карточек и показываю вам. Правим шаблон один раз — дальше работаю по утверждённому образцу.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h3>Наполняю весь каталог</h3>
+          <p>Работаю по списку SKU или категориям. Регулярно показываю прогресс — вы видите, сколько уже готово.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h3>Сдаю и правлю при необходимости</h3>
+          <p>После сдачи — один раунд правок входит в стоимость. Отчёт по каждой карточке прилагается.</p>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- SERVICES -->
-<section id="services">
+<section class="services">
   <div class="container">
-    <div class="section-label">Услуги и цены</div>
-    <h2 class="section-title">Выберите нужный формат</h2>
-    <p class="section-sub">От разовой загрузки до регулярного ведения каталога — подберём оптимальный пакет под вашу задачу.</p>
-
-    <div class="services-grid">
-      <div class="service-item">
-        <h3>Разовая загрузка</h3>
-        <ul>
-          <li>До 100 карточек товаров</li>
-          <li>Перенос описания и фото</li>
-          <li>Базовые характеристики</li>
-          <li>Срок: 1–2 рабочих дня</li>
-        </ul>
-        <div class="price-tag">от ___ ₽ <span>за 100 карточек</span></div>
+    <div class="section-label" style="color: var(--accent2);">Что входит в работу</div>
+    <h2>Форматы задач,<br>с которыми работаю</h2>
+    <p class="subtitle">Подбираем объём под ваш каталог — платите только за то, что нужно.</p>
+    <div class="service-grid">
+      <div class="service-card">
+        <h3>📋 Базовое наполнение</h3>
+        <p>Название, описание, характеристики, 1–3 фото на карточку. Идеально для старта.</p>
+        <div class="price-tag">от ___ ₽ <span>за карточку</span></div>
       </div>
-      <div class="service-item featured">
-        <div class="featured-badge">ПОПУЛЯРНОЕ</div>
-        <h3>Средний каталог</h3>
-        <ul>
-          <li>100–500 карточек</li>
-          <li>Полное описание + характеристики</li>
-          <li>Фото с именованием файлов</li>
-          <li>Проверка на дубли</li>
-          <li>Срок: 3–7 рабочих дней</li>
-        </ul>
-        <div class="price-tag">от ___ ₽ <span>за объём</span></div>
+      <div class="service-card">
+        <h3>🖼️ Расширенное наполнение</h3>
+        <p>Полный комплект фото, все технические характеристики, мета-теги, категории и теги.</p>
+        <div class="price-tag">от ___ ₽ <span>за карточку</span></div>
       </div>
-      <div class="service-item">
-        <h3>Регулярное ведение</h3>
-        <ul>
-          <li>Новинки от поставщиков</li>
-          <li>Обновление цен и остатков</li>
-          <li>Разбивка по категориям</li>
-          <li>Ежемесячный отчёт</li>
-        </ul>
-        <div class="price-tag">от ___ ₽ <span>в месяц</span></div>
+      <div class="service-card">
+        <h3>🗂️ Большой каталог</h3>
+        <p>От 200 позиций. Работаю в несколько потоков, организую процесс под ваш дедлайн.</p>
+        <div class="price-tag">Обсуждаем <span>индивидуально</span></div>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- HOW WE WORK -->
-<section class="how">
-  <div class="container">
-    <div class="section-label">Как работаем</div>
-    <h2 class="section-title">Четыре шага — и каталог готов</h2>
-    <p class="section-sub">Никакой лишней переписки. Прозрачный процесс от заявки до сдачи.</p>
-
-    <div class="steps">
-      <div class="step active">
-        <div class="step-num">1</div>
-        <h4>Получаем задачу</h4>
-        <p>Вы присылаете ссылку на сайт источника и доступ к вашей CMS.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">2</div>
-        <h4>Согласуем структуру</h4>
-        <p>Уточняем категории, формат карточки и обязательные поля.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">3</div>
-        <h4>Наполняем каталог</h4>
-        <p>Переносим данные, загружаем фото, проставляем характеристики.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">4</div>
-        <h4>Сдаём и правим</h4>
-        <p>Показываем результат, при необходимости вносим корректировки.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- PREVIEW MOCKUP -->
-<section class="preview">
-  <div class="container">
-    <div class="section-label" style="color:#f9a95a;">Пример результата</div>
-    <h2 class="section-title">Так выглядят карточки после наполнения</h2>
-    <p class="section-sub" style="color:rgba(255,255,255,0.5);">Структурированно, с фото и ценой — каталог готов принимать покупателей.</p>
-
-    <div class="catalog-mockup">
-      <div class="card-mock">
-        <div class="card-img c1">🔧</div>
-        <div class="card-body">
-          <div class="card-name">Набор инструментов 24 предмета</div>
-          <div class="card-art">Арт: TL-2401</div>
-          <div class="card-price">___ ₽</div>
-          <div class="card-btn">В корзину</div>
-        </div>
-      </div>
-      <div class="card-mock">
-        <div class="card-img c2">💡</div>
-        <div class="card-body">
-          <div class="card-name">Лампа светодиодная E27 12W</div>
-          <div class="card-art">Арт: LM-1227</div>
-          <div class="card-price">___ ₽</div>
-          <div class="card-btn">В корзину</div>
-        </div>
-      </div>
-      <div class="card-mock">
-        <div class="card-img c3">🌿</div>
-        <div class="card-body">
-          <div class="card-name">Удобрение комплексное 1 кг</div>
-          <div class="card-art">Арт: GR-5510</div>
-          <div class="card-price">___ ₽</div>
-          <div class="card-btn">В корзину</div>
-        </div>
-      </div>
-      <div class="card-mock">
-        <div class="card-img c4">🏺</div>
-        <div class="card-body">
-          <div class="card-name">Горшок керамический 18 см</div>
-          <div class="card-art">Арт: CR-1807</div>
-          <div class="card-price">___ ₽</div>
-          <div class="card-btn">В корзину</div>
-        </div>
-      </div>
-    </div>
-    <div class="mockup-note">⬆ Пример карточек — без реальных данных клиента</div>
   </div>
 </section>
 
 <!-- REVIEW -->
-<section class="review-section">
+<section class="review">
   <div class="container" style="text-align:center;">
-    <div class="section-label">Отзывы</div>
-    <h2 class="section-title">Что говорят заказчики</h2>
-
+    <div class="section-label">Отзывы клиентов</div>
+    <h2>Что говорят заказчики</h2>
+    <p class="subtitle" style="margin: 0 auto 40px;">Работаю через биржу — все отзывы реальные, с историей заказов.</p>
     <div class="review-card">
-      <div class="quote-icon">"</div>
+      <div class="stars">★★★★★</div>
       <p class="review-text">
-        Передала список из 340 позиций и ссылки на двух поставщиков — через 5 дней весь каталог был заполнен аккуратно и без единого дубля. Особенно понравилось, что фото загружены с правильными именами файлов, не пришлось ничего переименовывать самой.
+        Заказывала наполнение 150 карточек для интернет-магазина строительных материалов.
+        Всё сделано ровно по шаблону, ни одного пустого поля. Особенно понравилась тестовая партия — сразу было видно, что человек понимает, чего я хочу. Сдала раньше срока, правок почти не было.
       </p>
-      <div class="reviewer">
-        <div class="reviewer-avatar">М</div>
-        <div>
-          <div class="reviewer-name">Марина Сорокина</div>
-          <div class="reviewer-role">Владелец магазина товаров для дома</div>
-          <div class="stars">★★★★★</div>
+      <div class="review-author">
+        <div class="avatar">🏪</div>
+        <div class="author-info">
+          <strong>Марина К.</strong>
+          <span>Владелец интернет-магазина, Москва</span>
         </div>
       </div>
     </div>
@@ -819,58 +591,48 @@
 </section>
 
 <!-- FORM -->
-<section class="form-section" id="form">
+<section class="form-section" id="order">
   <div class="container" style="text-align:center;">
-    <div class="section-label" style="color:#f9a95a;">Заявка</div>
-    <h2 class="section-title">Расскажите о вашем каталоге</h2>
-    <p class="section-sub" style="margin:0 auto 0;">Оставьте контакты — обсудим объём, сроки и стоимость в течение часа.</p>
-
-    <div class="form-box">
-      <div class="form-row">
-        <div class="form-group">
-          <label>Ваше имя</label>
-          <input type="text" placeholder="Иван">
-        </div>
-        <div class="form-group">
-          <label>Телефон / Telegram</label>
-          <input type="text" placeholder="+7 ___">
-        </div>
+    <div class="section-label" style="color: var(--accent2);">Оставить заявку</div>
+    <h2>Расскажите о своей задаче</h2>
+    <p class="subtitle" style="margin: 0 auto 40px;">Отвечу в течение часа, оценю объём и назову точную стоимость.</p>
+    <div class="form-wrap">
+      <div class="form-group">
+        <label>Ваше имя</label>
+        <input type="text" placeholder="Как к вам обращаться?">
       </div>
       <div class="form-group">
-        <label>Сайт или CMS-платформа</label>
-        <input type="text" placeholder="https://ваш-магазин.ru или «Битрикс»">
+        <label>Ссылка на ваш сайт или CMS</label>
+        <input type="text" placeholder="https://...">
       </div>
       <div class="form-group">
-        <label>Примерное количество товаров</label>
+        <label>Примерное количество карточек</label>
         <select>
-          <option value="">— выберите —</option>
-          <option>до 100 карточек</option>
-          <option>100–300 карточек</option>
-          <option>300–1000 карточек</option>
-          <option>больше 1000 карточек</option>
+          <option value="" disabled selected>Выберите объём</option>
+          <option>до 50 карточек</option>
+          <option>50–150 карточек</option>
+          <option>150–500 карточек</option>
+          <option>более 500 карточек</option>
         </select>
       </div>
       <div class="form-group">
-        <label>Дополнительно</label>
-        <textarea placeholder="Ссылки на источники, особые требования к карточкам, срочность..."></textarea>
+        <label>Что ещё важно знать</label>
+        <textarea placeholder="Какая CMS, есть ли шаблон карточки, нужны ли мета-теги, дедлайн..."></textarea>
       </div>
-      <button class="form-submit" type="button">Отправить заявку →</button>
-      <p class="form-note">Нажимая кнопку, вы соглашаетесь на обработку данных. Отвечаю в мессенджерах и по email.</p>
+      <button class="submit-btn">Отправить заявку →</button>
+      <p class="form-note">Нажимая кнопку, вы соглашаетесь на обработку персональных данных.<br>Никакого спама — только ответ по вашему заказу.</p>
     </div>
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-logo">🗂 КаталогПро</div>
-  <div class="footer-tagline">Наполнение интернет-магазинов карточками товаров</div>
-  <div class="footer-contacts">
-    <a href="#">+7 ___</a>
-    <a href="#">@___ в Telegram</a>
-    <a href="#">___@mail.ru</a>
+  <div><strong>КонтентМастер</strong> — наполнение каталогов товарами</div>
+  <div class="contacts">
+    Связь: <a href="#">+7 ___</a> &nbsp;·&nbsp; <a href="#">Telegram</a> &nbsp;·&nbsp; <a href="#">Биржа фриланс</a>
   </div>
-  <div class="footer-copy">
-    © 2025 · Фриланс-контент-менеджер · Работаем по всей России удалённо
+  <div style="margin-top: 16px; font-size: 12px;">
+    © 2026 · Демо-лендинг подготовлен studio Алёны · Все тексты и цены — плейсхолдеры под замену
   </div>
 </footer>
 
