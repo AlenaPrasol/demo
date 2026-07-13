@@ -1,0 +1,675 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Графика для сайта — студия Алёны</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --dark: #1a1a2e;
+    --mid: #16213e;
+    --light: #f8f7f4;
+    --accent: #e94560;
+    --accent2: #a855f7;
+    --text: #2d2d2d;
+    --muted: #6b7280;
+    --r: 16px;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--light);
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  /* ── DEMO BANNER ── */
+  .demo-bar {
+    background: linear-gradient(90deg, var(--accent2), var(--accent));
+    color: #fff;
+    text-align: center;
+    font-size: 12px;
+    letter-spacing: .08em;
+    padding: 8px 16px;
+    font-weight: 500;
+  }
+
+  /* ── NAV ── */
+  nav {
+    background: var(--dark);
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .logo {
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -.02em;
+  }
+  .logo span { color: var(--accent); }
+  .nav-cta {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: opacity .2s;
+  }
+  .nav-cta:hover { opacity: .85; }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, var(--dark) 0%, #0f3460 60%, #16213e 100%);
+    color: #fff;
+    padding: 80px 24px 90px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(168,85,247,.25), transparent 70%);
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; left: -60px;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(233,69,96,.2), transparent 70%);
+    pointer-events: none;
+  }
+  .hero-tag {
+    display: inline-block;
+    background: rgba(255,255,255,.1);
+    border: 1px solid rgba(255,255,255,.2);
+    border-radius: 50px;
+    padding: 6px 18px;
+    font-size: 13px;
+    margin-bottom: 24px;
+    letter-spacing: .04em;
+  }
+  .hero h1 {
+    font-size: clamp(28px, 6vw, 52px);
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 20px;
+    letter-spacing: -.02em;
+  }
+  .hero h1 em {
+    font-style: normal;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero p {
+    font-size: clamp(15px, 2.5vw, 18px);
+    opacity: .8;
+    max-width: 540px;
+    margin: 0 auto 36px;
+  }
+  .hero-btns {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #fff;
+    border: none;
+    padding: 16px 36px;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform .2s, box-shadow .2s;
+    box-shadow: 0 8px 30px rgba(233,69,96,.35);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(233,69,96,.45); }
+  .btn-outline {
+    background: transparent;
+    color: #fff;
+    border: 2px solid rgba(255,255,255,.35);
+    padding: 14px 32px;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .2s;
+  }
+  .btn-outline:hover { background: rgba(255,255,255,.08); }
+
+  /* ── VISUAL SHOWCASE ── */
+  .showcase {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    padding: 48px 24px 0;
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+  .mock-card {
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,.4);
+  }
+  .mock-icon {
+    width: 80px; height: 80px;
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 32px;
+  }
+  .mock-banner {
+    width: 220px; height: 90px;
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: .04em;
+  }
+  .mock-header {
+    width: 280px; height: 70px;
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+    color: rgba(255,255,255,.7);
+    letter-spacing: .06em;
+  }
+
+  /* ── SECTION WRAPPER ── */
+  .section { padding: 80px 24px; }
+  .section-inner { max-width: 1000px; margin: 0 auto; }
+  .section-tag {
+    display: inline-block;
+    background: linear-gradient(135deg, rgba(233,69,96,.1), rgba(168,85,247,.1));
+    border: 1px solid rgba(168,85,247,.2);
+    color: var(--accent2);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 50px;
+    margin-bottom: 16px;
+  }
+  .section h2 {
+    font-size: clamp(24px, 4vw, 38px);
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -.02em;
+    margin-bottom: 12px;
+  }
+  .section-sub {
+    color: var(--muted);
+    font-size: 16px;
+    max-width: 520px;
+    margin-bottom: 52px;
+  }
+
+  /* ── BENEFITS GRID ── */
+  .benefits { background: #fff; }
+  .grid-4 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 24px;
+  }
+  .benefit-card {
+    padding: 32px 24px;
+    border-radius: var(--r);
+    border: 1px solid #ebebeb;
+    background: var(--light);
+    transition: box-shadow .2s, transform .2s;
+  }
+  .benefit-card:hover { box-shadow: 0 8px 30px rgba(0,0,0,.08); transform: translateY(-3px); }
+  .benefit-icon {
+    width: 52px; height: 52px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  .benefit-card h3 { font-size: 17px; font-weight: 700; margin-bottom: 10px; }
+  .benefit-card p { font-size: 14px; color: var(--muted); line-height: 1.65; }
+
+  /* ── SERVICES ── */
+  .services { background: var(--light); }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .service-item {
+    background: #fff;
+    border-radius: var(--r);
+    padding: 28px;
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+    border: 1px solid #ebebeb;
+    transition: box-shadow .2s;
+  }
+  .service-item:hover { box-shadow: 0 6px 24px rgba(0,0,0,.07); }
+  .svc-num {
+    min-width: 44px; height: 44px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff;
+    font-weight: 800;
+    font-size: 15px;
+  }
+  .service-item h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+  .service-item p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+  .price-tag {
+    display: inline-block;
+    margin-top: 12px;
+    background: linear-gradient(135deg, rgba(233,69,96,.08), rgba(168,85,247,.08));
+    border: 1px solid rgba(168,85,247,.2);
+    color: var(--accent2);
+    font-size: 13px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 50px;
+  }
+
+  /* ── HOW WE WORK ── */
+  .process { background: var(--dark); color: #fff; }
+  .process h2 { color: #fff; }
+  .process .section-sub { color: rgba(255,255,255,.5); }
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 32px;
+    counter-reset: step;
+  }
+  .step { position: relative; }
+  .step-num {
+    font-size: 48px;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+  .step h3 { font-size: 17px; font-weight: 700; margin-bottom: 10px; color: #fff; }
+  .step p { font-size: 14px; color: rgba(255,255,255,.55); line-height: 1.65; }
+  .step-connector {
+    display: none;
+  }
+
+  /* ── TESTIMONIAL ── */
+  .testimonial-section { background: #fff; }
+  .testi-card {
+    background: linear-gradient(135deg, #1a1a2e, #0f3460);
+    border-radius: 24px;
+    padding: 48px;
+    color: #fff;
+    max-width: 680px;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+  }
+  .testi-card::before {
+    content: '❝';
+    position: absolute;
+    top: -10px; left: 36px;
+    font-size: 120px;
+    color: var(--accent);
+    opacity: .15;
+    line-height: 1;
+    font-family: Georgia, serif;
+  }
+  .testi-text {
+    font-size: clamp(15px, 2vw, 18px);
+    line-height: 1.7;
+    margin-bottom: 28px;
+    position: relative;
+    z-index: 1;
+  }
+  .testi-author {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    position: relative;
+    z-index: 1;
+  }
+  .testi-avatar {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+  }
+  .testi-name { font-weight: 700; font-size: 15px; }
+  .testi-role { font-size: 13px; color: rgba(255,255,255,.5); margin-top: 2px; }
+  .stars { color: #fbbf24; font-size: 16px; margin-bottom: 16px; }
+
+  /* ── FORM ── */
+  .form-section {
+    background: linear-gradient(135deg, var(--dark), #0f3460);
+    color: #fff;
+    text-align: center;
+  }
+  .form-section h2 { color: #fff; }
+  .form-section .section-sub { color: rgba(255,255,255,.55); margin-left: auto; margin-right: auto; }
+  .form-wrap {
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 24px;
+    padding: 40px;
+    max-width: 540px;
+    margin: 0 auto;
+    backdrop-filter: blur(10px);
+  }
+  .form-row { margin-bottom: 16px; text-align: left; }
+  .form-row label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(255,255,255,.7);
+    margin-bottom: 8px;
+    letter-spacing: .02em;
+  }
+  .form-row input,
+  .form-row textarea,
+  .form-row select {
+    width: 100%;
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.15);
+    border-radius: 10px;
+    padding: 14px 16px;
+    color: #fff;
+    font-size: 15px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color .2s;
+  }
+  .form-row input::placeholder,
+  .form-row textarea::placeholder { color: rgba(255,255,255,.3); }
+  .form-row input:focus,
+  .form-row textarea:focus,
+  .form-row select:focus { border-color: var(--accent2); }
+  .form-row textarea { resize: vertical; min-height: 100px; }
+  .form-row select option { background: var(--dark); color: #fff; }
+  .form-submit {
+    width: 100%;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #fff;
+    border: none;
+    padding: 18px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: opacity .2s, transform .2s;
+    letter-spacing: .01em;
+  }
+  .form-submit:hover { opacity: .9; transform: translateY(-1px); }
+  .form-note { font-size: 12px; color: rgba(255,255,255,.35); margin-top: 14px; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #0d0d1a;
+    color: rgba(255,255,255,.4);
+    padding: 36px 24px;
+    text-align: center;
+    font-size: 13px;
+    line-height: 1.8;
+  }
+  footer strong { color: rgba(255,255,255,.7); }
+  footer a { color: var(--accent); text-decoration: none; }
+
+  /* ── UTILS ── */
+  .center { text-align: center; }
+  .mt-auto { margin-top: auto; }
+
+  @media (max-width: 600px) {
+    .section { padding: 56px 20px; }
+    .testi-card { padding: 32px 24px; }
+    .form-wrap { padding: 28px 20px; }
+    .showcase { gap: 10px; }
+    .mock-banner { width: 160px; height: 70px; }
+    .mock-header { width: 200px; height: 56px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- DEMO BAR -->
+<div class="demo-bar">Демо-набросок · studio Алёны · не финал — под вашу задачу</div>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">pixel<span>craft</span></div>
+  <button class="nav-cta" onclick="document.getElementById('form').scrollIntoView({behavior:'smooth'})">Обсудить проект</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-tag">✦ Графика для сайтов под ключ</div>
+  <h1>Обновим визуал вашего сайта — <em>иконки, баннеры, шапки</em></h1>
+  <p>Создаём цельный графический стиль: от иконок разделов до баннеров и изображений для шапок страниц. Сайт начинает выглядеть профессионально.</p>
+  <div class="hero-btns">
+    <button class="btn-primary" onclick="document.getElementById('form').scrollIntoView({behavior:'smooth'})">Получить КП — бесплатно</button>
+    <button class="btn-outline" onclick="document.getElementById('services').scrollIntoView({behavior:'smooth'})">Посмотреть состав работ</button>
+  </div>
+
+  <!-- visual mock -->
+  <div class="showcase">
+    <div class="mock-icon mock-card" style="background:linear-gradient(135deg,#e94560,#a855f7)">🎨</div>
+    <div class="mock-icon mock-card" style="background:linear-gradient(135deg,#0f3460,#16213e)">📐</div>
+    <div class="mock-banner mock-card" style="background:linear-gradient(135deg,#1a1a2e,#a855f7)">БАННЕР РАЗДЕЛА</div>
+    <div class="mock-icon mock-card" style="background:linear-gradient(135deg,#e94560,#ff6b6b)">💡</div>
+    <div class="mock-icon mock-card" style="background:linear-gradient(135deg,#0ea5e9,#a855f7)">🔧</div>
+    <div class="mock-header mock-card" style="background:linear-gradient(90deg,#0f3460,#e94560)">ШАПКА СТРАНИЦЫ</div>
+  </div>
+</section>
+
+<!-- BENEFITS -->
+<section class="section benefits" id="benefits">
+  <div class="section-inner">
+    <div class="center">
+      <span class="section-tag">почему мы</span>
+      <h2>Графика, которая работает на бизнес</h2>
+      <p class="section-sub">Не просто «красиво», а визуал, который помогает пользователю ориентироваться и доверять сайту.</p>
+    </div>
+    <div class="grid-4">
+      <div class="benefit-card">
+        <div class="benefit-icon" style="background:linear-gradient(135deg,rgba(233,69,96,.12),rgba(233,69,96,.04))">🎯</div>
+        <h3>Единый стиль</h3>
+        <p>Все элементы — в одной палитре и сетке. Сайт выглядит как продукт, а не набор случайных картинок.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon" style="background:linear-gradient(135deg,rgba(168,85,247,.12),rgba(168,85,247,.04))">⚡</div>
+        <h3>Быстрый старт</h3>
+        <p>Первые макеты через 1–2 дня после брифинга. Итерируем быстро, без долгих согласований.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon" style="background:linear-gradient(135deg,rgba(14,165,233,.12),rgba(14,165,233,.04))">📁</div>
+        <h3>Все форматы</h3>
+        <p>Передаём SVG, PNG, WebP и исходники в Figma. Разработчик подключит с первого раза.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon" style="background:linear-gradient(135deg,rgba(251,191,36,.12),rgba(251,191,36,.04))">🔄</div>
+        <h3>Правки включены</h3>
+        <p>До 3 раундов правок в рамках проекта. Работаем, пока вы не скажете «отлично».</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="section services" id="services">
+  <div class="section-inner">
+    <span class="section-tag">состав работ</span>
+    <h2>Что входит в проект</h2>
+    <p class="section-sub">Полный пакет графики под доработку сайта — от иконок до декоративных элементов.</p>
+    <div class="services-grid">
+
+      <div class="service-item">
+        <div class="svc-num">01</div>
+        <div>
+          <h3>Иконки для разделов и преимуществ</h3>
+          <p>Набор векторных иконок в едином стиле: для навигации, карточек услуг, блока преимуществ. Гибкие SVG — масштабируются без потери качества.</p>
+          <span class="price-tag">от ___ ₽</span>
+        </div>
+      </div>
+
+      <div class="service-item">
+        <div class="svc-num">02</div>
+        <div>
+          <h3>Баннеры для страниц сайта</h3>
+          <p>Промо-баннеры для главной, акций, спецпредложений. Адаптируем под десктоп и мобилку, с вариантами под разные поводы.</p>
+          <span class="price-tag">от ___ ₽</span>
+        </div>
+      </div>
+
+      <div class="service-item">
+        <div class="svc-num">03</div>
+        <div>
+          <h3>Изображения для шапок страниц</h3>
+          <p>Hero-секции для каждой страницы: фон, типографика, декор. Создаём атмосферу раздела с первого экрана.</p>
+          <span class="price-tag">от ___ ₽</span>
+        </div>
+      </div>
+
+      <div class="service-item">
+        <div class="svc-num">04</div>
+        <div>
+          <h3>Дополнительные графические элементы</h3>
+          <p>Разделители, фоновые текстуры, декоративные фигуры, подложки для цитат и CTA-блоков. Всё то, что делает страницу живой.</p>
+          <span class="price-tag">от ___ ₽</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- HOW WE WORK -->
+<section class="section process">
+  <div class="section-inner">
+    <div class="center">
+      <span class="section-tag">процесс</span>
+      <h2>Как мы работаем</h2>
+      <p class="section-sub">Четыре шага от брифа до финальных файлов</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h3>Бриф и референсы</h3>
+        <p>Задаём вопросы по стилю, ЦА и задаче. Изучаем существующий сайт — ищем, что сохранить, что обновить.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <h3>Концепция и стайлгайд</h3>
+        <p>Формируем мини-стайлгайд: цвета, сетка, стиль иконок. Утверждаем до начала основной работы.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <h3>Разработка и правки</h3>
+        <p>Создаём все элементы, показываем в контексте страниц. Вносим правки — до трёх раундов включительно.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <h3>Передача файлов</h3>
+        <p>Архив с SVG, PNG/WebP и исходником Figma. При необходимости — помощь в передаче разработчику.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<section class="section testimonial-section">
+  <div class="section-inner center">
+    <span class="section-tag">отзыв</span>
+    <h2>Говорят клиенты</h2>
+    <p class="section-sub" style="margin:0 auto 40px">Работаем честно — вот что пишут те, кто уже с нами</p>
+
+    <div class="testi-card">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">«Заказывали иконки и баннеры для корпоративного сайта. Очень понравилось, что дизайнер сразу уловила стиль бренда и не пришлось объяснять дважды. Всё сдали за неделю, файлы пришли в идеальном порядке — разработчик подключил без вопросов. Обязательно вернёмся за следующим пакетом.»</p>
+      <div class="testi-author">
+        <div class="testi-avatar">👤</div>
+        <div>
+          <div class="testi-name">Михаил К., владелец интернет-магазина</div>
+          <div class="testi-role">Редизайн каталога · апрель 2025</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORM -->
+<section class="section form-section" id="form">
+  <div class="section-inner">
+    <span class="section-tag">заявка</span>
+    <h2>Обсудим ваш проект</h2>
+    <p class="section-sub">Расскажите о задаче — ответим с примерным составом и сроками в течение нескольких часов</p>
+
+    <div class="form-wrap">
+      <div class="form-row">
+        <label>Ваше имя</label>
+        <input type="text" placeholder="Как к вам обращаться?">
+      </div>
+      <div class="form-row">
+        <label>Телефон или Telegram</label>
+        <input type="text" placeholder="+7 ___ или @username">
+      </div>
+      <div class="form-row">
+        <label>Ссылка на ваш сайт</label>
+        <input type="text" placeholder="https://...">
+      </div>
+      <div class="form-row">
+        <label>Что нужно сделать?</label>
+        <select>
+          <option value="">— Выберите пакет —</option>
+          <option>Только иконки</option>
+          <option>Иконки + баннеры</option>
+          <option>Полный пакет (иконки, баннеры, шапки, декор)</option>
+          <option>Обсудить состав отдельно</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label>Стиль / референсы / пожелания</label>
+        <textarea placeholder="Опишите стиль сайта, покажите примеры, которые нравятся — любая деталь поможет сделать точнее…"></textarea>
+      </div>
+      <button class="form-submit" onclick="this.textContent='✓ Заявка отправлена!'">Отправить заявку</button>
+      <p class="form-note">Нажимая кнопку, вы соглашаетесь на обработку персональных данных. Без спама.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <strong>pixelcraft studio</strong><br>
+  Графика для сайтов · Иконки · Баннеры · Шапки страниц<br>
+  +7 ___ ___ __ __ &nbsp;·&nbsp; <a href="#">@_username</a> &nbsp;·&nbsp; ___@mail.ru<br><br>
+  <span style="font-size:11px">© 2025 · Это демо-набросок, подготовленный studio Алёны Прасоловой. Тексты и цены — ориентировочные. Финальный дизайн согласовывается после брифинга.</span>
+</footer>
+
+</body>
+</html>
