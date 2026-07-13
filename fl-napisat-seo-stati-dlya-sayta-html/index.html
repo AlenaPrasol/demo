@@ -1,0 +1,574 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEO-тексты для fashion-брендов</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1c1c1e;
+    --paper: #faf9f7;
+    --accent: #c9a96e;
+    --accent-dark: #a8854d;
+    --muted: #6b6b6b;
+    --light: #ece9e3;
+    --radius: 12px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.6;
+    font-size: 16px;
+  }
+
+  /* DEMO BANNER */
+  .demo-bar {
+    background: var(--ink);
+    color: #fff;
+    text-align: center;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 8px 16px;
+    opacity: 0.85;
+  }
+  .demo-bar span { color: var(--accent); font-weight: 600; }
+
+  /* HERO */
+  .hero {
+    min-height: 92vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 80px 24px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 60% at 20% 80%, rgba(201,169,110,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 80% 20%, rgba(201,169,110,0.08) 0%, transparent 55%);
+    z-index: 0;
+  }
+  .hero-eyebrow {
+    position: relative;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    position: relative;
+    font-size: clamp(2rem, 6vw, 3.6rem);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    max-width: 700px;
+    margin-bottom: 24px;
+  }
+  .hero h1 em {
+    font-style: normal;
+    color: var(--accent);
+  }
+  .hero p {
+    position: relative;
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+    color: var(--muted);
+    max-width: 520px;
+    margin-bottom: 40px;
+  }
+  .hero-cta {
+    position: relative;
+    display: inline-flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .btn {
+    display: inline-block;
+    padding: 15px 32px;
+    border-radius: 50px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border: none;
+  }
+  .btn-primary {
+    background: var(--ink);
+    color: #fff;
+  }
+  .btn-primary:hover { background: #333; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+  .btn-ghost {
+    background: transparent;
+    color: var(--ink);
+    border: 1.5px solid var(--ink);
+  }
+  .btn-ghost:hover { background: var(--ink); color: #fff; }
+
+  /* DECO STRIP */
+  .deco-strip {
+    overflow: hidden;
+    white-space: nowrap;
+    border-top: 1px solid var(--light);
+    border-bottom: 1px solid var(--light);
+    padding: 14px 0;
+    background: #fff;
+  }
+  .deco-inner {
+    display: inline-block;
+    animation: marquee 18s linear infinite;
+    font-size: 13px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .deco-inner span { color: var(--accent); margin: 0 12px; }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* SECTIONS COMMON */
+  section { padding: 80px 24px; }
+  .container { max-width: 1040px; margin: 0 auto; }
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-size: clamp(1.7rem, 4vw, 2.4rem);
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+    margin-bottom: 16px;
+  }
+  .section-sub {
+    color: var(--muted);
+    font-size: 1.05rem;
+    max-width: 520px;
+    margin-bottom: 52px;
+  }
+
+  /* BENEFITS */
+  .benefits { background: var(--ink); color: #fff; }
+  .benefits .section-label { color: var(--accent); }
+  .benefits .section-sub { color: rgba(255,255,255,0.55); }
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+  }
+  .card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: var(--radius);
+    padding: 32px 28px;
+    transition: border-color 0.2s;
+  }
+  .card:hover { border-color: rgba(201,169,110,0.4); }
+  .card-icon {
+    font-size: 2rem;
+    margin-bottom: 18px;
+    display: block;
+  }
+  .card h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
+  }
+  .card p { font-size: 0.9rem; color: rgba(255,255,255,0.55); line-height: 1.65; }
+
+  /* SERVICES */
+  .services { background: var(--paper); }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .service-card {
+    background: #fff;
+    border: 1px solid var(--light);
+    border-radius: var(--radius);
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .service-card .tag {
+    display: inline-block;
+    background: var(--light);
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 20px;
+    margin-bottom: 4px;
+    align-self: flex-start;
+  }
+  .service-card h3 { font-size: 1.1rem; font-weight: 700; }
+  .service-card p { font-size: 0.88rem; color: var(--muted); line-height: 1.6; }
+  .service-price {
+    margin-top: auto;
+    font-weight: 700;
+    color: var(--accent-dark);
+    font-size: 0.95rem;
+  }
+
+  /* HOW WE WORK */
+  .process { background: var(--light); }
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0;
+    position: relative;
+  }
+  .step {
+    padding: 32px 24px;
+    position: relative;
+  }
+  .step-num {
+    font-size: 2.8rem;
+    font-weight: 900;
+    color: var(--accent);
+    opacity: 0.3;
+    line-height: 1;
+    margin-bottom: 12px;
+    font-variant-numeric: tabular-nums;
+  }
+  .step h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+  .step p { font-size: 0.875rem; color: var(--muted); line-height: 1.6; }
+
+  /* REVIEW */
+  .review { background: #fff; }
+  .review-box {
+    background: var(--paper);
+    border-left: 4px solid var(--accent);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 36px 40px;
+    max-width: 700px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .review-box::before {
+    content: '"';
+    font-size: 6rem;
+    color: var(--accent);
+    opacity: 0.15;
+    position: absolute;
+    top: -10px;
+    left: 20px;
+    line-height: 1;
+    font-family: Georgia, serif;
+  }
+  .review-text {
+    font-size: 1.1rem;
+    line-height: 1.75;
+    color: var(--ink);
+    margin-bottom: 24px;
+    position: relative;
+  }
+  .reviewer {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .avatar {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent) 0%, #e0c080 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+  .reviewer-info strong { display: block; font-size: 0.95rem; font-weight: 700; }
+  .reviewer-info span { font-size: 0.8rem; color: var(--muted); }
+  .stars { color: var(--accent); font-size: 0.9rem; letter-spacing: 2px; margin-top: 2px; }
+
+  /* FORM */
+  .contact { background: var(--ink); color: #fff; }
+  .contact .section-label { color: var(--accent); }
+  .contact .section-sub { color: rgba(255,255,255,0.5); }
+  .form-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    max-width: 640px;
+  }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-group.full { grid-column: 1 / -1; }
+  .form-group label {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    font-weight: 600;
+  }
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 8px;
+    padding: 13px 16px;
+    color: #fff;
+    font-size: 15px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s;
+    appearance: none;
+  }
+  .form-group input::placeholder,
+  .form-group textarea::placeholder { color: rgba(255,255,255,0.25); }
+  .form-group input:focus,
+  .form-group textarea:focus,
+  .form-group select:focus { border-color: var(--accent); }
+  .form-group textarea { resize: vertical; min-height: 100px; }
+  .form-group select option { background: #1c1c1e; }
+  .form-note {
+    grid-column: 1 / -1;
+    font-size: 11px;
+    color: rgba(255,255,255,0.3);
+    margin-top: 4px;
+  }
+
+  /* FOOTER */
+  footer {
+    background: #111;
+    color: rgba(255,255,255,0.4);
+    text-align: center;
+    padding: 32px 24px;
+    font-size: 13px;
+  }
+  footer strong { color: var(--accent); }
+
+  /* MOBILE */
+  @media (max-width: 640px) {
+    .form-wrap { grid-template-columns: 1fr; }
+    .form-group.full { grid-column: 1; }
+    .step-num { font-size: 2rem; }
+    .review-box { padding: 28px 24px; }
+    section { padding: 56px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="demo-bar">Демо-набросок · <span>studio Алёны</span> · не финал · подготовлено под ваш заказ</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">SEO-контент для fashion-брендов</div>
+  <h1>Статьи, которые<br><em>продают одежду</em><br>через Google</h1>
+  <p>Пишем по вашему ТЗ — с насмотренностью в моде, SEO-грамотностью и живым авторским стилем. Без воды и lorem ipsum.</p>
+  <div class="hero-cta">
+    <a href="#contact" class="btn btn-primary">Обсудить проект</a>
+    <a href="#services" class="btn btn-ghost">Посмотреть форматы</a>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="deco-strip">
+  <span class="deco-inner">
+    SEO-статьи<span>✦</span>Мода и стиль<span>✦</span>Тренды сезона<span>✦</span>Lookbook-тексты<span>✦</span>Карточки товаров<span>✦</span>Обзоры коллекций<span>✦</span>Гиды по выбору<span>✦</span>
+    SEO-статьи<span>✦</span>Мода и стиль<span>✦</span>Тренды сезона<span>✦</span>Lookbook-тексты<span>✦</span>Карточки товаров<span>✦</span>Обзоры коллекций<span>✦</span>Гиды по выбору<span>✦</span>
+  </span>
+</div>
+
+<!-- BENEFITS -->
+<section class="benefits">
+  <div class="container">
+    <div class="section-label">Почему мы</div>
+    <div class="section-title" style="color:#fff">Три вещи, которые<br>редко совпадают в одном авторе</div>
+    <p class="section-sub">Большинство SEO-копирайтеров не разбираются в моде. А большинство модных редакторов — в SEO. Мы умеем и то, и другое.</p>
+    <div class="grid-3">
+      <div class="card">
+        <span class="card-icon">👗</span>
+        <h3>Насмотренность в моде</h3>
+        <p>Знаем разницу между оверсайз и бойфренд-кроем, следим за Vogue и ЦУМом — тексты звучат как редакция, а не как инструкция.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">🔍</span>
+        <h3>SEO без потери стиля</h3>
+        <p>Вписываем ключевые запросы так, что читатель не замечает — он просто читает. Тексты индексируются и живут в топе.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">⚡</span>
+        <h3>Работа строго по ТЗ</h3>
+        <p>Присылаете бриф, ключи, структуру — получаете готовый текст. Никаких домыслов и «мы решили иначе».</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">✏️</span>
+        <h3>Живой авторский язык</h3>
+        <p>Не шаблонный «копирайтинг», а настоящий редакторский текст: образы, детали, интонация — то, что хочется дочитать.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="container">
+    <div class="section-label">Форматы работы</div>
+    <div class="section-title">Что входит в сотрудничество</div>
+    <p class="section-sub">Берём любые задачи под тему одежды и моды — от блога интернет-магазина до экспертных лонгридов.</p>
+    <div class="services-grid">
+      <div class="service-card">
+        <span class="tag">Блог</span>
+        <h3>SEO-статья по ТЗ</h3>
+        <p>Полноценный материал с вашей структурой, ключевыми словами, LSI-фразами и уникальностью 90%+. Темы: тренды, гиды, обзоры.</p>
+        <div class="service-price">от ___ ₽ / статья</div>
+      </div>
+      <div class="service-card">
+        <span class="tag">Карточки</span>
+        <h3>Описания товаров</h3>
+        <p>Короткие SEO-тексты для карточек: ёмко, с ключами, продающе — но без агрессивного «купи сейчас».</p>
+        <div class="service-price">от ___ ₽ / шт.</div>
+      </div>
+      <div class="service-card">
+        <span class="tag">Спецпроект</span>
+        <h3>Лонгрид / Lookbook-текст</h3>
+        <p>Редакционный материал под спецпроект, лукбук или лендинг коллекции — стиль, история, образ бренда.</p>
+        <div class="service-price">от ___ ₽ / материал</div>
+      </div>
+      <div class="service-card">
+        <span class="tag">Абонемент</span>
+        <h3>Пакет статей в месяц</h3>
+        <p>Фиксированное количество текстов в месяц — стабильная публикация для роста органики и аудитории блога.</p>
+        <div class="service-price">обсуждается индивидуально</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process">
+  <div class="container">
+    <div class="section-label">Как работаем</div>
+    <div class="section-title">Просто и без долгих согласований</div>
+    <p class="section-sub">Четыре шага от вашего ТЗ до готового текста на сайте.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h3>Получаем ТЗ</h3>
+        <p>Вы присылаете техзадание, ключи, структуру и любые материалы — принимаем всё в удобном формате.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <h3>Погружаемся в тему</h3>
+        <p>Изучаем нишу, конкурентов и тренды — чтобы текст попадал точно в целевой запрос и тон бренда.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <h3>Пишем и проверяем</h3>
+        <p>Готовим текст, проверяем уникальность, SEO-параметры и соответствие ТЗ — и только потом отдаём.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <h3>Правки и сдача</h3>
+        <p>Один круг правок включён. Финальный файл — в нужном формате: Google Docs, Word или сразу в CMS.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEW -->
+<section class="review">
+  <div class="container" style="text-align:center">
+    <div class="section-label" style="text-align:center">Отзыв клиента</div>
+    <div class="section-title" style="text-align:center;margin-bottom:40px">Что говорят те, кто уже работал</div>
+    <div class="review-box">
+      <p class="review-text">Наконец-то нашли автора, который реально понимает моду. Статьи выходят «как из редакции» — и при этом хорошо ранжируются. За три месяца органика блога выросла вдвое, несколько статей вышли в топ-5 по целевым запросам.</p>
+      <div class="reviewer">
+        <div class="avatar">👜</div>
+        <div class="reviewer-info">
+          <strong>___ — бренд-менеджер fashion-магазина</strong>
+          <span>сотрудничество — ___ месяцев</span>
+          <div class="stars">★★★★★</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT FORM -->
+<section class="contact" id="contact">
+  <div class="container">
+    <div class="section-label">Связаться</div>
+    <div class="section-title" style="color:#fff">Обсудим ваш проект</div>
+    <p class="section-sub">Расскажите о задаче — ответим в течение нескольких часов и пришлём пример работы по вашей теме.</p>
+    <form onsubmit="return false;" class="form-wrap">
+      <div class="form-group">
+        <label>Ваше имя</label>
+        <input type="text" placeholder="Как к вам обращаться">
+      </div>
+      <div class="form-group">
+        <label>Контакт</label>
+        <input type="text" placeholder="Telegram / e-mail / +7 ___">
+      </div>
+      <div class="form-group">
+        <label>Тематика сайта</label>
+        <select>
+          <option value="">Выберите направление</option>
+          <option>Женская одежда</option>
+          <option>Мужская мода</option>
+          <option>Детский гардероб</option>
+          <option>Аксессуары и украшения</option>
+          <option>Мультибрендовый магазин</option>
+          <option>Другое</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Сколько статей нужно?</label>
+        <select>
+          <option value="">Примерный объём</option>
+          <option>1–3 статьи (тест)</option>
+          <option>4–10 статей</option>
+          <option>Постоянное сотрудничество</option>
+          <option>Пока не знаю</option>
+        </select>
+      </div>
+      <div class="form-group full">
+        <label>Задача / комментарий</label>
+        <textarea placeholder="Опишите, что нужно сделать — ТЗ, ключи, примеры, пожелания. Или просто «хочу поговорить» 🙂"></textarea>
+      </div>
+      <div class="form-group full">
+        <button type="button" class="btn btn-primary" style="width:100%;padding:17px;font-size:16px;border-radius:10px;">Отправить заявку</button>
+        <p class="form-note">Нажимая кнопку, вы соглашаетесь с обработкой персональных данных. Спам не рассылаем.</p>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p><strong>studio Алёны</strong> · SEO-тексты для fashion-брендов</p>
+  <p style="margin-top:6px">+7 ___ · alenaprasol@tutamail.com</p>
+  <p style="margin-top:10px;font-size:11px;opacity:0.4">Демо-набросок · создан как черновик под задачу клиента · не публичная версия</p>
+</footer>
+
+<div style="position:fixed;inset:0;z-index:99998;pointer-events:none;opacity:.10;background-image:url(&quot;data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='420' height='300'><text x='0' y='150' transform='rotate(-28 210 150)' font-family='sans-serif' font-size='22' font-weight='700' fill='%23808080' fill-opacity='0.5'>%D0%94%D0%95%D0%9C%D0%9E%20%C2%B7%20%D0%90%D0%9B%D0%81%D0%9D%D0%90%20%D0%9F%D0%A0%D0%90%D0%A1%D0%9E%D0%9B%D0%9E%D0%92%D0%90%20%C2%B7%20%D0%9E%D0%91%D0%A0%D0%90%D0%97%D0%95%D0%A6</text></svg>&quot;);background-repeat:repeat"></div><div style="position:fixed;left:0;right:0;bottom:0;z-index:99999;pointer-events:none;text-align:center;font:600 12px/1.4 sans-serif;color:#fff;background:rgba(20,24,33,.88);padding:7px 12px">Демо-набросок для оценки · © Алёна Прасолова · не для коммерческого использования · рабочая версия и чистовой дизайн — после старта работы</div></body>
+</html>
