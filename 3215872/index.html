@@ -1,0 +1,845 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Аудит сайта и воронки продаж</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --dark: #0f1117;
+    --mid: #1e2130;
+    --accent: #6c63ff;
+    --accent2: #a78bfa;
+    --light: #f4f3ff;
+    --muted: #8b8fa8;
+    --white: #ffffff;
+    --radius: 16px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--dark);
+    color: var(--white);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* DEMO BAR */
+  .demo-bar {
+    background: linear-gradient(90deg, #2d1b69, #3d2b8a);
+    text-align: center;
+    padding: 8px 16px;
+    font-size: 12px;
+    color: var(--accent2);
+    letter-spacing: 0.08em;
+    border-bottom: 1px solid rgba(108,99,255,0.3);
+  }
+
+  /* NAV */
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    position: sticky;
+    top: 0;
+    background: rgba(15,17,23,0.92);
+    backdrop-filter: blur(10px);
+    z-index: 100;
+  }
+
+  .logo {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--white);
+  }
+  .logo span { color: var(--accent); }
+
+  nav a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.2s;
+  }
+  nav a:hover { color: var(--white); }
+
+  .nav-links { display: flex; gap: 32px; }
+
+  .btn-nav {
+    background: var(--accent);
+    color: var(--white) !important;
+    padding: 10px 22px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+  }
+  .btn-nav:hover { background: #574fd6 !important; }
+
+  /* HERO */
+  .hero {
+    padding: 100px 40px 80px;
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    background: rgba(108,99,255,0.15);
+    border: 1px solid rgba(108,99,255,0.4);
+    color: var(--accent2);
+    padding: 6px 18px;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 28px;
+  }
+
+  .hero h1 {
+    font-size: clamp(32px, 5vw, 58px);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    background: linear-gradient(135deg, #6c63ff, #a78bfa, #c084fc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero p {
+    font-size: 18px;
+    color: var(--muted);
+    max-width: 600px;
+    margin: 0 auto 40px;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, #6c63ff, #8b5cf6);
+    color: var(--white);
+    padding: 16px 36px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 8px 32px rgba(108,99,255,0.4);
+    display: inline-block;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(108,99,255,0.5); }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--white);
+    padding: 16px 36px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    border: 1px solid rgba(255,255,255,0.2);
+    text-decoration: none;
+    cursor: pointer;
+    transition: border-color 0.2s;
+    display: inline-block;
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent2); }
+
+  /* STATS */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: rgba(255,255,255,0.06);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    margin: 0;
+  }
+
+  .stat {
+    background: var(--dark);
+    padding: 36px 24px;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-size: 40px;
+    font-weight: 800;
+    color: var(--accent2);
+    display: block;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .stat-label { font-size: 13px; color: var(--muted); }
+
+  /* SECTION */
+  section { padding: 80px 40px; }
+
+  .section-inner { max-width: 1080px; margin: 0 auto; }
+
+  .section-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+
+  .section-title {
+    font-size: clamp(26px, 3.5vw, 42px);
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 16px;
+    letter-spacing: -0.01em;
+  }
+
+  .section-sub {
+    font-size: 16px;
+    color: var(--muted);
+    max-width: 580px;
+    margin-bottom: 56px;
+  }
+
+  /* BENEFITS */
+  .benefits-bg { background: var(--mid); }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+  }
+
+  .card {
+    background: var(--dark);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: var(--radius);
+    padding: 32px 28px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .card:hover { border-color: rgba(108,99,255,0.5); transform: translateY(-4px); }
+
+  .card-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    background: rgba(108,99,255,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  .card h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  .card p { font-size: 14px; color: var(--muted); line-height: 1.65; }
+
+  /* PROCESS */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0;
+    position: relative;
+  }
+
+  .step {
+    padding: 32px 24px;
+    position: relative;
+  }
+
+  .step-num {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #6c63ff, #8b5cf6);
+    color: var(--white);
+    font-weight: 800;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+
+  .step h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+  .step p { font-size: 14px; color: var(--muted); }
+
+  .steps-line {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    height: 1px;
+    opacity: 0.3;
+    margin-bottom: 0;
+  }
+
+  /* WHAT'S INSIDE */
+  .audit-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .audit-item {
+    background: var(--mid);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: var(--radius);
+    padding: 24px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .audit-check {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    border-radius: 8px;
+    background: rgba(108,99,255,0.2);
+    color: var(--accent2);
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .audit-item h4 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+  .audit-item p { font-size: 13px; color: var(--muted); }
+
+  /* REVIEW */
+  .review-bg { background: var(--mid); }
+
+  .review-card {
+    background: var(--dark);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 20px;
+    padding: 48px;
+    max-width: 720px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+  }
+
+  .review-quote {
+    font-size: 64px;
+    color: var(--accent);
+    opacity: 0.3;
+    line-height: 0.6;
+    margin-bottom: 24px;
+    display: block;
+  }
+
+  .review-text {
+    font-size: 18px;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.85);
+    margin-bottom: 32px;
+    font-style: italic;
+  }
+
+  .review-author {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+  }
+
+  .review-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #6c63ff, #c084fc);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+  }
+
+  .review-name { font-weight: 700; font-size: 15px; }
+  .review-pos { font-size: 13px; color: var(--muted); }
+
+  .stars { color: #f59e0b; font-size: 18px; margin-bottom: 4px; }
+
+  /* PRICING */
+  .price-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .price-card {
+    background: var(--mid);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: var(--radius);
+    padding: 36px 28px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .price-card.featured {
+    border-color: var(--accent);
+    background: linear-gradient(160deg, rgba(108,99,255,0.15), var(--mid));
+  }
+
+  .price-badge {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: var(--accent);
+    color: var(--white);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 50px;
+    letter-spacing: 0.05em;
+  }
+
+  .price-name { font-size: 14px; font-weight: 700; color: var(--accent2); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.1em; }
+  .price-val { font-size: 38px; font-weight: 800; margin-bottom: 4px; }
+  .price-val span { font-size: 18px; font-weight: 400; color: var(--muted); }
+  .price-desc { font-size: 13px; color: var(--muted); margin-bottom: 24px; }
+
+  .price-list { list-style: none; margin-bottom: 28px; }
+  .price-list li {
+    font-size: 14px;
+    color: rgba(255,255,255,0.75);
+    padding: 7px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    padding-left: 22px;
+    position: relative;
+  }
+  .price-list li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .btn-price {
+    display: block;
+    text-align: center;
+    padding: 14px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 14px;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    width: 100%;
+    transition: 0.2s;
+  }
+
+  .price-card.featured .btn-price {
+    background: linear-gradient(135deg, #6c63ff, #8b5cf6);
+    color: var(--white);
+    box-shadow: 0 4px 20px rgba(108,99,255,0.4);
+  }
+  .price-card:not(.featured) .btn-price {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: var(--white);
+  }
+  .btn-price:hover { opacity: 0.85; transform: translateY(-1px); }
+
+  /* FORM */
+  .form-bg { background: var(--mid); }
+
+  .form-wrap {
+    max-width: 620px;
+    margin: 0 auto;
+    background: var(--dark);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 24px;
+    padding: 52px 48px;
+  }
+
+  .form-title { font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+  .form-sub { font-size: 15px; color: var(--muted); margin-bottom: 36px; }
+
+  .form-group { margin-bottom: 18px; }
+  label { display: block; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.6); margin-bottom: 8px; }
+
+  input, textarea, select {
+    width: 100%;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    color: var(--white);
+    font-size: 15px;
+    padding: 14px 16px;
+    outline: none;
+    transition: border-color 0.2s;
+    font-family: inherit;
+  }
+  input:focus, textarea:focus, select:focus { border-color: var(--accent); }
+  input::placeholder, textarea::placeholder { color: rgba(255,255,255,0.25); }
+  textarea { resize: vertical; min-height: 110px; }
+  select option { background: var(--dark); }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+  .btn-submit {
+    width: 100%;
+    background: linear-gradient(135deg, #6c63ff, #8b5cf6);
+    color: var(--white);
+    border: none;
+    border-radius: 12px;
+    padding: 18px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 8px;
+    box-shadow: 0 8px 32px rgba(108,99,255,0.4);
+    transition: 0.2s;
+  }
+  .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(108,99,255,0.5); }
+
+  .form-note { font-size: 12px; color: var(--muted); text-align: center; margin-top: 14px; }
+
+  /* FOOTER */
+  footer {
+    padding: 48px 40px;
+    border-top: 1px solid rgba(255,255,255,0.07);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .footer-logo { font-size: 18px; font-weight: 700; }
+  .footer-logo span { color: var(--accent); }
+
+  .footer-links { display: flex; gap: 28px; }
+  .footer-links a { color: var(--muted); font-size: 14px; text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--white); }
+
+  .footer-copy { font-size: 13px; color: var(--muted); }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 16px 20px; }
+    .nav-links { display: none; }
+    .hero { padding: 60px 20px 50px; }
+    section { padding: 56px 20px; }
+    .stats { grid-template-columns: 1fr; }
+    .audit-grid { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .form-wrap { padding: 32px 24px; }
+    footer { flex-direction: column; text-align: center; }
+    .footer-links { flex-wrap: wrap; justify-content: center; }
+    .steps { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- DEMO BAR -->
+<div class="demo-bar">Демо-набросок · studio Алёны · не финал</div>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">маркет<span>про</span></div>
+  <div class="nav-links">
+    <a href="#benefits">Что входит</a>
+    <a href="#process">Как работаем</a>
+    <a href="#pricing">Стоимость</a>
+    <a href="#form" class="btn-nav">Оставить заявку</a>
+  </div>
+  <a href="#form" class="btn-nav" style="display:none;display:block;">Заявка</a>
+</nav>
+
+<!-- HERO -->
+<section style="padding-top: 0; padding-bottom: 0;">
+  <div class="hero">
+    <div class="hero-badge">⚡ Маркетинговый аудит сайта</div>
+    <h1>Ваш сайт теряет клиентов.<br><em>Мы найдём где и исправим.</em></h1>
+    <p>Разберём структуру, логику воронки и дизайн — получите чёткий план, почему посетители уходят без покупки, и как это исправить.</p>
+    <div class="hero-btns">
+      <a href="#form" class="btn-primary">Получить аудит сайта</a>
+      <a href="#benefits" class="btn-outline">Что входит в аудит?</a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat">
+    <span class="stat-num">87%</span>
+    <div class="stat-label">сайтов теряют клиентов из-за слабой воронки</div>
+  </div>
+  <div class="stat">
+    <span class="stat-num">×2–4</span>
+    <div class="stat-label">рост конверсии после структурного аудита</div>
+  </div>
+  <div class="stat">
+    <span class="stat-num">7 дней</span>
+    <div class="stat-label">и вы получаете готовый план изменений</div>
+  </div>
+</div>
+
+<!-- BENEFITS -->
+<section class="benefits-bg" id="benefits">
+  <div class="section-inner">
+    <div class="section-label">Что вы получаете</div>
+    <h2 class="section-title">Не просто отчёт —<br>конкретные решения</h2>
+    <p class="section-sub">Каждый пункт аудита сопровождается рекомендацией: что именно поменять и почему.</p>
+
+    <div class="cards">
+      <div class="card">
+        <div class="card-icon">🔍</div>
+        <h3>Аудит воронки продаж</h3>
+        <p>Проходим путь клиента от первого экрана до заявки. Находим дыры, где люди теряются и уходят без действия.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🗂️</div>
+        <h3>Логика и структура</h3>
+        <p>Проверяем последовательность блоков: правильно ли выстроен оффер, доверие, возражения и призывы к действию.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🎨</div>
+        <h3>Разбор дизайна</h3>
+        <p>Оцениваем читаемость, визуальные акценты и то, помогает ли оформление продавать или мешает ему.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">📋</div>
+        <h3>Готовый план правок</h3>
+        <p>Выдаём приоритизированный список изменений — что сделать сначала, чтобы получить результат быстрее.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT'S INSIDE AUDIT -->
+<section id="inside">
+  <div class="section-inner">
+    <div class="section-label">Состав аудита</div>
+    <h2 class="section-title">Что именно проверяем</h2>
+    <p class="section-sub">Опытный маркетолог смотрит на сайт глазами вашего клиента — и глазами бизнеса.</p>
+
+    <div class="audit-grid">
+      <div class="audit-item">
+        <div class="audit-check">✦</div>
+        <div>
+          <h4>Первый экран и оффер</h4>
+          <p>Понятно ли за 5 секунд, что вы продаёте и почему стоит остаться.</p>
+        </div>
+      </div>
+      <div class="audit-item">
+        <div class="audit-check">✦</div>
+        <div>
+          <h4>Призывы к действию</h4>
+          <p>Есть ли CTA, правильно ли они расставлены, цепляют ли формулировки.</p>
+        </div>
+      </div>
+      <div class="audit-item">
+        <div class="audit-check">✦</div>
+        <div>
+          <h4>Блоки доверия</h4>
+          <p>Отзывы, кейсы, цифры, гарантии — насколько они убеждают и верно ли стоят.</p>
+        </div>
+      </div>
+      <div class="audit-item">
+        <div class="audit-check">✦</div>
+        <div>
+          <h4>Работа с возражениями</h4>
+          <p>Закрыты ли типовые сомнения клиента до того, как он задал их вслух.</p>
+        </div>
+      </div>
+      <div class="audit-item">
+        <div class="audit-check">✦</div>
+        <div>
+          <h4>Мобильная версия</h4>
+          <p>Удобно ли на телефоне, не теряются ли важные элементы на маленьком экране.</p>
+        </div>
+      </div>
+      <div class="audit-item">
+        <div class="audit-check">✦</div>
+        <div>
+          <h4>Тексты и заголовки</h4>
+          <p>Говорим ли на языке клиента или сухим языком компании — и как это влияет на продажи.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section style="background: var(--mid);" id="process">
+  <div class="section-inner">
+    <div class="section-label">Как работаем</div>
+    <h2 class="section-title">4 шага — и у вас план действий</h2>
+    <p class="section-sub">Без воды, без затяжных согласований. Чётко и по делу.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Заявка</h3>
+        <p>Оставляете ссылку на сайт и коротко рассказываете о вашем клиенте и продукте.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>Глубокий анализ</h3>
+        <p>Изучаем сайт, нишу, конкурентов. Проходим воронку полностью — как реальный покупатель.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>Аудит-документ</h3>
+        <p>Формируем структурированный отчёт с оценками, скриншотами и рекомендациями.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <h3>Разбор и вопросы</h3>
+        <p>Созваниваемся или отвечаем в мессенджере: объясняем каждый пункт, отвечаем на вопросы.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEW -->
+<section class="review-bg">
+  <div class="section-inner">
+    <div class="section-label">Отзыв</div>
+    <div class="review-card">
+      <span class="review-quote">"</span>
+      <div class="stars">★★★★★</div>
+      <p class="review-text">Сайт у нас был давно, реклама шла, но заявок было мало. После аудита выяснилось: первый экран вообще не объяснял, что мы делаем, а кнопка заявки стояла не там. Через две недели после правок конверсия выросла в три раза. Рекомендую — это реально работающий взгляд со стороны.</p>
+      <div class="review-author">
+        <div class="review-avatar">👤</div>
+        <div>
+          <div class="review-name">Имя Фамилия</div>
+          <div class="review-pos">Владелец бизнеса · заглушка-отзыв</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="section-inner">
+    <div class="section-label">Стоимость</div>
+    <h2 class="section-title" style="text-align:center;">Выберите формат аудита</h2>
+    <p class="section-sub" style="text-align:center; margin-left:auto; margin-right:auto; margin-bottom:48px;">Подберём под ваш сайт и задачи</p>
+
+    <div class="price-cards">
+      <div class="price-card">
+        <div class="price-name">Базовый</div>
+        <div class="price-val">от ___ <span>₽</span></div>
+        <div class="price-desc">Экспресс-оценка ключевых проблем</div>
+        <ul class="price-list">
+          <li>Аудит главной страницы</li>
+          <li>Разбор оффера и CTA</li>
+          <li>Список из 10–15 правок</li>
+          <li>Срок — 3 рабочих дня</li>
+        </ul>
+        <button class="btn-price">Выбрать</button>
+      </div>
+
+      <div class="price-card featured">
+        <div class="price-badge">Популярный</div>
+        <div class="price-name">Полный</div>
+        <div class="price-val">от ___ <span>₽</span></div>
+        <div class="price-desc">Комплексный разбор всего сайта</div>
+        <ul class="price-list">
+          <li>Весь сайт + воронка целиком</li>
+          <li>Анализ конкурентов (3 шт.)</li>
+          <li>Дизайн и мобильная версия</li>
+          <li>Расставленные приоритеты правок</li>
+          <li>Созвон-разбор 60 минут</li>
+          <li>Срок — 7 рабочих дней</li>
+        </ul>
+        <button class="btn-price">Выбрать</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORM -->
+<section class="form-bg" id="form">
+  <div class="section-inner">
+    <div class="form-wrap">
+      <h2 class="form-title">Оставьте заявку</h2>
+      <p class="form-sub">Заполните форму — свяжемся в течение 2 часов и уточним детали.</p>
+
+      <form onsubmit="return false;">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Ваше имя</label>
+            <input type="text" placeholder="Иван">
+          </div>
+          <div class="form-group">
+            <label>Телефон или Telegram</label>
+            <input type="text" placeholder="+7 ___">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Ссылка на сайт</label>
+          <input type="url" placeholder="https://your-site.ru">
+        </div>
+
+        <div class="form-group">
+          <label>Какой результат хотите получить?</label>
+          <select>
+            <option value="">Выберите цель...</option>
+            <option>Больше заявок с сайта</option>
+            <option>Понять, почему люди уходят</option>
+            <option>Подготовка к редизайну</option>
+            <option>Запуск новой рекламы</option>
+            <option>Другое</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Коротко о вашем продукте или услуге</label>
+          <textarea placeholder="Что продаёте, кто ваш клиент, какие боли решаете..."></textarea>
+        </div>
+
+        <button type="submit" class="btn-submit">Отправить заявку на аудит →</button>
+        <p class="form-note">Нажимая кнопку, вы соглашаетесь на обработку персональных данных. Без спама — только по делу.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">маркет<span>про</span></div>
+  <div class="footer-links">
+    <a href="#">Telegram</a>
+    <a href="#">WhatsApp</a>
+    <a href="#">+7 ___</a>
+    <a href="#">mail@___</a>
+  </div>
+  <div class="footer-copy">© 2026 · Маркетинговый аудит сайтов</div>
+</footer>
+
+<div style="position:fixed;inset:0;z-index:99998;pointer-events:none;opacity:.10;background-image:url(&quot;data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='420' height='300'><text x='0' y='150' transform='rotate(-28 210 150)' font-family='sans-serif' font-size='22' font-weight='700' fill='%23808080' fill-opacity='0.5'>%D0%94%D0%95%D0%9C%D0%9E%20%C2%B7%20%D0%90%D0%9B%D0%81%D0%9D%D0%90%20%D0%9F%D0%A0%D0%90%D0%A1%D0%9E%D0%9B%D0%9E%D0%92%D0%90%20%C2%B7%20%D0%9E%D0%91%D0%A0%D0%90%D0%97%D0%95%D0%A6</text></svg>&quot;);background-repeat:repeat"></div><div style="position:fixed;left:0;right:0;bottom:0;z-index:99999;pointer-events:none;text-align:center;font:600 12px/1.4 sans-serif;color:#fff;background:rgba(20,24,33,.88);padding:7px 12px">Демо-набросок для оценки · © Алёна Прасолова · не для коммерческого использования · рабочая версия и чистовой дизайн — после старта работы</div></body>
+</html>
