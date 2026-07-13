@@ -3,575 +3,638 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI-подбор промышленного оборудования</title>
+<title>EquipAI — AI-подбор промышленного оборудования</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --navy: #0f1c2e;
-    --blue: #1a3a5c;
-    --accent: #f59e0b;
-    --light: #f8fafc;
-    --gray: #64748b;
-    --border: #e2e8f0;
+    --dark: #0f1623;
+    --mid: #1c2840;
+    --light: #f4f7ff;
+    --accent: #3b82f6;
+    --accent2: #06b6d4;
+    --text: #e2e8f0;
+    --muted: #8899aa;
     --white: #ffffff;
-    --text: #1e293b;
+    --radius: 14px;
   }
 
   html { scroll-behavior: smooth; }
 
   body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
-    background: var(--white);
+    background: var(--dark);
     color: var(--text);
-    line-height: 1.6;
+    line-height: 1.65;
     font-size: 16px;
   }
 
-  /* DEMO BADGE */
-  .demo-bar {
-    background: linear-gradient(90deg, #1e293b, #334155);
-    color: #94a3b8;
+  /* DEMO BANNER */
+  .demo-banner {
+    background: linear-gradient(90deg, #7c3aed, #3b82f6);
     text-align: center;
     padding: 8px 16px;
     font-size: 12px;
-    letter-spacing: 0.05em;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: #fff;
+    text-transform: uppercase;
   }
-  .demo-bar span { color: var(--accent); font-weight: 600; }
 
   /* NAV */
   nav {
-    background: var(--navy);
-    padding: 0 5vw;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 64px;
+    padding: 20px 6%;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
     position: sticky;
     top: 0;
+    background: rgba(15,22,35,0.92);
+    backdrop-filter: blur(10px);
     z-index: 100;
   }
+
   .logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    text-decoration: none;
+    font-size: 22px;
+    font-weight: 800;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
-  .logo-icon {
-    width: 36px;
-    height: 36px;
-    background: linear-gradient(135deg, var(--accent), #f97316);
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-  }
-  .logo-text {
-    color: var(--white);
-    font-size: 18px;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-  }
-  .logo-text em {
-    color: var(--accent);
-    font-style: normal;
-  }
-  nav a.nav-link {
-    color: #94a3b8;
+
+  .logo span { font-weight: 300; }
+
+  nav a {
+    color: var(--muted);
     text-decoration: none;
     font-size: 14px;
+    font-weight: 500;
     transition: color .2s;
   }
-  nav a.nav-link:hover { color: var(--white); }
-  .nav-links { display: flex; gap: 28px; }
-  .nav-cta {
-    background: var(--accent);
-    color: var(--navy) !important;
+  nav a:hover { color: var(--white); }
+
+  .nav-links { display: flex; gap: 28px; align-items: center; }
+
+  .btn {
+    display: inline-block;
+    padding: 12px 28px;
+    border-radius: 50px;
     font-weight: 700;
-    padding: 8px 20px;
-    border-radius: 8px;
+    font-size: 15px;
+    cursor: pointer;
     text-decoration: none;
-    font-size: 14px;
-    transition: opacity .2s;
+    border: none;
+    transition: transform .15s, box-shadow .15s;
   }
-  .nav-cta:hover { opacity: .9; }
+  .btn:hover { transform: translateY(-2px); }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #fff;
+    box-shadow: 0 8px 32px rgba(59,130,246,0.35);
+  }
+  .btn-primary:hover { box-shadow: 0 12px 40px rgba(59,130,246,0.5); }
+
+  .btn-ghost {
+    background: transparent;
+    border: 1.5px solid rgba(255,255,255,0.15);
+    color: var(--text);
+    padding: 11px 24px;
+    font-size: 14px;
+  }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--white); }
 
   /* HERO */
   .hero {
-    background: linear-gradient(135deg, var(--navy) 0%, #0d2845 60%, #162d4a 100%);
-    padding: 90px 5vw 80px;
-    position: relative;
-    overflow: hidden;
-  }
-  .hero::before {
-    content: '';
-    position: absolute;
-    top: -100px; right: -100px;
-    width: 500px; height: 500px;
-    background: radial-gradient(circle, rgba(245,158,11,.12) 0%, transparent 70%);
-    pointer-events: none;
-  }
-  .hero::after {
-    content: '';
-    position: absolute;
-    bottom: -80px; left: 20%;
-    width: 400px; height: 400px;
-    background: radial-gradient(circle, rgba(26,58,92,.6) 0%, transparent 70%);
-    pointer-events: none;
-  }
-  .hero-inner {
+    padding: 100px 6% 80px;
     max-width: 1100px;
     margin: 0 auto;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 60px;
     align-items: center;
-    position: relative;
-    z-index: 1;
   }
+
   .hero-badge {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: rgba(245,158,11,.15);
-    border: 1px solid rgba(245,158,11,.3);
-    color: var(--accent);
-    padding: 6px 14px;
-    border-radius: 20px;
+    background: rgba(59,130,246,0.12);
+    border: 1px solid rgba(59,130,246,0.3);
+    border-radius: 50px;
+    padding: 6px 16px;
     font-size: 13px;
+    color: var(--accent2);
     font-weight: 600;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
     letter-spacing: 0.03em;
   }
-  .hero h1 {
-    font-size: clamp(28px, 4vw, 48px);
-    font-weight: 800;
-    color: var(--white);
+
+  h1 {
+    font-size: clamp(32px, 4.5vw, 54px);
+    font-weight: 900;
     line-height: 1.15;
-    letter-spacing: -0.03em;
+    color: var(--white);
     margin-bottom: 20px;
   }
-  .hero h1 span { color: var(--accent); }
+
+  h1 em {
+    font-style: normal;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
   .hero-sub {
-    color: #94a3b8;
-    font-size: 17px;
-    line-height: 1.7;
+    font-size: 18px;
+    color: var(--muted);
     margin-bottom: 36px;
-    max-width: 480px;
+    max-width: 460px;
   }
-  .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
-  .btn-primary {
-    background: var(--accent);
-    color: var(--navy);
-    font-weight: 800;
-    padding: 15px 32px;
-    border-radius: 10px;
-    text-decoration: none;
-    font-size: 16px;
-    transition: transform .15s, box-shadow .15s;
-    display: inline-block;
-  }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(245,158,11,.35); }
-  .btn-ghost {
-    border: 1.5px solid rgba(255,255,255,.2);
-    color: var(--white);
-    padding: 14px 28px;
-    border-radius: 10px;
-    text-decoration: none;
-    font-size: 15px;
-    transition: background .2s;
-    display: inline-block;
-  }
-  .btn-ghost:hover { background: rgba(255,255,255,.08); }
+
+  .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
 
   .hero-stats {
     display: flex;
     gap: 32px;
-    margin-top: 44px;
+    margin-top: 48px;
+    padding-top: 32px;
+    border-top: 1px solid rgba(255,255,255,0.07);
   }
-  .stat-item { text-align: center; }
+
   .stat-num {
-    font-size: 28px;
-    font-weight: 800;
-    color: var(--accent);
-    line-height: 1;
+    font-size: 30px;
+    font-weight: 900;
+    color: var(--white);
   }
-  .stat-label { font-size: 12px; color: #64748b; margin-top: 4px; letter-spacing: 0.04em; }
+
+  .stat-label {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
 
   /* HERO VISUAL */
   .hero-visual {
     position: relative;
   }
+
   .ai-card {
-    background: rgba(255,255,255,.06);
-    border: 1px solid rgba(255,255,255,.1);
-    border-radius: 20px;
+    background: var(--mid);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: var(--radius);
     padding: 28px;
-    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
   }
-  .ai-card-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 20px;
+
+  .ai-card::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(59,130,246,0.18) 0%, transparent 70%);
+    border-radius: 50%;
   }
-  .ai-avatar {
-    width: 44px; height: 44px;
-    background: linear-gradient(135deg, var(--accent), #f97316);
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 22px;
+
+  .card-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-bottom: 12px;
   }
-  .ai-card-header-text .title { color: var(--white); font-weight: 600; font-size: 15px; }
-  .ai-card-header-text .sub { color: #64748b; font-size: 12px; margin-top: 2px; }
-  .ai-msg {
-    background: rgba(245,158,11,.12);
-    border-left: 3px solid var(--accent);
+
+  .card-input-mock {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
     padding: 14px 16px;
-    border-radius: 0 10px 10px 0;
-    color: #cbd5e1;
     font-size: 14px;
-    line-height: 1.6;
+    color: var(--text);
     margin-bottom: 16px;
+    min-height: 72px;
+    line-height: 1.5;
   }
+
+  .card-input-mock span { color: var(--muted); }
+
+  .card-file-drop {
+    border: 2px dashed rgba(59,130,246,0.3);
+    border-radius: 8px;
+    padding: 18px;
+    text-align: center;
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 16px;
+    cursor: pointer;
+  }
+
+  .card-file-drop strong { color: var(--accent); }
+
   .ai-result {
-    background: rgba(255,255,255,.04);
-    border: 1px solid rgba(255,255,255,.08);
-    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(59,130,246,0.1), rgba(6,182,212,0.08));
+    border: 1px solid rgba(59,130,246,0.2);
+    border-radius: 10px;
     padding: 16px;
   }
-  .ai-result-row {
+
+  .ai-result-head {
+    font-size: 12px;
+    color: var(--accent2);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 10px;
+  }
+
+  .result-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 8px 0;
-    border-bottom: 1px solid rgba(255,255,255,.06);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
     font-size: 13px;
   }
-  .ai-result-row:last-child { border-bottom: none; }
-  .ai-result-row .label { color: #64748b; }
-  .ai-result-row .value { color: var(--white); font-weight: 500; }
-  .ai-result-row .value.match {
-    color: #4ade80;
+
+  .result-item:last-child { border-bottom: none; }
+
+  .result-name { color: var(--text); }
+
+  .result-match {
+    background: rgba(16,185,129,0.15);
+    color: #34d399;
     font-weight: 700;
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 50px;
   }
 
   /* SECTION COMMON */
-  section { padding: 80px 5vw; }
-  .section-tag {
-    display: inline-block;
-    background: rgba(245,158,11,.12);
-    color: var(--accent);
-    padding: 5px 14px;
-    border-radius: 20px;
+  section { padding: 80px 6%; }
+
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+
+  .section-label {
     font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
     text-transform: uppercase;
-    margin-bottom: 14px;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    font-weight: 700;
+    margin-bottom: 12px;
   }
-  .section-title {
-    font-size: clamp(24px, 3vw, 38px);
+
+  h2 {
+    font-size: clamp(26px, 3.5vw, 42px);
     font-weight: 800;
-    letter-spacing: -0.025em;
+    color: var(--white);
     line-height: 1.2;
-    margin-bottom: 14px;
+    margin-bottom: 16px;
   }
+
   .section-sub {
-    color: var(--gray);
     font-size: 17px;
+    color: var(--muted);
     max-width: 560px;
-    line-height: 1.7;
+    margin-bottom: 56px;
   }
-  .section-head { max-width: 1100px; margin: 0 auto 52px; }
-  .section-head.center { text-align: center; }
-  .section-head.center .section-sub { margin: 0 auto; }
 
   /* BENEFITS */
-  .benefits { background: var(--light); }
+  .benefits { background: var(--mid); }
+
   .benefits-grid {
-    max-width: 1100px;
-    margin: 0 auto;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 24px;
+    margin-top: 0;
   }
+
   .benefit-card {
-    background: var(--white);
-    border: 1px solid var(--border);
-    border-radius: 16px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: var(--radius);
     padding: 32px 28px;
-    transition: box-shadow .2s, transform .2s;
+    transition: border-color .2s, transform .2s;
   }
-  .benefit-card:hover { box-shadow: 0 12px 32px rgba(0,0,0,.08); transform: translateY(-3px); }
+
+  .benefit-card:hover {
+    border-color: rgba(59,130,246,0.4);
+    transform: translateY(-4px);
+  }
+
   .benefit-icon {
-    width: 52px; height: 52px;
-    border-radius: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 26px;
-    margin-bottom: 20px;
+    font-size: 36px;
+    margin-bottom: 18px;
+    display: block;
   }
-  .icon-blue { background: linear-gradient(135deg, #dbeafe, #bfdbfe); }
-  .icon-amber { background: linear-gradient(135deg, #fef3c7, #fde68a); }
-  .icon-green { background: linear-gradient(135deg, #dcfce7, #bbf7d0); }
-  .icon-purple { background: linear-gradient(135deg, #ede9fe, #ddd6fe); }
-  .benefit-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 10px; }
-  .benefit-card p { color: var(--gray); font-size: 15px; line-height: 1.65; }
+
+  .benefit-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 10px;
+  }
+
+  .benefit-text {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
 
   /* HOW IT WORKS */
-  .how-inner { max-width: 1100px; margin: 0 auto; }
-  .steps {
+  .steps-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: 0;
     position: relative;
-    margin-top: 48px;
   }
-  .steps::before {
+
+  .steps-grid::before {
     content: '';
     position: absolute;
-    top: 32px;
+    top: 38px;
     left: 10%;
     right: 10%;
     height: 2px;
-    background: linear-gradient(90deg, var(--accent), #f97316, var(--accent));
-    z-index: 0;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    opacity: 0.3;
   }
+
   .step {
+    padding: 32px 28px;
     text-align: center;
-    padding: 0 16px;
     position: relative;
-    z-index: 1;
   }
+
   .step-num {
-    width: 64px; height: 64px;
-    background: linear-gradient(135deg, var(--accent), #f97316);
+    width: 56px;
+    height: 56px;
     border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 900;
-    color: var(--navy);
+    color: #fff;
     margin: 0 auto 20px;
-    box-shadow: 0 4px 16px rgba(245,158,11,.35);
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 0 0 6px var(--dark), 0 0 30px rgba(59,130,246,0.3);
   }
-  .step h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
-  .step p { color: var(--gray); font-size: 14px; line-height: 1.6; }
 
-  /* FEATURES / SERVICES */
-  .services { background: var(--navy); }
-  .services .section-title { color: var(--white); }
-  .services .section-sub { color: #94a3b8; }
-  .services-grid {
-    max-width: 1100px;
-    margin: 0 auto;
+  .step-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+
+  .step-text {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* FEATURES TABLE */
+  .features { background: var(--mid); }
+
+  .features-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 20px;
+    gap: 32px;
+    align-items: start;
   }
-  .service-item {
-    background: rgba(255,255,255,.05);
-    border: 1px solid rgba(255,255,255,.08);
-    border-radius: 14px;
-    padding: 28px;
+
+  .feature-list {
+    list-style: none;
     display: flex;
+    flex-direction: column;
     gap: 18px;
-    transition: background .2s;
   }
-  .service-item:hover { background: rgba(255,255,255,.09); }
-  .service-icon { font-size: 30px; flex-shrink: 0; margin-top: 2px; }
-  .service-item h3 { color: var(--white); font-size: 16px; font-weight: 700; margin-bottom: 6px; }
-  .service-item p { color: #64748b; font-size: 14px; line-height: 1.6; }
+
+  .feature-list li {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .feature-check {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: rgba(59,130,246,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .feature-text strong { color: var(--white); display: block; font-size: 15px; }
+  .feature-text span { font-size: 13px; color: var(--muted); }
+
+  .pricing-block {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: var(--radius);
+    padding: 32px;
+    text-align: center;
+  }
+
+  .price-tag {
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  .price-value {
+    font-size: 48px;
+    font-weight: 900;
+    color: var(--white);
+    margin-bottom: 6px;
+  }
+
+  .price-sub {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 28px;
+  }
+
+  .price-features {
+    list-style: none;
+    text-align: left;
+    margin-bottom: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .price-features li {
+    font-size: 14px;
+    color: var(--text);
+    display: flex;
+    gap: 10px;
+  }
+
+  .price-features li::before { content: '✓'; color: var(--accent2); font-weight: 700; }
 
   /* TESTIMONIAL */
-  .testimonial { background: linear-gradient(135deg, #fefce8, #fffbeb); }
-  .testimonial-inner {
-    max-width: 800px;
+  .testimonial { background: var(--dark); }
+
+  .testi-wrap {
+    max-width: 700px;
     margin: 0 auto;
     text-align: center;
   }
-  .quote-icon { font-size: 48px; line-height: 1; margin-bottom: 24px; opacity: .6; }
-  .testimonial-text {
-    font-size: clamp(18px, 2.2vw, 24px);
-    font-weight: 500;
-    line-height: 1.6;
-    color: var(--text);
+
+  .testi-stars { font-size: 22px; margin-bottom: 20px; }
+
+  .testi-text {
+    font-size: 20px;
     font-style: italic;
-    margin-bottom: 32px;
+    color: var(--text);
+    line-height: 1.6;
+    margin-bottom: 28px;
+    position: relative;
   }
-  .testimonial-author {
+
+  .testi-text::before {
+    content: '\201C';
+    font-size: 80px;
+    color: rgba(59,130,246,0.15);
+    font-family: Georgia, serif;
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    line-height: 1;
+  }
+
+  .testi-author {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 14px;
   }
-  .author-avatar {
-    width: 50px; height: 50px;
+
+  .testi-avatar {
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
-    background: linear-gradient(135deg, var(--navy), var(--blue));
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 22px;
+    font-size: 20px;
   }
-  .author-name { font-weight: 700; font-size: 15px; }
-  .author-role { color: var(--gray); font-size: 13px; }
-  .stars { color: var(--accent); font-size: 18px; letter-spacing: 2px; margin-bottom: 4px; }
 
-  /* PRICING HINT */
-  .pricing {
-    background: var(--light);
-    padding: 64px 5vw;
-  }
-  .pricing-inner {
-    max-width: 700px;
-    margin: 0 auto;
-    background: var(--white);
-    border: 2px solid var(--accent);
-    border-radius: 24px;
-    padding: 44px 48px;
-    text-align: center;
-    position: relative;
-  }
-  .pricing-badge {
-    position: absolute;
-    top: -14px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--accent);
-    color: var(--navy);
+  .testi-name { font-weight: 700; color: var(--white); font-size: 15px; }
+  .testi-role { font-size: 13px; color: var(--muted); }
+
+  .testi-note {
+    display: inline-block;
+    margin-top: 20px;
+    background: rgba(255,200,0,0.08);
+    border: 1px solid rgba(255,200,0,0.2);
+    color: #fbbf24;
     font-size: 12px;
-    font-weight: 800;
-    padding: 5px 18px;
-    border-radius: 20px;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    white-space: nowrap;
+    padding: 4px 14px;
+    border-radius: 50px;
+    font-weight: 600;
   }
-  .pricing-price {
-    font-size: clamp(40px, 6vw, 64px);
-    font-weight: 900;
-    color: var(--navy);
-    letter-spacing: -0.04em;
-    line-height: 1;
-    margin-bottom: 8px;
-  }
-  .pricing-price span { font-size: 0.45em; color: var(--gray); font-weight: 400; }
-  .pricing-desc { color: var(--gray); font-size: 15px; margin-bottom: 28px; line-height: 1.6; }
-  .pricing-features {
-    list-style: none;
-    text-align: left;
-    margin-bottom: 32px;
-  }
-  .pricing-features li {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    padding: 8px 0;
-    font-size: 15px;
-    border-bottom: 1px solid var(--border);
-  }
-  .pricing-features li:last-child { border-bottom: none; }
-  .check { color: #22c55e; font-weight: 700; flex-shrink: 0; }
 
   /* FORM */
-  .form-section { background: var(--navy); padding: 80px 5vw; }
-  .form-inner {
-    max-width: 680px;
+  .form-section { background: var(--mid); }
+
+  .form-wrap {
+    max-width: 640px;
     margin: 0 auto;
-    text-align: center;
   }
-  .form-inner .section-title { color: var(--white); }
-  .form-inner .section-sub { color: #94a3b8; margin: 0 auto 40px; }
-  .form-card {
-    background: rgba(255,255,255,.06);
-    border: 1px solid rgba(255,255,255,.1);
-    border-radius: 20px;
-    padding: 36px;
-    text-align: left;
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
   }
-  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  .form-group { margin-bottom: 18px; }
-  .form-group label {
-    display: block;
-    color: #94a3b8;
+
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  label {
     font-size: 13px;
+    color: var(--muted);
     font-weight: 600;
-    margin-bottom: 7px;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.03em;
   }
-  .form-group input,
-  .form-group textarea,
-  .form-group select {
-    width: 100%;
-    background: rgba(255,255,255,.07);
-    border: 1px solid rgba(255,255,255,.12);
+
+  input, textarea, select {
+    background: rgba(255,255,255,0.04);
+    border: 1.5px solid rgba(255,255,255,0.1);
     border-radius: 10px;
-    padding: 12px 16px;
-    color: var(--white);
+    padding: 14px 16px;
     font-size: 15px;
-    outline: none;
-    transition: border-color .2s;
+    color: var(--text);
     font-family: inherit;
-    -webkit-appearance: none;
-  }
-  .form-group input::placeholder,
-  .form-group textarea::placeholder { color: #475569; }
-  .form-group input:focus,
-  .form-group textarea:focus,
-  .form-group select:focus {
-    border-color: var(--accent);
-    background: rgba(255,255,255,.1);
-  }
-  .form-group select option { background: var(--navy); color: var(--white); }
-  .form-group textarea { resize: vertical; min-height: 110px; }
-  .upload-area {
-    border: 2px dashed rgba(255,255,255,.15);
-    border-radius: 12px;
-    padding: 24px;
-    text-align: center;
-    cursor: pointer;
     transition: border-color .2s;
-    margin-bottom: 18px;
-  }
-  .upload-area:hover { border-color: var(--accent); }
-  .upload-icon { font-size: 28px; margin-bottom: 8px; }
-  .upload-text { color: #64748b; font-size: 14px; }
-  .upload-text strong { color: var(--accent); }
-  .submit-btn {
     width: 100%;
-    background: linear-gradient(135deg, var(--accent), #f97316);
-    color: var(--navy);
-    font-weight: 800;
-    font-size: 17px;
-    padding: 16px;
-    border-radius: 12px;
-    border: none;
-    cursor: pointer;
-    transition: opacity .2s, transform .15s;
-    letter-spacing: 0.02em;
+    outline: none;
   }
-  .submit-btn:hover { opacity: .92; transform: translateY(-1px); }
-  .form-note {
+
+  input:focus, textarea:focus, select:focus {
+    border-color: var(--accent);
+  }
+
+  input::placeholder, textarea::placeholder { color: rgba(255,255,255,0.2); }
+
+  textarea { min-height: 110px; resize: vertical; }
+
+  .form-full { grid-column: 1 / -1; }
+
+  .drop-zone {
+    border: 2px dashed rgba(59,130,246,0.3);
+    border-radius: 10px;
+    padding: 32px;
     text-align: center;
-    color: #475569;
+    cursor: pointer;
+    margin-bottom: 16px;
+    transition: border-color .2s;
+  }
+
+  .drop-zone:hover { border-color: var(--accent); }
+
+  .drop-zone-icon { font-size: 32px; margin-bottom: 10px; }
+
+  .drop-zone-text { font-size: 14px; color: var(--muted); }
+
+  .drop-zone-text strong { color: var(--accent); }
+
+  .form-submit {
+    text-align: center;
+    margin-top: 28px;
+  }
+
+  .privacy-note {
     font-size: 12px;
+    color: var(--muted);
+    text-align: center;
     margin-top: 14px;
   }
 
   /* FOOTER */
   footer {
-    background: #070e17;
-    padding: 40px 5vw;
-    color: #334155;
-    font-size: 14px;
+    background: var(--dark);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 48px 6%;
   }
+
   .footer-inner {
     max-width: 1100px;
     margin: 0 auto;
@@ -579,233 +642,241 @@
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    gap: 16px;
+    gap: 24px;
   }
-  .footer-logo { color: #475569; display: flex; align-items: center; gap: 8px; }
-  .footer-logo .name { color: #64748b; font-weight: 600; }
-  .footer-contacts { text-align: right; }
-  .footer-contacts a {
-    color: var(--accent);
-    text-decoration: none;
-    display: block;
-    margin-bottom: 4px;
-  }
-  .footer-copy { color: #1e293b; font-size: 12px; margin-top: 24px; text-align: center; width: 100%; }
+
+  .footer-logo { font-size: 20px; font-weight: 800; color: var(--white); }
+
+  .footer-contacts { font-size: 14px; color: var(--muted); line-height: 1.8; }
+
+  .footer-contacts a { color: var(--accent); text-decoration: none; }
+
+  .footer-copy { font-size: 12px; color: var(--muted); }
 
   /* RESPONSIVE */
   @media (max-width: 768px) {
+    nav { padding: 16px 4%; }
     .nav-links { display: none; }
-    .hero-inner { grid-template-columns: 1fr; gap: 40px; }
-    .hero-visual { display: none; }
+
+    section { padding: 56px 4%; }
+
+    .hero {
+      grid-template-columns: 1fr;
+      padding: 60px 4% 48px;
+      gap: 40px;
+    }
+
+    .hero-sub { font-size: 16px; }
+
     .hero-stats { gap: 20px; }
-    .steps::before { display: none; }
-    .steps { gap: 32px; }
-    .services-grid { grid-template-columns: 1fr; }
-    .form-row { grid-template-columns: 1fr; }
-    .pricing-inner { padding: 36px 24px; }
+
+    .features-grid { grid-template-columns: 1fr; }
+
+    .form-grid { grid-template-columns: 1fr; }
+
     .footer-inner { flex-direction: column; text-align: center; }
-    .footer-contacts { text-align: center; }
-    section { padding: 56px 5vw; }
+
+    .steps-grid::before { display: none; }
+  }
+
+  @media (max-width: 480px) {
+    h1 { font-size: 28px; }
+    h2 { font-size: 24px; }
+    .price-value { font-size: 36px; }
   }
 </style>
 </head>
 <body>
 
-<!-- DEMO BADGE -->
-<div class="demo-bar">Демо-набросок · <span>studio Алёны</span> · не финал</div>
+<!-- DEMO BANNER -->
+<div class="demo-banner">Демо-набросок · Studio Алёны · не финал</div>
 
 <!-- NAV -->
 <nav>
-  <a class="logo" href="#">
-    <div class="logo-icon">🤖</div>
-    <div class="logo-text"><em>AI</em>Equip</div>
-  </a>
+  <div class="logo">Equip<span>AI</span></div>
   <div class="nav-links">
-    <a class="nav-link" href="#how">Как работает</a>
-    <a class="nav-link" href="#features">Возможности</a>
-    <a class="nav-link" href="#form">Попробовать</a>
+    <a href="#how">Как работает</a>
+    <a href="#features">Возможности</a>
+    <a href="#form">Попробовать</a>
+    <a href="#form" class="btn btn-primary" style="padding:10px 22px;font-size:14px;">Оставить заявку</a>
   </div>
-  <a class="nav-cta" href="#form">Получить демо</a>
 </nav>
 
 <!-- HERO -->
-<section class="hero">
-  <div class="hero-inner">
+<div class="section-inner">
+  <div class="hero">
     <div class="hero-content">
-      <div class="hero-badge">🔬 Искусственный интеллект для промышленности</div>
-      <h1>Подберём промышленное<br><span>оборудование за минуту</span></h1>
-      <p class="hero-sub">
-        Опишите задачу текстом или загрузите ТЗ — AI-сервис мгновенно проанализирует требования
-        и предложит точный подбор из тысяч позиций с обоснованием.
-      </p>
-      <div class="hero-btns">
-        <a class="btn-primary" href="#form">Попробовать бесплатно</a>
-        <a class="btn-ghost" href="#how">Как это работает →</a>
+      <div class="hero-badge">⚡ ИИ-ассистент закупщика</div>
+      <h1>Промышленное оборудование — <em>подобрано за минуты</em></h1>
+      <p class="hero-sub">Опишите задачу текстом или загрузите ТЗ — система сама найдёт подходящее оборудование, сравнит характеристики и предложит лучшие варианты.</p>
+      <div class="hero-actions">
+        <a href="#form" class="btn btn-primary">Попробовать бесплатно</a>
+        <a href="#how" class="btn btn-ghost">Как это работает</a>
       </div>
       <div class="hero-stats">
-        <div class="stat-item">
-          <div class="stat-num">95%</div>
-          <div class="stat-label">Точность<br>подбора</div>
+        <div>
+          <div class="stat-num">3 мин</div>
+          <div class="stat-label">среднее время подбора</div>
         </div>
-        <div class="stat-item">
-          <div class="stat-num">&lt; 2 мин</div>
-          <div class="stat-label">Время<br>ответа</div>
-        </div>
-        <div class="stat-item">
+        <div>
           <div class="stat-num">10 000+</div>
-          <div class="stat-label">Позиций<br>в базе</div>
+          <div class="stat-label">позиций в базе</div>
+        </div>
+        <div>
+          <div class="stat-num">94%</div>
+          <div class="stat-label">точность совпадения</div>
         </div>
       </div>
     </div>
 
     <div class="hero-visual">
       <div class="ai-card">
-        <div class="ai-card-header">
-          <div class="ai-avatar">🤖</div>
-          <div class="ai-card-header-text">
-            <div class="title">AI-помощник</div>
-            <div class="sub">Анализирует ТЗ...</div>
-          </div>
-        </div>
-        <div class="ai-msg">
-          «Нужен промышленный компрессор для цеха окраски, давление 8–10 бар,
-          производительность от 500 л/мин, работа во взрывоопасной зоне»
-        </div>
+        <div class="card-label">📝 Ваш запрос</div>
+        <div class="card-input-mock">Нужен насос центробежный для перекачки воды, производительность 80 м³/ч, давление не менее 6 бар, материал — нержавеющая сталь<span>|</span></div>
+        <div class="card-file-drop">📎 Перетащите ТЗ сюда или <strong>выберите файл</strong><br><small style="color:var(--muted);">PDF, DOCX, XLS до 10 МБ</small></div>
         <div class="ai-result">
-          <div class="ai-result-row">
-            <span class="label">Тип оборудования</span>
-            <span class="value">Поршневой компрессор</span>
+          <div class="ai-result-head">🤖 ИИ нашёл подходящие варианты</div>
+          <div class="result-item">
+            <span class="result-name">CNP CDLF 32-80 (нерж.)</span>
+            <span class="result-match">97%</span>
           </div>
-          <div class="ai-result-row">
-            <span class="label">Исполнение</span>
-            <span class="value">Ex-защита (ATEX)</span>
+          <div class="result-item">
+            <span class="result-name">Grundfos CM 85-3 ST</span>
+            <span class="result-match">92%</span>
           </div>
-          <div class="ai-result-row">
-            <span class="label">Соответствие ТЗ</span>
-            <span class="value match">✓ 98%</span>
-          </div>
-          <div class="ai-result-row">
-            <span class="label">Найдено позиций</span>
-            <span class="value">14 вариантов</span>
+          <div class="result-item">
+            <span class="result-name">Wilo-MHI 803-E</span>
+            <span class="result-match">88%</span>
           </div>
         </div>
       </div>
     </div>
   </div>
-</section>
+</div>
 
 <!-- BENEFITS -->
-<section class="benefits" id="benefits">
-  <div class="section-head center">
-    <div class="section-tag">Почему мы</div>
-    <h2 class="section-title">Забудьте про каталоги и менеджеров</h2>
-    <p class="section-sub">AI разберётся в вашей задаче быстрее и точнее, чем любой справочник</p>
-  </div>
-  <div class="benefits-grid">
-    <div class="benefit-card">
-      <div class="benefit-icon icon-blue">⚡</div>
-      <h3>Мгновенный результат</h3>
-      <p>Вводите задачу — получаете подборку за 1–2 минуты. Никаких звонков и ожиданий ответа от менеджера.</p>
-    </div>
-    <div class="benefit-card">
-      <div class="benefit-icon icon-amber">📄</div>
-      <h3>Загрузка ТЗ</h3>
-      <p>Прикрепите PDF или Word с техническим заданием — AI сам извлечёт требования и сформирует запрос.</p>
-    </div>
-    <div class="benefit-card">
-      <div class="benefit-icon icon-green">✅</div>
-      <h3>Обоснование выбора</h3>
-      <p>Каждая рекомендация сопровождается пояснением: почему именно это оборудование подходит под ваши условия.</p>
-    </div>
-    <div class="benefit-card">
-      <div class="benefit-icon icon-purple">🔒</div>
-      <h3>Нормы и стандарты</h3>
-      <p>AI учитывает ГОСТ, ТУ и отраслевые требования. Подберёт только сертифицированное для вашей отрасли.</p>
+<section class="benefits">
+  <div class="section-inner">
+    <div class="section-label">Почему это работает</div>
+    <h2>Никакого ручного перебора<br>каталогов и звонков</h2>
+    <p class="section-sub">Один инструмент заменяет часы поиска, переписки с менеджерами и сравнения таблиц.</p>
+
+    <div class="benefits-grid">
+      <div class="benefit-card">
+        <span class="benefit-icon">🧠</span>
+        <div class="benefit-title">Понимает технические требования</div>
+        <p class="benefit-text">ИИ читает ваш запрос или ТЗ и сам извлекает ключевые параметры: мощность, давление, материалы, стандарты. Вы не заполняете формы с фильтрами.</p>
+      </div>
+      <div class="benefit-card">
+        <span class="benefit-icon">📋</span>
+        <div class="benefit-title">Загружай ТЗ — получай список</div>
+        <p class="benefit-text">Прикрепите PDF или Word с техническим заданием. Система распознает текст, таблицы и чертёжные пометки, и сформирует перечень нужного оборудования.</p>
+      </div>
+      <div class="benefit-card">
+        <span class="benefit-icon">⚖️</span>
+        <div class="benefit-title">Сравнение по 20+ параметрам</div>
+        <p class="benefit-text">Предложенные модели автоматически сравниваются по характеристикам, цене, наличию и срокам поставки — в удобной таблице без ручной сборки.</p>
+      </div>
+      <div class="benefit-card">
+        <span class="benefit-icon">💰</span>
+        <div class="benefit-title">Экономия на закупках</div>
+        <p class="benefit-text">ИИ предлагает аналоги и альтернативы — в том числе отечественные. Экономия на закупке в среднем составляет от ___ до ___% от бюджета.</p>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- HOW IT WORKS -->
 <section id="how">
-  <div class="how-inner">
-    <div class="section-head center">
-      <div class="section-tag">Процесс</div>
-      <h2 class="section-title">Как это работает</h2>
-      <p class="section-sub">Три простых шага от описания задачи до готового списка оборудования</p>
-    </div>
-    <div class="steps">
+  <div class="section-inner">
+    <div class="section-label">Процесс работы</div>
+    <h2>Три шага — и список готов</h2>
+    <p class="section-sub">Не нужно регистраций и обучения. Просто опишите задачу.</p>
+
+    <div class="steps-grid">
       <div class="step">
         <div class="step-num">1</div>
-        <h3>Опишите задачу</h3>
-        <p>Напишите текстом или загрузите готовое ТЗ. Можно в свободной форме — AI разберётся.</p>
+        <div class="step-title">Опишите потребность</div>
+        <p class="step-text">Введите запрос в свободной форме («нужен компрессор для покраски, 200 л/мин») или загрузите готовое ТЗ в любом формате.</p>
       </div>
       <div class="step">
         <div class="step-num">2</div>
-        <h3>AI анализирует</h3>
-        <p>Система извлекает параметры, сопоставляет с базой и формирует точный перечень.</p>
+        <div class="step-title">ИИ анализирует и подбирает</div>
+        <p class="step-text">Система сверяется с базой оборудования, ранжирует результаты по совпадению параметров и добавляет технические комментарии.</p>
       </div>
       <div class="step">
         <div class="step-num">3</div>
-        <h3>Получите подборку</h3>
-        <p>Список позиций с обоснованием, ссылками и сравнением характеристик — скачайте или отправьте.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">4</div>
-        <h3>Уточните и закажите</h3>
-        <p>При необходимости задайте уточняющий вопрос или запросите расчёт КП напрямую.</p>
+        <div class="step-title">Скачайте результат или отправьте запрос</div>
+        <p class="step-text">Готовый список в Excel или PDF — для отправки поставщику. Или сразу запросите КП через интегрированную форму.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- SERVICES / FEATURES -->
-<section class="services" id="features">
-  <div class="section-head center" style="max-width:1100px;margin:0 auto 48px;">
-    <div class="section-tag" style="background:rgba(245,158,11,.2);">Возможности</div>
-    <h2 class="section-title">Всё необходимое — в одном сервисе</h2>
-    <p class="section-sub" style="margin:0 auto;">От текстового запроса до сформированного коммерческого предложения</p>
-  </div>
-  <div class="services-grid">
-    <div class="service-item">
-      <div class="service-icon">💬</div>
-      <div>
-        <h3>Текстовый запрос</h3>
-        <p>Описывайте задачу как коллеге: «нужен насос для перекачки кислоты в цехе № 3». AI поймёт контекст.</p>
-      </div>
-    </div>
-    <div class="service-item">
-      <div class="service-icon">📎</div>
-      <div>
-        <h3>Загрузка документов</h3>
-        <p>Поддержка PDF, DOCX, таблиц Excel. Система сама распознает и структурирует требования из ТЗ.</p>
-      </div>
-    </div>
-    <div class="service-item">
-      <div class="service-icon">🔍</div>
-      <div>
-        <h3>Умный поиск по базе</h3>
-        <p>Более 10 000 позиций промышленного оборудования с регулярным обновлением и актуальными ценами.</p>
-      </div>
-    </div>
-    <div class="service-item">
-      <div class="service-icon">📊</div>
-      <div>
-        <h3>Сравнение вариантов</h3>
-        <p>AI показывает несколько альтернатив с разбивкой по цене, характеристикам и срокам поставки.</p>
-      </div>
-    </div>
-    <div class="service-item">
-      <div class="service-icon">📥</div>
-      <div>
-        <h3>Экспорт результатов</h3>
-        <p>Скачайте подборку в Excel или PDF — готово для отправки поставщику или включения в проектную документацию.</p>
-      </div>
-    </div>
-    <div class="service-item">
-      <div class="service-icon">🔗</div>
-      <div>
-        <h3>API-интеграция</h3>
-        <p>Встройте сервис в вашу ERP или тендерную платформу. Документация и ключи — после подключения.</p>
+<!-- FEATURES + PRICING -->
+<section id="features" class="features">
+  <div class="section-inner">
+    <div class="section-label">Возможности и тарифы</div>
+    <h2>Всё что нужно закупщику<br>в одном окне</h2>
+    <div class="features-grid">
+      <ul class="feature-list">
+        <li>
+          <div class="feature-check">✦</div>
+          <div class="feature-text">
+            <strong>Текстовый запрос и загрузка файлов</strong>
+            <span>PDF, DOCX, XLS, фото чертежей</span>
+          </div>
+        </li>
+        <li>
+          <div class="feature-check">✦</div>
+          <div class="feature-text">
+            <strong>База промышленного оборудования</strong>
+            <span>Насосы, компрессоры, электродвигатели, трубопроводная арматура и многое другое</span>
+          </div>
+        </li>
+        <li>
+          <div class="feature-check">✦</div>
+          <div class="feature-text">
+            <strong>Автоматическое сравнение характеристик</strong>
+            <span>Таблица совпадений по вашим требованиям</span>
+          </div>
+        </li>
+        <li>
+          <div class="feature-check">✦</div>
+          <div class="feature-text">
+            <strong>Подбор отечественных аналогов</strong>
+            <span>Импортозамещение без ручного поиска</span>
+          </div>
+        </li>
+        <li>
+          <div class="feature-check">✦</div>
+          <div class="feature-text">
+            <strong>Экспорт в Excel / PDF</strong>
+            <span>Готово для передачи поставщику или руководству</span>
+          </div>
+        </li>
+        <li>
+          <div class="feature-check">✦</div>
+          <div class="feature-text">
+            <strong>История запросов и проекты</strong>
+            <span>Сохраняйте подборки и возвращайтесь к ним</span>
+          </div>
+        </li>
+      </ul>
+
+      <div class="pricing-block">
+        <div class="price-tag">Тариф «Профессиональный»</div>
+        <div class="price-value">от ___ ₽</div>
+        <div class="price-sub">в месяц · без скрытых платежей</div>
+        <ul class="price-features">
+          <li>До ___ запросов в месяц</li>
+          <li>Загрузка файлов до 50 МБ</li>
+          <li>Экспорт в Excel и PDF</li>
+          <li>История за 6 месяцев</li>
+          <li>Email-поддержка</li>
+        </ul>
+        <a href="#form" class="btn btn-primary" style="width:100%;text-align:center;display:block;">Оставить заявку на доступ</a>
+        <div style="margin-top:12px;font-size:12px;color:var(--muted);">Первые 14 дней — бесплатно</div>
       </div>
     </div>
   </div>
@@ -813,95 +884,77 @@
 
 <!-- TESTIMONIAL -->
 <section class="testimonial">
-  <div class="testimonial-inner">
-    <div class="section-tag" style="margin-bottom:16px;">Отзывы</div>
-    <div class="quote-icon">❝</div>
-    <p class="testimonial-text">
-      «Раньше подбор оборудования для нового объекта занимал у нас 2–3 дня: обзвон поставщиков,
-      ручной поиск по каталогам. Сейчас — 15 минут. AI выдал список из 8 позиций,
-      и 6 из них мы в итоге и закупили. Экономия времени колоссальная.»
-    </p>
-    <div class="testimonial-author">
-      <div class="author-avatar">👷</div>
-      <div>
-        <div class="stars">★★★★★</div>
-        <div class="author-name">Иван ___, главный инженер</div>
-        <div class="author-role">Промышленное предприятие, ___ отрасль — заглушка-отзыв</div>
+  <div class="section-inner">
+    <div class="section-label">Отзывы клиентов</div>
+    <div class="testi-wrap">
+      <div class="testi-stars">⭐⭐⭐⭐⭐</div>
+      <div class="testi-text">
+        Раньше подбор насосного оборудования для объекта занимал у нас 2–3 дня: таблицы, звонки поставщикам, сверка характеристик. Сейчас — 20 минут, и список готов к отправке. Очень удобно, что можно просто вставить текст из ТЗ.
       </div>
+      <div class="testi-author">
+        <div class="testi-avatar">🏗️</div>
+        <div>
+          <div class="testi-name">Алексей В.</div>
+          <div class="testi-role">Инженер-технолог, строительная компания</div>
+        </div>
+      </div>
+      <div class="testi-note">⚠ Заглушка-отзыв · заменить реальным перед запуском</div>
     </div>
   </div>
 </section>
 
-<!-- PRICING HINT -->
-<section class="pricing">
-  <div class="pricing-inner">
-    <div class="pricing-badge">Простой старт</div>
-    <div class="pricing-price">от ___ ₽ <span>/ мес</span></div>
-    <p class="pricing-desc">Доступ к полному функционалу. Количество запросов и тарифные планы — по договорённости.</p>
-    <ul class="pricing-features">
-      <li><span class="check">✓</span> Неограниченные текстовые запросы</li>
-      <li><span class="check">✓</span> Загрузка ТЗ (PDF, DOCX, XLS)</li>
-      <li><span class="check">✓</span> Экспорт подборки в Excel / PDF</li>
-      <li><span class="check">✓</span> История запросов и повторный поиск</li>
-      <li><span class="check">✓</span> Техническая поддержка</li>
-    </ul>
-    <a class="btn-primary" href="#form" style="display:block;text-align:center;font-size:16px;">Оставить заявку на подключение</a>
-  </div>
-</section>
-
 <!-- FORM -->
-<section class="form-section" id="form">
-  <div class="form-inner">
-    <div class="section-tag">Попробовать</div>
-    <h2 class="section-title">Получите демо-доступ</h2>
-    <p class="section-sub">Заполните форму — мы свяжемся и покажем сервис на вашей реальной задаче</p>
-    <div class="form-card">
-      <div class="form-row">
-        <div class="form-group">
+<section id="form" class="form-section">
+  <div class="section-inner">
+    <div class="section-label">Заявка на доступ</div>
+    <h2>Попробуйте бесплатно<br>14 дней</h2>
+    <p class="section-sub">Оставьте заявку — мы дадим доступ к сервису и поможем настроить под вашу специфику.</p>
+
+    <div class="form-wrap">
+      <div class="form-grid">
+        <div class="form-field">
           <label>Ваше имя</label>
-          <input type="text" placeholder="Иван Петров">
+          <input type="text" placeholder="Иван Иванов">
         </div>
-        <div class="form-group">
+        <div class="form-field">
           <label>Компания</label>
-          <input type="text" placeholder="ООО «Пример»">
+          <input type="text" placeholder="ООО «Промснаб»">
         </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label>Телефон</label>
-          <input type="tel" placeholder="+7 ___ ___ __ __">
-        </div>
-        <div class="form-group">
+        <div class="form-field">
           <label>Email</label>
           <input type="email" placeholder="ivan@company.ru">
         </div>
-      </div>
-      <div class="form-group">
-        <label>Отрасль / тип оборудования</label>
-        <select>
-          <option value="" disabled selected>Выберите отрасль</option>
-          <option>Нефтегазовая промышленность</option>
-          <option>Горнодобывающая отрасль</option>
-          <option>Машиностроение</option>
-          <option>Пищевая промышленность</option>
-          <option>Химическая промышленность</option>
-          <option>Строительство</option>
-          <option>Другое</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>Опишите задачу</label>
-        <textarea placeholder="Например: «Нужен компрессор для цеха сборки, давление 6 бар, производительность 300 л/мин, 220В…»"></textarea>
-      </div>
-      <div class="upload-area">
-        <div class="upload-icon">📎</div>
-        <div class="upload-text">
-          <strong>Прикрепите ТЗ</strong> или перетащите файл сюда<br>
-          PDF, DOCX, XLS — до 10 МБ
+        <div class="form-field">
+          <label>Телефон</label>
+          <input type="tel" placeholder="+7 ___ ___ __ __">
+        </div>
+        <div class="form-field form-full">
+          <label>Какое оборудование подбираете чаще всего?</label>
+          <select>
+            <option value="" disabled selected>Выберите тип оборудования</option>
+            <option>Насосы и насосные станции</option>
+            <option>Компрессоры и пневматика</option>
+            <option>Электродвигатели и приводы</option>
+            <option>Трубопроводная арматура</option>
+            <option>Теплообменное оборудование</option>
+            <option>Другое промышленное оборудование</option>
+          </select>
+        </div>
+        <div class="form-field form-full">
+          <label>Кратко опишите задачу (необязательно)</label>
+          <textarea placeholder="Подбираем оборудование для объектов водоснабжения, около 10 запросов в месяц..."></textarea>
         </div>
       </div>
-      <button class="submit-btn" type="button">Отправить заявку на демо →</button>
-      <p class="form-note">Нажимая кнопку, вы соглашаетесь с обработкой персональных данных. Ответим в течение одного рабочего дня.</p>
+
+      <div class="drop-zone">
+        <div class="drop-zone-icon">📎</div>
+        <div class="drop-zone-text">Прикрепите пример ТЗ, если хотите — <strong>нажмите или перетащите</strong><br><small>PDF, DOCX, XLS · до 10 МБ</small></div>
+      </div>
+
+      <div class="form-submit">
+        <button class="btn btn-primary" style="min-width:240px;font-size:16px;padding:16px 40px;" type="button">Получить доступ на 14 дней</button>
+      </div>
+      <p class="privacy-note">Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности. Спам не рассылаем.</p>
     </div>
   </div>
 </section>
@@ -909,16 +962,19 @@
 <!-- FOOTER -->
 <footer>
   <div class="footer-inner">
-    <div class="footer-logo">
-      <div style="width:28px;height:28px;background:linear-gradient(135deg,#f59e0b,#f97316);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;">🤖</div>
-      <span class="name">AIEquip</span>
-      <span>— AI-подбор промышленного оборудования</span>
+    <div>
+      <div class="footer-logo">EquipAI</div>
+      <div style="font-size:13px;color:var(--muted);margin-top:6px;">ИИ-подбор промышленного оборудования</div>
     </div>
     <div class="footer-contacts">
-      <a href="tel:+7__________">+7 ___ ___ __ __</a>
-      <a href="mailto:info@_____.ru">info@_____.ru</a>
+      📧 <a href="#">info@equipai.ru</a><br>
+      📞 +7 ___<br>
+      🏢 ___ город, ___ офис
     </div>
-    <div class="footer-copy">© 2024 AIEquip · Все права защищены · Демо-версия лендинга</div>
+    <div class="footer-copy">
+      © 2026 EquipAI<br>
+      <span style="color:rgba(255,255,255,0.2)">Демо · не финал</span>
+    </div>
   </div>
 </footer>
 
