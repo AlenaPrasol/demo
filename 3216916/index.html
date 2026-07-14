@@ -1,0 +1,908 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Таргет ВКонтакте для фитнес-тренера</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --dark: #1a1f2e;
+    --mid: #2d3450;
+    --accent: #f4602a;
+    --accent2: #ff8c5a;
+    --light: #f7f8fc;
+    --white: #ffffff;
+    --text: #2d3450;
+    --muted: #6b7494;
+    --radius: 14px;
+    --shadow: 0 4px 32px rgba(26,31,46,.10);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    background: var(--light);
+    color: var(--text);
+    line-height: 1.65;
+    font-size: 16px;
+  }
+
+  /* DEMO BANNER */
+  .demo-bar {
+    background: var(--mid);
+    color: rgba(255,255,255,.75);
+    text-align: center;
+    font-size: 12px;
+    letter-spacing: .06em;
+    padding: 8px 16px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .demo-bar span { color: var(--accent2); font-weight: 600; }
+
+  /* NAV */
+  nav {
+    background: var(--white);
+    border-bottom: 1px solid rgba(45,52,80,.08);
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .logo {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--dark);
+    letter-spacing: -.02em;
+  }
+  .logo span { color: var(--accent); }
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 28px;
+  }
+  nav ul li a {
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 14px;
+    font-weight: 500;
+    transition: color .2s;
+  }
+  nav ul li a:hover { color: var(--accent); }
+  @media (max-width: 600px) { nav ul { display: none; } }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, var(--dark) 0%, var(--mid) 60%, #3d4870 100%);
+    color: var(--white);
+    padding: 80px 24px 90px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 80% 20%, rgba(244,96,42,.18) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 10% 80%, rgba(61,72,112,.5) 0%, transparent 70%);
+  }
+  .hero-inner { position: relative; max-width: 720px; margin: 0 auto; }
+  .hero-tag {
+    display: inline-block;
+    background: rgba(244,96,42,.2);
+    border: 1px solid rgba(244,96,42,.4);
+    color: var(--accent2);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 100px;
+    margin-bottom: 28px;
+  }
+  .hero h1 {
+    font-size: clamp(28px, 5vw, 52px);
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -.03em;
+    margin-bottom: 22px;
+  }
+  .hero h1 em {
+    font-style: normal;
+    color: var(--accent2);
+  }
+  .hero p {
+    font-size: clamp(15px, 2vw, 18px);
+    color: rgba(255,255,255,.75);
+    max-width: 560px;
+    margin: 0 auto 38px;
+  }
+  .btn {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--white);
+    font-weight: 700;
+    font-size: 16px;
+    padding: 16px 36px;
+    border-radius: 100px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: background .2s, transform .15s, box-shadow .2s;
+    box-shadow: 0 6px 28px rgba(244,96,42,.4);
+  }
+  .btn:hover {
+    background: #e0541f;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 36px rgba(244,96,42,.5);
+  }
+  .btn-ghost {
+    background: transparent;
+    border: 2px solid rgba(255,255,255,.3);
+    color: var(--white);
+    margin-left: 12px;
+    box-shadow: none;
+  }
+  .btn-ghost:hover {
+    background: rgba(255,255,255,.1);
+    border-color: rgba(255,255,255,.6);
+    box-shadow: none;
+  }
+  .hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 56px;
+    flex-wrap: wrap;
+  }
+  .hero-stat { text-align: center; }
+  .hero-stat strong {
+    display: block;
+    font-size: 32px;
+    font-weight: 900;
+    color: var(--white);
+    letter-spacing: -.03em;
+  }
+  .hero-stat span {
+    font-size: 13px;
+    color: rgba(255,255,255,.55);
+    font-weight: 500;
+  }
+
+  /* SECTIONS */
+  section { padding: 72px 24px; }
+  .container { max-width: 1060px; margin: 0 auto; }
+  .section-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-size: clamp(22px, 3.5vw, 36px);
+    font-weight: 900;
+    letter-spacing: -.025em;
+    color: var(--dark);
+    line-height: 1.15;
+    margin-bottom: 16px;
+  }
+  .section-sub {
+    color: var(--muted);
+    font-size: 16px;
+    max-width: 540px;
+  }
+  .section-head { margin-bottom: 52px; }
+
+  /* BENEFITS */
+  .benefits-bg { background: var(--white); }
+  .benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 24px;
+  }
+  .benefit-card {
+    background: var(--light);
+    border-radius: var(--radius);
+    padding: 32px 28px;
+    border: 1px solid rgba(45,52,80,.07);
+    transition: box-shadow .2s, transform .2s;
+  }
+  .benefit-card:hover {
+    box-shadow: var(--shadow);
+    transform: translateY(-4px);
+  }
+  .benefit-icon {
+    font-size: 38px;
+    margin-bottom: 18px;
+    display: block;
+  }
+  .benefit-card h3 {
+    font-size: 17px;
+    font-weight: 800;
+    color: var(--dark);
+    margin-bottom: 10px;
+    letter-spacing: -.01em;
+  }
+  .benefit-card p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* SERVICES */
+  .services-bg {
+    background: linear-gradient(160deg, var(--dark) 0%, var(--mid) 100%);
+    color: var(--white);
+  }
+  .services-bg .section-title { color: var(--white); }
+  .services-bg .section-sub { color: rgba(255,255,255,.6); }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .service-card {
+    background: rgba(255,255,255,.07);
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: var(--radius);
+    padding: 28px 26px;
+    transition: background .2s;
+  }
+  .service-card:hover { background: rgba(255,255,255,.12); }
+  .service-num {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    color: var(--accent2);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .service-card h3 {
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--white);
+    margin-bottom: 10px;
+  }
+  .service-card p {
+    font-size: 14px;
+    color: rgba(255,255,255,.55);
+    line-height: 1.6;
+  }
+  .service-card .tag {
+    display: inline-block;
+    margin-top: 14px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--accent2);
+    background: rgba(244,96,42,.15);
+    border-radius: 100px;
+    padding: 4px 12px;
+  }
+
+  /* HOW WE WORK */
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0;
+    position: relative;
+  }
+  .step {
+    text-align: center;
+    padding: 32px 20px;
+    position: relative;
+  }
+  .step::after {
+    content: '→';
+    position: absolute;
+    right: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--accent);
+    font-size: 22px;
+    font-weight: 700;
+  }
+  .step:last-child::after { display: none; }
+  @media (max-width: 600px) {
+    .step::after { display: none; }
+  }
+  .step-circle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: var(--white);
+    font-size: 22px;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 18px;
+    box-shadow: 0 6px 24px rgba(244,96,42,.3);
+  }
+  .step h4 {
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--dark);
+    margin-bottom: 8px;
+  }
+  .step p {
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  /* PRICE */
+  .price-bg { background: var(--white); }
+  .price-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+    align-items: start;
+  }
+  .price-card {
+    border-radius: var(--radius);
+    border: 2px solid rgba(45,52,80,.1);
+    padding: 36px 28px;
+    background: var(--light);
+    transition: border-color .2s, box-shadow .2s;
+  }
+  .price-card:hover { border-color: var(--accent); box-shadow: 0 8px 40px rgba(244,96,42,.12); }
+  .price-card.featured {
+    border-color: var(--accent);
+    background: var(--white);
+    box-shadow: 0 8px 40px rgba(244,96,42,.16);
+    position: relative;
+  }
+  .price-badge {
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--accent);
+    color: var(--white);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    padding: 5px 16px;
+    border-radius: 100px;
+    white-space: nowrap;
+  }
+  .price-name {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+  .price-val {
+    font-size: 34px;
+    font-weight: 900;
+    color: var(--dark);
+    letter-spacing: -.03em;
+    margin-bottom: 4px;
+  }
+  .price-val sub {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--muted);
+    vertical-align: baseline;
+  }
+  .price-period {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 24px;
+  }
+  .price-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+    margin-bottom: 28px;
+  }
+  .price-list li {
+    font-size: 14px;
+    color: var(--text);
+    padding-left: 22px;
+    position: relative;
+  }
+  .price-list li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .btn-outline {
+    display: block;
+    text-align: center;
+    border: 2px solid var(--accent);
+    color: var(--accent);
+    border-radius: 100px;
+    padding: 12px;
+    font-weight: 700;
+    font-size: 15px;
+    text-decoration: none;
+    cursor: pointer;
+    background: transparent;
+    transition: background .2s, color .2s;
+  }
+  .btn-outline:hover { background: var(--accent); color: var(--white); }
+  .btn-full { display: block; text-align: center; width: 100%; font-size: 15px; padding: 14px; }
+
+  /* TESTIMONIAL */
+  .testimonial-bg { background: var(--light); }
+  .testimonial-wrap {
+    max-width: 720px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .testimonial-card {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 48px 40px;
+    box-shadow: var(--shadow);
+    position: relative;
+  }
+  .testimonial-card::before {
+    content: '❝';
+    font-size: 64px;
+    color: var(--accent);
+    opacity: .18;
+    position: absolute;
+    top: 20px;
+    left: 32px;
+    line-height: 1;
+  }
+  .testimonial-text {
+    font-size: 18px;
+    color: var(--text);
+    line-height: 1.7;
+    font-style: italic;
+    margin-bottom: 28px;
+    position: relative;
+    z-index: 1;
+  }
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+  }
+  .avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), #ffb347);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+  .author-info strong {
+    display: block;
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--dark);
+  }
+  .author-info span {
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .stars { color: #f4c430; font-size: 16px; margin-bottom: 6px; }
+
+  /* FORM */
+  .form-bg {
+    background: linear-gradient(135deg, #f0f2f8 0%, var(--white) 100%);
+  }
+  .form-wrap {
+    max-width: 640px;
+    margin: 0 auto;
+    background: var(--white);
+    border-radius: 20px;
+    padding: 52px 48px;
+    box-shadow: 0 8px 60px rgba(26,31,46,.1);
+  }
+  @media (max-width: 600px) {
+    .form-wrap { padding: 36px 24px; }
+  }
+  .form-title {
+    font-size: 26px;
+    font-weight: 900;
+    color: var(--dark);
+    letter-spacing: -.025em;
+    margin-bottom: 8px;
+  }
+  .form-sub {
+    color: var(--muted);
+    font-size: 15px;
+    margin-bottom: 36px;
+  }
+  .form-group { margin-bottom: 20px; }
+  label {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 8px;
+    letter-spacing: .01em;
+  }
+  input, textarea, select {
+    width: 100%;
+    border: 2px solid rgba(45,52,80,.12);
+    border-radius: 10px;
+    padding: 13px 16px;
+    font-size: 15px;
+    color: var(--text);
+    background: var(--light);
+    outline: none;
+    transition: border-color .2s, box-shadow .2s;
+    font-family: inherit;
+    appearance: none;
+  }
+  input:focus, textarea:focus, select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(244,96,42,.12);
+    background: var(--white);
+  }
+  textarea { resize: vertical; min-height: 100px; }
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  @media (max-width: 480px) { .form-row { grid-template-columns: 1fr; } }
+  .form-note {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 14px;
+    text-align: center;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--dark);
+    color: rgba(255,255,255,.5);
+    text-align: center;
+    padding: 40px 24px;
+    font-size: 14px;
+  }
+  footer strong { color: var(--white); }
+  footer a { color: var(--accent2); text-decoration: none; }
+  footer .footer-logo {
+    font-size: 20px;
+    font-weight: 900;
+    color: var(--white);
+    margin-bottom: 12px;
+    letter-spacing: -.02em;
+  }
+  footer .footer-logo span { color: var(--accent); }
+  .footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin: 16px 0;
+    flex-wrap: wrap;
+  }
+  .footer-links a { color: rgba(255,255,255,.45); font-size: 13px; transition: color .2s; }
+  .footer-links a:hover { color: var(--accent2); }
+</style>
+</head>
+<body>
+
+<!-- DEMO BAR -->
+<div class="demo-bar">
+  Демо-набросок · <span>studio Алёны</span> · не финал — черновик под вашу нишу, до оплаты
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Фит<span>Таргет</span></div>
+  <ul>
+    <li><a href="#benefits">Выгоды</a></li>
+    <li><a href="#services">Что делаем</a></li>
+    <li><a href="#process">Процесс</a></li>
+    <li><a href="#form">Заявка</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-tag">🎯 Таргет ВКонтакте · Фитнес-ниша</div>
+    <h1>Запустим рекламу ВКонтакте<br>и приведём клиентов<br><em>на ваши тренировки</em></h1>
+    <p>Настроим таргетированную рекламу для фитнес-тренера: анализ аудитории, написание текстов, запуск кампаний и оптимизация — под ключ.</p>
+    <a href="#form" class="btn">Хочу заявки от клиентов</a>
+    <a href="#services" class="btn btn-ghost">Что входит →</a>
+
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <strong>от ___ ₽</strong>
+        <span>стоимость заявки</span>
+      </div>
+      <div class="hero-stat">
+        <strong>7 дней</strong>
+        <span>до первых результатов</span>
+      </div>
+      <div class="hero-stat">
+        <strong>3+ ниши</strong>
+        <span>опыт в фитнесе</span>
+      </div>
+      <div class="hero-stat">
+        <strong>ВКонтакте</strong>
+        <span>основная площадка</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- BENEFITS -->
+<section class="benefits-bg" id="benefits">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-label">Почему мы</div>
+      <h2 class="section-title">Таргет для фитнеса —<br>это не «просто реклама»</h2>
+      <p class="section-sub">Фитнес-тренер продаёт доверие и результат. Реклама должна это передавать — иначе деньги уходят в никуда.</p>
+    </div>
+    <div class="benefits-grid">
+      <div class="benefit-card">
+        <span class="benefit-icon">🎯</span>
+        <h3>Точная аудитория</h3>
+        <p>Найдём тех, кто уже ищет тренера или готов начать: по интересам, поведению, подпискам конкурентов в ВКонтакте.</p>
+      </div>
+      <div class="benefit-card">
+        <span class="benefit-icon">✍️</span>
+        <h3>Тексты, которые цепляют</h3>
+        <p>Пишем объявления на языке вашей аудитории — без штампов вроде «достигни своей мечты». Только живой оффер.</p>
+      </div>
+      <div class="benefit-card">
+        <span class="benefit-icon">📊</span>
+        <h3>Оптимизация в процессе</h3>
+        <p>Следим за показателями каждый день. Отключаем слабое, масштабируем то, что даёт заявки по нужной цене.</p>
+      </div>
+      <div class="benefit-card">
+        <span class="benefit-icon">📋</span>
+        <h3>Прозрачный отчёт</h3>
+        <p>По итогам тестового периода — чёткий отчёт: сколько потрачено, сколько заявок, что сработало и что дальше.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services-bg" id="services">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-label">Что входит</div>
+      <h2 class="section-title">Полный цикл запуска таргета —<br>от анализа до первых заявок</h2>
+      <p class="section-sub">Берём весь процесс на себя. Вам не нужно вникать в кабинет VK Реклама — мы разберёмся.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-num">Шаг 01</div>
+        <h3>Анализ проекта и ЦА</h3>
+        <p>Разбираемся в вашей нише, услугах, географии. Определяем сегменты: кто берёт персоналки, кто онлайн, кто ищет групповые.</p>
+        <span class="tag">Стратегия</span>
+      </div>
+      <div class="service-card">
+        <div class="service-num">Шаг 02</div>
+        <h3>Конкуренты и офферы</h3>
+        <p>Смотрим, что запускают другие фитнес-тренеры ВКонтакте. Формулируем ваш уникальный оффер — пробная, программа, консультация.</p>
+        <span class="tag">Анализ</span>
+      </div>
+      <div class="service-card">
+        <div class="service-num">Шаг 03</div>
+        <h3>Тексты и рекомендации по креативам</h3>
+        <p>Пишем тексты объявлений под каждый сегмент. Даём ТЗ на фото/видео или помогаем с созданием визуала.</p>
+        <span class="tag">Контент</span>
+      </div>
+      <div class="service-card">
+        <div class="service-num">Шаг 04</div>
+        <h3>Настройка кабинета VK Реклама</h3>
+        <p>Создаём кампании, настраиваем пиксель, цели и события. Запускаем тест нескольких аудиторий одновременно.</p>
+        <span class="tag">Технически</span>
+      </div>
+      <div class="service-card">
+        <div class="service-num">Шаг 05</div>
+        <h3>Тест и оптимизация</h3>
+        <p>Тестируем разные форматы и аудитории. Отключаем неэффективные, наращиваем бюджет на работающие связки.</p>
+        <span class="tag">Результат</span>
+      </div>
+      <div class="service-card">
+        <div class="service-num">Шаг 06</div>
+        <h3>Отчёт и рекомендации</h3>
+        <p>По итогам — полный отчёт в понятном формате. Что сработало, на какую аудиторию масштабировать, что тестировать дальше.</p>
+        <span class="tag">Аналитика</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-label">Как работаем</div>
+      <h2 class="section-title">От старта до первых заявок — за одну неделю</h2>
+      <p class="section-sub">Чёткая последовательность без лишних согласований и долгих ожиданий.</p>
+    </div>
+    <div class="steps-grid">
+      <div class="step">
+        <div class="step-circle">1</div>
+        <h4>Бриф</h4>
+        <p>Заполняете анкету или созваниваемся на 30 минут</p>
+      </div>
+      <div class="step">
+        <div class="step-circle">2</div>
+        <h4>Стратегия</h4>
+        <p>Готовим план по аудиториям и офферам</p>
+      </div>
+      <div class="step">
+        <div class="step-circle">3</div>
+        <h4>Запуск</h4>
+        <p>Настраиваем кабинет и запускаем тест</p>
+      </div>
+      <div class="step">
+        <div class="step-circle">4</div>
+        <h4>Заявки</h4>
+        <p>Первые результаты уже через 2–5 дней</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICE -->
+<section class="price-bg">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-label">Стоимость</div>
+      <h2 class="section-title">Тарифы</h2>
+      <p class="section-sub">Итоговая стоимость согласуется под ваш проект и рекламный бюджет.</p>
+    </div>
+    <div class="price-grid">
+      <div class="price-card">
+        <div class="price-name">Старт</div>
+        <div class="price-val">от ___ <sub>₽</sub></div>
+        <div class="price-period">разово · настройка и запуск</div>
+        <ul class="price-list">
+          <li>Анализ проекта и ЦА</li>
+          <li>Тексты для 3 объявлений</li>
+          <li>Настройка кабинета VK Реклама</li>
+          <li>Запуск 1–2 аудиторий</li>
+          <li>Итоговый отчёт</li>
+        </ul>
+        <a href="#form" class="btn-outline">Выбрать</a>
+      </div>
+      <div class="price-card featured">
+        <div class="price-badge">Популярный</div>
+        <div class="price-name">Под ключ</div>
+        <div class="price-val">от ___ <sub>₽</sub></div>
+        <div class="price-period">месяц · ведение + оптимизация</div>
+        <ul class="price-list">
+          <li>Полный анализ конкурентов</li>
+          <li>Тексты для 6–8 объявлений</li>
+          <li>Рекомендации по креативам</li>
+          <li>Настройка пикселя и целей</li>
+          <li>Тест 3–5 аудиторий</li>
+          <li>Оптимизация раз в неделю</li>
+          <li>Отчёт каждые 2 недели</li>
+        </ul>
+        <a href="#form" class="btn btn-full">Начать сейчас</a>
+      </div>
+      <div class="price-card">
+        <div class="price-name">Максимум</div>
+        <div class="price-val">от ___ <sub>₽</sub></div>
+        <div class="price-period">месяц · интенсивный рост</div>
+        <ul class="price-list">
+          <li>Всё из «Под ключ»</li>
+          <li>Создание креативов</li>
+          <li>Ретаргетинг и look-alike</li>
+          <li>Настройка лид-формы ВКонтакте</li>
+          <li>Сопровождение в чате 24/5</li>
+          <li>Ежедневная оптимизация</li>
+        </ul>
+        <a href="#form" class="btn-outline">Выбрать</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<section class="testimonial-bg">
+  <div class="container">
+    <div class="section-head" style="text-align:center;">
+      <div class="section-label">Отзывы</div>
+      <h2 class="section-title">Что говорят клиенты</h2>
+    </div>
+    <div class="testimonial-wrap">
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">
+          «Запустили рекламу на персональные тренировки — за первые две недели пришло ___ заявок. Раньше вела клиентов только по сарафану, думала, таргет это сложно и дорого. Оказалось, всё прозрачно: объяснили каждый шаг, написали тексты лучше, чем я бы сама. Теперь клиенты идут стабильно.»
+        </p>
+        <div class="testimonial-author">
+          <div class="avatar">🏋️</div>
+          <div class="author-info">
+            <strong>Анна ___</strong>
+            <span>фитнес-тренер, онлайн + офлайн</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORM -->
+<section class="form-bg" id="form">
+  <div class="container">
+    <div class="form-wrap">
+      <div class="form-title">Оставьте заявку</div>
+      <div class="form-sub">Обсудим ваш проект и подберём формат работы. Отвечаю в течение нескольких часов.</div>
+      <form onsubmit="return false;">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">Имя</label>
+            <input type="text" id="name" placeholder="Как вас зовут?">
+          </div>
+          <div class="form-group">
+            <label for="phone">Телефон / ВКонтакте</label>
+            <input type="text" id="phone" placeholder="+7 ___ или @вк">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="goal">Цель рекламы</label>
+          <select id="goal">
+            <option value="">— выберите —</option>
+            <option>Заявки на пробную тренировку</option>
+            <option>Заявки на персональное сопровождение</option>
+            <option>Продажа программ тренировок</option>
+            <option>Консультации</option>
+            <option>Другое</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="budget">Рекламный бюджет в месяц</label>
+          <select id="budget">
+            <option value="">— укажите бюджет —</option>
+            <option>до 10 000 ₽</option>
+            <option>10 000 — 30 000 ₽</option>
+            <option>30 000 — 60 000 ₽</option>
+            <option>более 60 000 ₽</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="about">Расскажите о проекте</label>
+          <textarea id="about" placeholder="Какие услуги, в каком городе работаете, есть ли уже страница ВКонтакте?"></textarea>
+        </div>
+        <button type="submit" class="btn btn-full">Отправить заявку →</button>
+        <p class="form-note">Нажимая «Отправить», вы соглашаетесь с обработкой персональных данных.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Фит<span>Таргет</span></div>
+  <p>Таргетированная реклама ВКонтакте для фитнес-тренеров</p>
+  <div class="footer-links">
+    <a href="#">ВКонтакте</a>
+    <a href="#">Telegram</a>
+    <a href="mailto:___@mail.ru">___@mail.ru</a>
+    <a href="#">+7 ___</a>
+  </div>
+  <p style="margin-top:16px; font-size:12px;">© 2024 · Демо-страница · Не является публичной офертой</p>
+</footer>
+
+<div style="position:fixed;inset:0;z-index:99998;pointer-events:none;opacity:.10;background-image:url(&quot;data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='420' height='300'><text x='0' y='150' transform='rotate(-28 210 150)' font-family='sans-serif' font-size='22' font-weight='700' fill='%23808080' fill-opacity='0.5'>%D0%94%D0%95%D0%9C%D0%9E%20%C2%B7%20%D0%90%D0%9B%D0%81%D0%9D%D0%90%20%D0%9F%D0%A0%D0%90%D0%A1%D0%9E%D0%9B%D0%9E%D0%92%D0%90%20%C2%B7%20%D0%9E%D0%91%D0%A0%D0%90%D0%97%D0%95%D0%A6</text></svg>&quot;);background-repeat:repeat"></div><div style="position:fixed;left:0;right:0;bottom:0;z-index:99999;pointer-events:none;text-align:center;font:600 12px/1.4 sans-serif;color:#fff;background:rgba(20,24,33,.88);padding:7px 12px">Демо-набросок для оценки · © Алёна Прасолова · не для коммерческого использования · рабочая версия и чистовой дизайн — после старта работы</div></body>
+</html>
