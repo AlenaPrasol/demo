@@ -1,0 +1,933 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>БухПрофи — Бухгалтерские услуги</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #1a2744;
+    --white: #ffffff;
+    --green: #2ecc6f;
+    --green-dark: #25a85b;
+    --gray-light: #f4f6fb;
+    --gray-mid: #e8ecf4;
+    --gray-text: #6b7894;
+    --text: #1a2744;
+    --radius: 14px;
+    --shadow: 0 4px 32px rgba(26,39,68,0.10);
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    color: var(--text);
+    background: var(--white);
+    line-height: 1.6;
+    font-size: 16px;
+  }
+
+  /* DEMO BANNER */
+  .demo-banner {
+    background: linear-gradient(90deg, #f0c040, #f5d76e);
+    text-align: center;
+    padding: 7px 16px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #5a3e00;
+    letter-spacing: 0.03em;
+  }
+
+  /* HEADER NAV */
+  .topbar {
+    background: var(--navy);
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 16px rgba(26,39,68,0.18);
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--white);
+  }
+  .logo-icon {
+    width: 38px; height: 38px;
+    background: var(--green);
+    border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  .logo-text { font-size: 18px; font-weight: 700; line-height: 1.2; }
+  .logo-text span { display: block; font-size: 11px; font-weight: 400; opacity: 0.6; }
+  .nav-links {
+    display: flex; gap: 24px; list-style: none;
+  }
+  .nav-links a {
+    color: rgba(255,255,255,0.75);
+    text-decoration: none; font-size: 14px;
+    transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--green); }
+  .nav-cta {
+    background: var(--green);
+    color: var(--white) !important;
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: background .2s !important;
+  }
+  .nav-cta:hover { background: var(--green-dark) !important; }
+  .lang-switcher {
+    display: flex; gap: 6px; margin-left: 20px;
+  }
+  .lang-switcher span {
+    font-size: 12px; color: rgba(255,255,255,0.5);
+    cursor: pointer; padding: 2px 6px; border-radius: 4px;
+    border: 1px solid transparent;
+  }
+  .lang-switcher span.active {
+    color: var(--green); border-color: var(--green);
+  }
+
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .lang-switcher { display: none; }
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #1a2744 0%, #243361 55%, #1a3a5c 100%);
+    color: var(--white);
+    padding: 80px 24px 88px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 40% at 20% 50%, rgba(46,204,111,0.10) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 60% at 80% 30%, rgba(46,204,111,0.07) 0%, transparent 70%);
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(46,204,111,0.18);
+    border: 1px solid rgba(46,204,111,0.4);
+    color: var(--green);
+    font-size: 13px; font-weight: 600;
+    padding: 6px 16px; border-radius: 20px;
+    margin-bottom: 24px;
+    position: relative;
+  }
+  .hero h1 {
+    font-size: clamp(28px, 5vw, 52px);
+    font-weight: 800; line-height: 1.15;
+    margin-bottom: 20px;
+    position: relative;
+    max-width: 780px; margin-left: auto; margin-right: auto;
+  }
+  .hero h1 em {
+    font-style: normal; color: var(--green);
+  }
+  .hero-sub {
+    font-size: clamp(15px, 2vw, 18px);
+    color: rgba(255,255,255,0.72);
+    max-width: 560px; margin: 0 auto 36px;
+    position: relative;
+  }
+  .hero-btns {
+    display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;
+    position: relative;
+  }
+  .btn-primary {
+    background: var(--green);
+    color: var(--white);
+    padding: 15px 34px;
+    border-radius: 10px;
+    font-size: 16px; font-weight: 700;
+    text-decoration: none;
+    border: none; cursor: pointer;
+    transition: background .2s, transform .15s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--green-dark); transform: translateY(-2px); }
+  .btn-outline {
+    background: transparent;
+    color: var(--white);
+    padding: 15px 34px;
+    border-radius: 10px;
+    font-size: 16px; font-weight: 600;
+    text-decoration: none;
+    border: 2px solid rgba(255,255,255,0.3);
+    cursor: pointer;
+    transition: border-color .2s, transform .15s;
+    display: inline-block;
+  }
+  .btn-outline:hover { border-color: var(--green); transform: translateY(-2px); }
+  .hero-stats {
+    display: flex; gap: 40px; justify-content: center; flex-wrap: wrap;
+    margin-top: 56px; padding-top: 40px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    position: relative;
+  }
+  .stat-item { text-align: center; }
+  .stat-num { font-size: 32px; font-weight: 800; color: var(--green); }
+  .stat-label { font-size: 13px; color: rgba(255,255,255,0.55); margin-top: 2px; }
+
+  /* SECTION BASE */
+  section { padding: 72px 24px; }
+  .container { max-width: 1100px; margin: 0 auto; }
+  .section-tag {
+    font-size: 12px; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--green);
+    margin-bottom: 10px;
+  }
+  .section-title {
+    font-size: clamp(22px, 3.5vw, 36px);
+    font-weight: 800; line-height: 1.2;
+    margin-bottom: 14px;
+  }
+  .section-sub {
+    font-size: 16px; color: var(--gray-text);
+    max-width: 520px;
+    margin-bottom: 48px;
+  }
+
+  /* BENEFITS */
+  .benefits { background: var(--gray-light); }
+  .benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+    margin-top: 48px;
+  }
+  .benefit-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 32px 28px;
+    box-shadow: var(--shadow);
+    transition: transform .2s, box-shadow .2s;
+    border: 1px solid var(--gray-mid);
+  }
+  .benefit-card:hover { transform: translateY(-4px); box-shadow: 0 8px 40px rgba(26,39,68,0.14); }
+  .benefit-icon {
+    width: 52px; height: 52px;
+    background: linear-gradient(135deg, rgba(46,204,111,0.12), rgba(46,204,111,0.05));
+    border-radius: 13px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px; margin-bottom: 18px;
+  }
+  .benefit-card h3 { font-size: 17px; font-weight: 700; margin-bottom: 10px; }
+  .benefit-card p { font-size: 14px; color: var(--gray-text); line-height: 1.65; }
+
+  /* SERVICES */
+  .services-tabs {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    margin-bottom: 36px;
+  }
+  .tab-btn {
+    padding: 9px 20px;
+    border-radius: 8px;
+    border: 2px solid var(--gray-mid);
+    background: transparent;
+    font-size: 14px; font-weight: 600; cursor: pointer;
+    color: var(--gray-text);
+    transition: all .2s;
+  }
+  .tab-btn.active {
+    border-color: var(--navy);
+    background: var(--navy);
+    color: var(--white);
+  }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+  }
+  .service-card {
+    border: 1.5px solid var(--gray-mid);
+    border-radius: var(--radius);
+    padding: 28px 24px;
+    transition: border-color .2s, box-shadow .2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .service-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: var(--green);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform .25s;
+  }
+  .service-card:hover::before { transform: scaleX(1); }
+  .service-card:hover { border-color: var(--green); box-shadow: 0 4px 20px rgba(46,204,111,0.12); }
+  .service-num {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+    color: var(--green); margin-bottom: 12px;
+  }
+  .service-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+  .service-card p { font-size: 13px; color: var(--gray-text); line-height: 1.6; }
+  .service-price {
+    margin-top: 16px; font-size: 15px; font-weight: 700; color: var(--navy);
+  }
+
+  /* HOW WE WORK */
+  .process { background: var(--navy); color: var(--white); }
+  .process .section-sub { color: rgba(255,255,255,0.55); }
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0;
+    margin-top: 48px;
+    position: relative;
+  }
+  .steps::before {
+    content: '';
+    position: absolute;
+    top: 32px; left: 10%; right: 10%; height: 2px;
+    background: linear-gradient(90deg, var(--green), rgba(46,204,111,0.2));
+  }
+  @media (max-width: 600px) { .steps::before { display: none; } }
+  .step {
+    text-align: center;
+    padding: 0 20px 24px;
+    position: relative;
+  }
+  .step-num {
+    width: 64px; height: 64px;
+    background: var(--green);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; font-weight: 800;
+    margin: 0 auto 20px;
+    position: relative; z-index: 1;
+    box-shadow: 0 0 0 6px rgba(46,204,111,0.2);
+  }
+  .step h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+  .step p { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.6; }
+
+  /* VIDEO SECTION */
+  .video-section { background: var(--gray-light); }
+  .video-wrap {
+    max-width: 720px; margin: 0 auto;
+    border-radius: 18px; overflow: hidden;
+    box-shadow: 0 12px 48px rgba(26,39,68,0.16);
+  }
+  .video-placeholder {
+    background: linear-gradient(135deg, #1a2744, #243361);
+    aspect-ratio: 16/9;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 16px; color: var(--white);
+  }
+  .play-btn {
+    width: 72px; height: 72px;
+    background: var(--green);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px;
+    box-shadow: 0 0 0 12px rgba(46,204,111,0.18);
+  }
+  .video-placeholder p { font-size: 15px; opacity: 0.6; }
+
+  /* PRICING */
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+    margin-top: 48px;
+  }
+  .pricing-card {
+    border-radius: var(--radius);
+    padding: 36px 28px;
+    border: 2px solid var(--gray-mid);
+    text-align: center;
+    position: relative;
+    transition: transform .2s, box-shadow .2s;
+  }
+  .pricing-card.popular {
+    border-color: var(--green);
+    box-shadow: 0 8px 40px rgba(46,204,111,0.15);
+  }
+  .pricing-card:hover { transform: translateY(-4px); }
+  .popular-badge {
+    position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+    background: var(--green); color: var(--white);
+    font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
+    padding: 4px 16px; border-radius: 20px;
+    text-transform: uppercase;
+  }
+  .pricing-name { font-size: 13px; font-weight: 700; color: var(--gray-text); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px; }
+  .pricing-price { font-size: 38px; font-weight: 800; color: var(--navy); margin-bottom: 4px; }
+  .pricing-price sub { font-size: 16px; font-weight: 500; }
+  .pricing-period { font-size: 13px; color: var(--gray-text); margin-bottom: 24px; }
+  .pricing-features { list-style: none; text-align: left; margin-bottom: 28px; }
+  .pricing-features li {
+    font-size: 14px; color: var(--gray-text);
+    padding: 7px 0; border-bottom: 1px solid var(--gray-mid);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .pricing-features li::before { content: '✓'; color: var(--green); font-weight: 700; }
+
+  /* REGIONS */
+  .regions { background: var(--gray-light); }
+  .regions-list {
+    display: flex; flex-wrap: wrap; gap: 10px; margin-top: 32px;
+  }
+  .region-tag {
+    background: var(--white); border: 1.5px solid var(--gray-mid);
+    border-radius: 8px; padding: 8px 16px;
+    font-size: 13px; font-weight: 600; color: var(--navy);
+    display: flex; align-items: center; gap: 6px;
+  }
+
+  /* TESTIMONIAL */
+  .testimonials { background: var(--white); }
+  .review-card {
+    background: var(--gray-light);
+    border-radius: var(--radius);
+    padding: 36px 32px;
+    max-width: 680px; margin: 0 auto;
+    border-left: 4px solid var(--green);
+    box-shadow: var(--shadow);
+  }
+  .review-text {
+    font-size: 17px; line-height: 1.7;
+    font-style: italic; color: var(--navy);
+    margin-bottom: 20px;
+  }
+  .review-author {
+    display: flex; align-items: center; gap: 14px;
+  }
+  .review-avatar {
+    width: 48px; height: 48px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--navy), var(--green));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; color: var(--white); font-weight: 700;
+    flex-shrink: 0;
+  }
+  .review-name { font-weight: 700; font-size: 15px; }
+  .review-meta { font-size: 13px; color: var(--gray-text); }
+  .stars { color: #f5a623; font-size: 16px; margin-bottom: 4px; }
+
+  /* FAQ */
+  .faq { background: var(--gray-light); }
+  .faq-list { max-width: 720px; margin: 0 auto; }
+  .faq-item {
+    background: var(--white);
+    border-radius: 10px;
+    margin-bottom: 12px;
+    overflow: hidden;
+    border: 1.5px solid var(--gray-mid);
+  }
+  .faq-q {
+    padding: 20px 24px;
+    font-size: 15px; font-weight: 600;
+    display: flex; justify-content: space-between; align-items: center;
+    cursor: pointer; gap: 12px;
+  }
+  .faq-icon { color: var(--green); font-size: 20px; flex-shrink: 0; }
+  .faq-a {
+    padding: 0 24px 20px;
+    font-size: 14px; color: var(--gray-text); line-height: 1.7;
+  }
+
+  /* FORM */
+  .form-section {
+    background: linear-gradient(135deg, #1a2744, #1a3a5c);
+    color: var(--white);
+    text-align: center;
+  }
+  .form-section .section-sub { color: rgba(255,255,255,0.6); margin-left: auto; margin-right: auto; }
+  .form-wrap {
+    max-width: 560px; margin: 0 auto;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 20px;
+    padding: 40px 36px;
+  }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 480px) { .form-row { grid-template-columns: 1fr; } }
+  .form-group { margin-bottom: 16px; text-align: left; }
+  .form-group label { font-size: 12px; color: rgba(255,255,255,0.55); display: block; margin-bottom: 6px; }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    background: rgba(255,255,255,0.08);
+    border: 1.5px solid rgba(255,255,255,0.15);
+    border-radius: 9px;
+    padding: 12px 16px;
+    color: var(--white);
+    font-size: 15px;
+    outline: none;
+    transition: border-color .2s;
+  }
+  .form-group input::placeholder,
+  .form-group textarea::placeholder { color: rgba(255,255,255,0.3); }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus { border-color: var(--green); }
+  .form-group select option { color: var(--navy); background: var(--white); }
+  .form-group textarea { resize: none; height: 90px; }
+  .form-note { font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 14px; }
+
+  /* FOOTER */
+  footer {
+    background: #10192e;
+    color: rgba(255,255,255,0.55);
+    padding: 48px 24px 28px;
+  }
+  .footer-top {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px;
+    margin-bottom: 40px;
+  }
+  @media (max-width: 768px) {
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; }
+  }
+  @media (max-width: 480px) {
+    .footer-top { grid-template-columns: 1fr; }
+  }
+  .footer-brand { }
+  .footer-logo { color: var(--white); font-size: 20px; font-weight: 800; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+  .footer-desc { font-size: 13px; line-height: 1.7; }
+  .footer-col h4 { color: var(--white); font-size: 14px; font-weight: 700; margin-bottom: 14px; }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: 8px; }
+  .footer-col ul li a { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 13px; transition: color .2s; }
+  .footer-col ul li a:hover { color: var(--green); }
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 20px;
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;
+    font-size: 12px;
+  }
+  .footer-langs { display: flex; gap: 8px; }
+  .footer-langs a {
+    color: rgba(255,255,255,0.4); text-decoration: none;
+    font-size: 12px; font-weight: 600;
+    padding: 3px 8px; border: 1px solid rgba(255,255,255,0.15); border-radius: 4px;
+    transition: color .2s, border-color .2s;
+  }
+  .footer-langs a:hover { color: var(--green); border-color: var(--green); }
+</style>
+</head>
+<body>
+
+<!-- DEMO BANNER -->
+<div class="demo-banner">Демо-набросок · studio Алёны · не финал &nbsp;—&nbsp; под доработку после согласования</div>
+
+<!-- NAV -->
+<nav class="topbar">
+  <a href="#" class="logo">
+    <div class="logo-icon">💼</div>
+    <div class="logo-text">БухПрофи<span>Бухгалтерские услуги онлайн</span></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#services">Услуги</a></li>
+    <li><a href="#pricing">Тарифы</a></li>
+    <li><a href="#faq">Вопросы</a></li>
+    <li><a href="#contact" class="nav-cta">Оставить заявку</a></li>
+  </ul>
+  <div class="lang-switcher">
+    <span class="active">RU</span>
+    <span>EN</span>
+    <span>UZ</span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-badge">🏆 Профессиональная бухгалтерия онлайн</div>
+    <h1>Бухгалтерия без головной боли — <em>мы берём всё на себя</em></h1>
+    <p class="hero-sub">Ведём учёт, сдаём отчётность и решаем налоговые вопросы для ИП и компаний по всей России. Без риска штрафов.</p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn-primary">Получить консультацию →</a>
+      <a href="#services" class="btn-outline">Посмотреть услуги</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">1200+</div>
+        <div class="stat-label">клиентов доверяют нам</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">0 ₽</div>
+        <div class="stat-label">штрафов по нашей вине</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">8 лет</div>
+        <div class="stat-label">на рынке бухгалтерии</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">15 рег.</div>
+        <div class="stat-label">работаем в России</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BENEFITS -->
+<section class="benefits" id="benefits">
+  <div class="container">
+    <div class="section-tag">Почему выбирают нас</div>
+    <div class="section-title">Всё что нужно — уже включено</div>
+    <p class="section-sub">Мы не просто ведём цифры — мы снимаем тревогу за бизнес и освобождаем ваше время.</p>
+    <div class="benefits-grid">
+      <div class="benefit-card">
+        <div class="benefit-icon">🔒</div>
+        <h3>Гарантия точности</h3>
+        <p>Если мы ошиблись — штраф за наш счёт. Страхование ответственности включено в каждый тариф.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">⚡</div>
+        <h3>Ответ за 2 часа</h3>
+        <p>Ваш персональный бухгалтер на связи в рабочее время. Срочные вопросы решаем быстро.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">🌍</div>
+        <h3>Работаем везде</h3>
+        <p>Обслуживаем клиентов из 15 регионов России полностью онлайн. Документы — электронно.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">📊</div>
+        <h3>Прозрачные отчёты</h3>
+        <p>Личный кабинет с отчётами в реальном времени. Всегда знаете, что происходит с вашими деньгами.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="container">
+    <div class="section-tag">Каталог услуг</div>
+    <div class="section-title">Что мы делаем для вашего бизнеса</div>
+    <p class="section-sub">Полный спектр бухгалтерских и налоговых услуг — от первичных документов до судебной защиты.</p>
+    <div class="services-tabs">
+      <button class="tab-btn active">Все услуги</button>
+      <button class="tab-btn">Для ИП</button>
+      <button class="tab-btn">Для ООО</button>
+      <button class="tab-btn">Налоги</button>
+      <button class="tab-btn">Кадры</button>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-num">01</div>
+        <h3>Ведение бухгалтерского учёта</h3>
+        <p>Первичка, регистры, проводки. Работаем с 1С, МойСклад, Контур и вашими системами.</p>
+        <div class="service-price">от ___ ₽/мес</div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">02</div>
+        <h3>Налоговая отчётность</h3>
+        <p>Декларации по НДС, прибыли, УСН, ЕСХН. Сдача через ЭДО точно в срок.</p>
+        <div class="service-price">от ___ ₽</div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">03</div>
+        <h3>Расчёт заработной платы</h3>
+        <p>Зарплата, отпускные, больничные, НДФЛ и страховые взносы. Любое количество сотрудников.</p>
+        <div class="service-price">от ___ ₽/чел</div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">04</div>
+        <h3>Регистрация ИП и ООО</h3>
+        <p>Полное сопровождение с нуля: документы, регистрация, выбор системы налогообложения.</p>
+        <div class="service-price">от ___ ₽</div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">05</div>
+        <h3>Налоговый аудит</h3>
+        <p>Проверяем ваш учёт до налоговой. Находим ошибки и экономим на налогах законно.</p>
+        <div class="service-price">от ___ ₽</div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">06</div>
+        <h3>Восстановление учёта</h3>
+        <p>Наведём порядок в запущенном учёте. Работаем с задолженностью за любой период.</p>
+        <div class="service-price">от ___ ₽</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW WE WORK -->
+<section class="process" id="how">
+  <div class="container">
+    <div class="section-tag" style="color:var(--green)">Как мы работаем</div>
+    <div class="section-title" style="color:#fff">4 шага до спокойного бизнеса</div>
+    <p class="section-sub">От заявки до готовой отчётности — просто и прозрачно.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Заявка</h3>
+        <p>Оставляете контакт — мы перезваниваем в течение 2 часов и узнаём задачу.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>Анализ</h3>
+        <p>Изучаем бизнес, текущий учёт и выбираем оптимальную схему работы.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>Договор</h3>
+        <p>Подписываем договор с ответственностью, фиксируем стоимость и сроки.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <h3>Работа</h3>
+        <p>Ведём учёт, сдаём отчёты, держим вас в курсе. Вы занимаетесь бизнесом.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VIDEO -->
+<section class="video-section">
+  <div class="container">
+    <div class="section-tag" style="text-align:center">Видео о нас</div>
+    <div class="section-title" style="text-align:center; margin-bottom:12px">Посмотрите, как мы работаем</div>
+    <p class="section-sub" style="text-align:center; margin-left:auto; margin-right:auto; margin-bottom:36px">Короткое видео о команде, процессе и результатах наших клиентов.</p>
+    <div class="video-wrap">
+      <div class="video-placeholder">
+        <div class="play-btn">▶</div>
+        <p>Видео с YouTube · [вставить ссылку]</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="container">
+    <div class="section-tag">Тарифы и цены</div>
+    <div class="section-title">Прозрачные цены без скрытых платежей</div>
+    <p class="section-sub">Выберите подходящий пакет или запросите индивидуальное предложение.</p>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <div class="pricing-name">Старт</div>
+        <div class="pricing-price">___ <sub>₽</sub></div>
+        <div class="pricing-period">в месяц · для ИП на УСН</div>
+        <ul class="pricing-features">
+          <li>Ведение учёта (до 30 операций)</li>
+          <li>Квартальная отчётность</li>
+          <li>Расчёт налогов</li>
+          <li>Консультации по email</li>
+        </ul>
+        <a href="#contact" class="btn-primary" style="display:block; text-align:center;">Выбрать →</a>
+      </div>
+      <div class="pricing-card popular">
+        <div class="popular-badge">Популярный</div>
+        <div class="pricing-name">Бизнес</div>
+        <div class="pricing-price">___ <sub>₽</sub></div>
+        <div class="pricing-period">в месяц · для ООО и ИП</div>
+        <ul class="pricing-features">
+          <li>Ведение учёта (до 150 операций)</li>
+          <li>Полная отчётность + НДС</li>
+          <li>Расчёт зарплаты до 5 чел.</li>
+          <li>Поддержка в чате 5 дней/нед.</li>
+          <li>Кадровые документы</li>
+        </ul>
+        <a href="#contact" class="btn-primary" style="display:block; text-align:center;">Выбрать →</a>
+      </div>
+      <div class="pricing-card">
+        <div class="pricing-name">Премиум</div>
+        <div class="pricing-price">___ <sub>₽</sub></div>
+        <div class="pricing-period">в месяц · без ограничений</div>
+        <ul class="pricing-features">
+          <li>Неограниченные операции</li>
+          <li>Полная отчётность + все налоги</li>
+          <li>Расчёт зарплаты без лимита</li>
+          <li>Персональный бухгалтер</li>
+          <li>Налоговое планирование</li>
+          <li>Представление в ИФНС</li>
+        </ul>
+        <a href="#contact" class="btn-primary" style="display:block; text-align:center;">Выбрать →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REGIONS -->
+<section class="regions">
+  <div class="container">
+    <div class="section-tag">Мультирегиональность</div>
+    <div class="section-title">Работаем по всей России</div>
+    <p class="section-sub">Полностью онлайн — неважно, в каком городе вы находитесь.</p>
+    <div class="regions-list">
+      <div class="region-tag">📍 Москва</div>
+      <div class="region-tag">📍 Санкт-Петербург</div>
+      <div class="region-tag">📍 Новосибирск</div>
+      <div class="region-tag">📍 Екатеринбург</div>
+      <div class="region-tag">📍 Казань</div>
+      <div class="region-tag">📍 Якутия</div>
+      <div class="region-tag">📍 Краснодар</div>
+      <div class="region-tag">📍 Ростов-на-Дону</div>
+      <div class="region-tag">📍 Уфа</div>
+      <div class="region-tag">📍 Красноярск</div>
+      <div class="region-tag">📍 Пермь</div>
+      <div class="region-tag">+ ещё 4 региона</div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<section class="testimonials" id="reviews">
+  <div class="container">
+    <div class="section-tag" style="text-align:center">Отзывы клиентов</div>
+    <div class="section-title" style="text-align:center; margin-bottom:40px">Что говорят наши клиенты</div>
+    <div class="review-card">
+      <div class="stars">★★★★★</div>
+      <div class="review-text">«Передал бухгалтерию БухПрофи после того, как сам запутался в отчётах. Они разобрались с задолженностью за полтора года, восстановили учёт и теперь ведут текущий. Ни одного штрафа, ни одной просрочки. Спокойствие бесценно.»</div>
+      <div class="review-author">
+        <div class="review-avatar">А</div>
+        <div>
+          <div class="review-name">Александр К.</div>
+          <div class="review-meta">Владелец ООО «СтройМастер» · Екатеринбург</div>
+        </div>
+      </div>
+    </div>
+    <p style="text-align:center; margin-top:24px; font-size:14px; color:var(--gray-text);">[Блок отзывов будет дополнен реальными текстами и фотографиями]</p>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="container">
+    <div class="section-tag" style="text-align:center">Вопрос — ответ</div>
+    <div class="section-title" style="text-align:center; margin-bottom:40px">Часто задаваемые вопросы</div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q">Как быстро вы берётесь за работу после заключения договора? <span class="faq-icon">+</span></div>
+        <div class="faq-a">Приступаем в день подписания договора. Если нужно восстановить запущенный учёт — проводим аудит в течение 2–3 рабочих дней и сразу начинаем работу.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Работаете ли вы с иностранными компаниями и нерезидентами? <span class="faq-icon">+</span></div>
+        <div class="faq-a">Да, сопровождаем компании с иностранным участием, ВЭД, валютные операции и агентские схемы. Мультиязычность — RU, EN, UZ — поддерживается на сайте.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Что если налоговая выставит претензии по нашей ошибке? <span class="faq-icon">+</span></div>
+        <div class="faq-a">Берём на себя ответственность: штрафы и пени, возникшие по нашей вине, компенсируем. Это прописано в договоре. Дополнительно страхуем профессиональную ответственность.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Могу ли я перейти к вам от другого бухгалтера? <span class="faq-icon">+</span></div>
+        <div class="faq-a">Конечно. Мы берём дела в любом состоянии. Забираем документацию, проверяем остатки, выстраиваем учёт с нуля — без потерь данных и истории.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Какие системы и программы вы поддерживаете? <span class="faq-icon">+</span></div>
+        <div class="faq-a">Работаем с 1С всех версий, Контур.Бухгалтерия, МойСклад, Битрикс24, amoCRM. При необходимости адаптируемся под вашу систему или помогаем с переходом.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORM -->
+<section class="form-section" id="contact">
+  <div class="container">
+    <div class="section-tag" style="color:var(--green)">Оставить заявку</div>
+    <div class="section-title" style="color:#fff; margin-bottom:12px">Получите бесплатную консультацию</div>
+    <p class="section-sub" style="margin-bottom:36px">Расскажите о задаче — ответим в течение 2 часов и предложим подходящий вариант.</p>
+    <div class="form-wrap">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Ваше имя</label>
+          <input type="text" placeholder="Иван Иванов">
+        </div>
+        <div class="form-group">
+          <label>Телефон</label>
+          <input type="tel" placeholder="+7 ___">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" placeholder="example@mail.ru">
+      </div>
+      <div class="form-group">
+        <label>Тип бизнеса</label>
+        <select>
+          <option>Выберите...</option>
+          <option>ИП на УСН</option>
+          <option>ООО на ОСНО</option>
+          <option>ООО на УСН</option>
+          <option>Самозанятый</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Ваша задача</label>
+        <textarea placeholder="Коротко опишите, что нужно сделать..."></textarea>
+      </div>
+      <button class="btn-primary" style="width:100%; font-size:16px; padding:16px;">Отправить заявку →</button>
+      <div class="form-note">Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности. Данные не передаются третьим лицам.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">💼 БухПрофи</div>
+        <p class="footer-desc">Профессиональные бухгалтерские услуги онлайн. Работаем по всей России с 2016 года. Ответственность застрахована.</p>
+        <div style="margin-top:16px; font-size:14px;">
+          <div style="color:#fff; margin-bottom:4px;">📞 +7 ___</div>
+          <div style="font-size:13px;">пн–пт с 9:00 до 18:00</div>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Услуги</h4>
+        <ul>
+          <li><a href="#">Бухучёт</a></li>
+          <li><a href="#">Налоги</a></li>
+          <li><a href="#">Зарплата</a></li>
+          <li><a href="#">Кадры</a></li>
+          <li><a href="#">Аудит</a></li>
+          <li><a href="#">Регистрация</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Компания</h4>
+        <ul>
+          <li><a href="#">О нас</a></li>
+          <li><a href="#">Команда</a></li>
+          <li><a href="#">Новости</a></li>
+          <li><a href="#">Видео</a></li>
+          <li><a href="#">Отзывы</a></li>
+          <li><a href="#">Контакты</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Поддержка</h4>
+        <ul>
+          <li><a href="#">Вопрос-ответ</a></li>
+          <li><a href="#">Тарифы</a></li>
+          <li><a href="#">Политика</a></li>
+          <li><a href="#">Договор-оферта</a></li>
+          <li><a href="#">Регионы</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2024 БухПрофи · ИНН: ___ · ОГРН: ___</div>
+      <div class="footer-langs">
+        <a href="#">RU</a>
+        <a href="#">EN</a>
+        <a href="#">UZ</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div style="position:fixed;inset:0;z-index:99998;pointer-events:none;opacity:.10;background-image:url(&quot;data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='420' height='300'><text x='0' y='150' transform='rotate(-28 210 150)' font-family='sans-serif' font-size='22' font-weight='700' fill='%23808080' fill-opacity='0.5'>%D0%94%D0%95%D0%9C%D0%9E%20%C2%B7%20%D0%90%D0%9B%D0%81%D0%9D%D0%90%20%D0%9F%D0%A0%D0%90%D0%A1%D0%9E%D0%9B%D0%9E%D0%92%D0%90%20%C2%B7%20%D0%9E%D0%91%D0%A0%D0%90%D0%97%D0%95%D0%A6</text></svg>&quot;);background-repeat:repeat"></div><div style="position:fixed;left:0;right:0;bottom:0;z-index:99999;pointer-events:none;text-align:center;font:600 12px/1.4 sans-serif;color:#fff;background:rgba(20,24,33,.88);padding:7px 12px">Демо-набросок для оценки · © Алёна Прасолова · не для коммерческого использования · рабочая версия и чистовой дизайн — после старта работы</div></body>
+</html>
