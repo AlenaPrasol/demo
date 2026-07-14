@@ -1,0 +1,1104 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Клевер — Кадровое агентство премиум-класса</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #0f1e17;
+    --mid: #2d5240;
+    --accent: #b8945a;
+    --accent-light: #d4b07a;
+    --bg: #f7f5f0;
+    --white: #ffffff;
+    --muted: #7a8c83;
+    --border: #e0dbd0;
+    --radius: 4px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  /* DEMO BANNER */
+  .demo-bar {
+    background: var(--ink);
+    color: var(--accent-light);
+    text-align: center;
+    font-family: -apple-system, 'Helvetica Neue', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 9px 16px;
+  }
+  .demo-bar span { opacity: 0.55; color: #fff; }
+
+  /* NAV */
+  nav {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 0 5vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 68px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--ink);
+  }
+  .logo-mark {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+  }
+  .logo-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.15;
+  }
+  .logo-name {
+    font-size: 18px;
+    font-weight: normal;
+    letter-spacing: 0.04em;
+    color: var(--mid);
+  }
+  .logo-sub {
+    font-family: -apple-system, 'Helvetica Neue', sans-serif;
+    font-size: 9.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+    font-family: -apple-system, 'Helvetica Neue', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+  }
+  .nav-links a { text-decoration: none; color: var(--muted); transition: color .2s; }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-cta {
+    background: var(--accent);
+    color: var(--white);
+    border: none;
+    padding: 10px 22px;
+    font-family: -apple-system, 'Helvetica Neue', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+    border-radius: var(--radius);
+    text-decoration: none;
+    transition: background .2s;
+  }
+  .nav-cta:hover { background: var(--accent-light); }
+
+  @media (max-width: 700px) {
+    .nav-links { display: none; }
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(145deg, #0f1e17 0%, #1a3d2a 50%, #2d5240 100%);
+    color: var(--white);
+    padding: 100px 5vw 90px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    min-height: 82vh;
+  }
+  @media (max-width: 860px) {
+    .hero { grid-template-columns: 1fr; min-height: auto; padding: 64px 5vw 56px; }
+    .hero-visual { display: none; }
+  }
+  .hero-eyebrow {
+    font-family: -apple-system, 'Helvetica Neue', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent-light);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    display: block;
+    width: 28px;
+    height: 1px;
+    background: var(--accent);
+  }
+  .hero h1 {
+    font-size: clamp(28px, 4vw, 52px);
+    font-weight: normal;
+    line-height: 1.2;
+    margin-bottom: 28px;
+    letter-spacing: -0.01em;
+  }
+  .hero h1 em {
+    font-style: normal;
+    color: var(--accent-light);
+  }
+  .hero-lead {
+    font-family: -apple-system, 'Helvetica Neue', sans-serif;
+    font-size: 16px;
+    color: rgba(255,255,255,0.72);
+    line-height: 1.7;
+    margin-bottom: 44px;
+    max-width: 480px;
+  }
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: var(--white);
+    border: none;
+    padding: 15px 36px;
+    font-family: -apple-system, 'Helvetica Neue', sans-serif;
+    font-size: 14px;
+    letter-spacing: 0.07em;
+    cursor: pointer;
+    border-radius: var(--radius);
+    text-decoration: none;
+    transition: background .2s, transform .15s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--accent-light); transform: translateY(-1px); }
+  .btn-ghost {
+    border: 1px solid rgba(255,255,255,0.3);
+    color: rgba(255,255,255,0.8);
+    padding: 15px 36px;
+    font-family: -apple-system, 'Helvetica Neue', sans-serif;
+    font-size: 14px;
+    letter-spacing: 0.07em;
+    cursor: pointer;
+    border-radius: var(--radius);
+    text-decoration: none;
+    transition: border-color .2s, color .2s;
+    display: inline-block;
+  }
+  .btn-ghost:hover { border-color: rgba(255,255,255,0.7); color: #fff; }
+
+  .hero-stats {
+    margin-top: 56px;
+    display: flex;
+    gap: 40px;
+    padding-top: 40px;
+    border-top: 1px solid rgba(255,255,255,0.12);
+  }
+  .stat-item { display: flex; flex-direction: column; }
+  .stat-num {
+    font-size: 30px;
+    color: var(--accent-light);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .stat-label {
+    font-family: -apple-system, 'Helvetica Neue', sans-serif;
+    font-size: 12px;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.05em;
+  }
+
+  /* Hero visual */
+  .hero-visual {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .hero-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 12px;
+    padding: 36px 32px;
+    width: 100%;
+    max-width: 320px;
+    backdrop-filter: blur(8px);
+  }
+  .hcard-tag {
+    background: var(--accent);
+    color: #fff;
+    font-family: -apple-system, sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 20px;
+    display: inline-block;
+    margin-bottom: 20px;
+  }
+  .hcard-role {
+    font-size: 17px;
+    color: #fff;
+    margin-bottom: 6px;
+  }
+  .hcard-company {
+    font-family: -apple-system, sans-serif;
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 24px;
+  }
+  .hcard-divider {
+    height: 1px;
+    background: rgba(255,255,255,0.1);
+    margin-bottom: 20px;
+  }
+  .hcard-row {
+    display: flex;
+    justify-content: space-between;
+    font-family: -apple-system, sans-serif;
+    font-size: 13px;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 10px;
+  }
+  .hcard-row strong { color: rgba(255,255,255,0.85); font-weight: 500; }
+  .hcard-status {
+    margin-top: 24px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: -apple-system, sans-serif;
+    font-size: 12px;
+    color: #6fcf97;
+  }
+  .hcard-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #6fcf97;
+    flex-shrink: 0;
+  }
+
+  /* SECTION SHARED */
+  section { padding: 96px 5vw; }
+  .section-label {
+    font-family: -apple-system, 'Helvetica Neue', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+  .section-title {
+    font-size: clamp(22px, 3vw, 38px);
+    font-weight: normal;
+    line-height: 1.25;
+    color: var(--ink);
+    margin-bottom: 16px;
+    max-width: 520px;
+  }
+  .section-lead {
+    font-family: -apple-system, 'Helvetica Neue', sans-serif;
+    font-size: 16px;
+    color: var(--muted);
+    max-width: 540px;
+    margin-bottom: 60px;
+  }
+
+  /* WHY US */
+  .why { background: var(--white); }
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 2px;
+    border: 1px solid var(--border);
+    margin-top: 64px;
+  }
+  .why-cell {
+    padding: 44px 36px;
+    border: 1px solid var(--border);
+    position: relative;
+    transition: background .2s;
+  }
+  .why-cell:hover { background: var(--bg); }
+  .why-icon {
+    font-size: 28px;
+    margin-bottom: 20px;
+    display: block;
+  }
+  .why-num {
+    position: absolute;
+    top: 20px;
+    right: 24px;
+    font-family: -apple-system, sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--border);
+  }
+  .why-cell h3 {
+    font-size: 17px;
+    font-weight: normal;
+    margin-bottom: 10px;
+    color: var(--ink);
+  }
+  .why-cell p {
+    font-family: -apple-system, 'Helvetica Neue', sans-serif;
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  /* SERVICES */
+  .services { background: var(--bg); }
+  .services-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+  }
+  @media (max-width: 700px) { .services-grid { grid-template-columns: 1fr; } }
+  .service-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 40px 36px;
+    position: relative;
+    overflow: hidden;
+    transition: box-shadow .2s;
+  }
+  .service-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.07); }
+  .service-card.featured {
+    border-color: var(--accent);
+    background: linear-gradient(135deg, #fff 0%, #fdf8f2 100%);
+  }
+  .service-badge {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: var(--accent);
+    color: #fff;
+    font-family: -apple-system, sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 20px;
+  }
+  .service-emoji { font-size: 32px; margin-bottom: 20px; display: block; }
+  .service-card h3 {
+    font-size: 19px;
+    font-weight: normal;
+    margin-bottom: 10px;
+  }
+  .service-card p {
+    font-family: -apple-system, sans-serif;
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.65;
+    margin-bottom: 24px;
+  }
+  .service-price {
+    font-family: -apple-system, sans-serif;
+    font-size: 13px;
+    color: var(--accent);
+    letter-spacing: 0.04em;
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+  }
+
+  /* HOW WE WORK */
+  .process { background: var(--ink); color: var(--white); }
+  .process .section-title { color: var(--white); }
+  .process .section-lead { color: rgba(255,255,255,0.55); }
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0;
+    margin-top: 64px;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .step {
+    padding: 40px 28px;
+    border-right: 1px solid rgba(255,255,255,0.08);
+    position: relative;
+  }
+  .step:last-child { border-right: none; }
+  @media (max-width: 700px) {
+    .process-steps { grid-template-columns: 1fr; }
+    .step { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .step:last-child { border-bottom: none; }
+  }
+  .step-num {
+    font-size: 40px;
+    color: rgba(255,255,255,0.07);
+    font-family: Georgia, serif;
+    line-height: 1;
+    margin-bottom: 20px;
+  }
+  .step h4 {
+    font-size: 15px;
+    font-weight: normal;
+    color: var(--accent-light);
+    margin-bottom: 8px;
+  }
+  .step p {
+    font-family: -apple-system, sans-serif;
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.6;
+  }
+
+  /* FIGMA BLOCK */
+  .collab {
+    background: linear-gradient(135deg, #f7f5f0 0%, #eee9de 100%);
+    padding: 80px 5vw;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+  @media (max-width: 860px) { .collab { grid-template-columns: 1fr; gap: 40px; } }
+  .collab-title {
+    font-size: clamp(20px, 2.5vw, 32px);
+    font-weight: normal;
+    line-height: 1.3;
+    margin-bottom: 20px;
+  }
+  .collab-text {
+    font-family: -apple-system, sans-serif;
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 28px;
+  }
+  .collab-tools {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .tool-badge {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 8px 14px;
+    font-family: -apple-system, sans-serif;
+    font-size: 13px;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .collab-mockup {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+  }
+  .mock-topbar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .mock-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+  }
+  .mock-title {
+    font-family: -apple-system, sans-serif;
+    font-size: 12px;
+    color: var(--muted);
+    margin-left: 6px;
+  }
+  .mock-frame {
+    background: linear-gradient(135deg, #e8f4ec 0%, #d4e8db 100%);
+    border-radius: 6px;
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    margin-bottom: 12px;
+  }
+  .mock-comments {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .mock-comment {
+    background: var(--bg);
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-family: -apple-system, sans-serif;
+    font-size: 12px;
+    color: var(--muted);
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .mc-av {
+    width: 20px; height: 20px; border-radius: 50%;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: bold;
+    color: white;
+  }
+
+  /* TESTIMONIAL */
+  .testimonial {
+    background: var(--white);
+    padding: 96px 5vw;
+    display: flex;
+    justify-content: center;
+  }
+  .testi-inner {
+    max-width: 720px;
+    text-align: center;
+  }
+  .testi-stars { font-size: 20px; margin-bottom: 28px; letter-spacing: 4px; }
+  .testi-quote {
+    font-size: clamp(17px, 2.2vw, 23px);
+    font-weight: normal;
+    line-height: 1.55;
+    color: var(--ink);
+    margin-bottom: 36px;
+    font-style: italic;
+  }
+  .testi-author {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+  }
+  .testi-av {
+    width: 48px; height: 48px; border-radius: 50%;
+    background: linear-gradient(135deg, #2d5240, #b8945a);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: white;
+  }
+  .testi-name { font-size: 15px; color: var(--ink); }
+  .testi-pos {
+    font-family: -apple-system, sans-serif;
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+  .testi-placeholder {
+    display: inline-block;
+    margin-top: 32px;
+    font-family: -apple-system, sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    text-transform: uppercase;
+    border: 1px dashed var(--accent);
+    padding: 6px 14px;
+    border-radius: 3px;
+  }
+
+  /* FORM */
+  .form-section {
+    background: linear-gradient(160deg, #0f1e17 0%, #1a3d2a 100%);
+    padding: 96px 5vw;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+  @media (max-width: 860px) { .form-section { grid-template-columns: 1fr; gap: 48px; } }
+  .form-intro .section-label { color: var(--accent-light); }
+  .form-intro .section-title { color: var(--white); max-width: 100%; }
+  .form-intro-text {
+    font-family: -apple-system, sans-serif;
+    font-size: 15px;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.7;
+    margin-top: 20px;
+  }
+  .tg-note {
+    margin-top: 36px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    padding: 20px 24px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .tg-icon { font-size: 22px; flex-shrink: 0; margin-top: 1px; }
+  .tg-text {
+    font-family: -apple-system, sans-serif;
+    font-size: 13px;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.6;
+  }
+  .tg-text strong { color: rgba(255,255,255,0.9); }
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 500px) { .form-row { grid-template-columns: 1fr; } }
+  label {
+    font-family: -apple-system, sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    margin-bottom: 6px;
+    display: block;
+  }
+  .field { display: flex; flex-direction: column; }
+  input, select, textarea {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: var(--radius);
+    padding: 13px 16px;
+    color: rgba(255,255,255,0.85);
+    font-family: -apple-system, sans-serif;
+    font-size: 14px;
+    outline: none;
+    transition: border-color .2s;
+    width: 100%;
+  }
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--accent);
+  }
+  input::placeholder, textarea::placeholder { color: rgba(255,255,255,0.28); }
+  select option { background: #1a3d2a; color: #fff; }
+  textarea { resize: vertical; min-height: 100px; }
+  .form-submit {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius);
+    padding: 16px;
+    font-family: -apple-system, sans-serif;
+    font-size: 14px;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition: background .2s, transform .15s;
+    margin-top: 6px;
+  }
+  .form-submit:hover { background: var(--accent-light); transform: translateY(-1px); }
+  .form-note {
+    font-family: -apple-system, sans-serif;
+    font-size: 12px;
+    color: rgba(255,255,255,0.3);
+    text-align: center;
+    line-height: 1.5;
+  }
+
+  /* FOOTER */
+  footer {
+    background: #080f0b;
+    color: rgba(255,255,255,0.4);
+    padding: 56px 5vw 40px;
+  }
+  .footer-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 40px;
+    flex-wrap: wrap;
+    margin-bottom: 48px;
+    padding-bottom: 48px;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+  .footer-logo {
+    font-size: 22px;
+    color: rgba(255,255,255,0.8);
+    letter-spacing: 0.06em;
+    margin-bottom: 8px;
+  }
+  .footer-tagline {
+    font-family: -apple-system, sans-serif;
+    font-size: 13px;
+    color: rgba(255,255,255,0.35);
+    max-width: 220px;
+    line-height: 1.6;
+  }
+  .footer-col h5 {
+    font-family: -apple-system, sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 16px;
+    font-weight: 500;
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col li {
+    font-family: -apple-system, sans-serif;
+    font-size: 14px;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 10px;
+  }
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    font-family: -apple-system, sans-serif;
+    font-size: 12px;
+  }
+  .footer-contact {
+    font-family: -apple-system, sans-serif;
+    font-size: 14px;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 8px;
+  }
+  .footer-contact span { color: rgba(255,255,255,0.6); }
+</style>
+</head>
+<body>
+
+<!-- DEMO BANNER -->
+<div class="demo-bar">
+  Демо-набросок · studio Алёны · не финал &nbsp;<span>— показываем подход, тексты и структуру уточняются вместе с вами</span>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">
+    <svg class="logo-mark" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="18" cy="14" r="6" fill="#2d5240"/>
+      <circle cx="10" cy="24" r="5" fill="#2d5240" opacity=".7"/>
+      <circle cx="26" cy="24" r="5" fill="#2d5240" opacity=".7"/>
+      <circle cx="18" cy="14" r="2.5" fill="#b8945a"/>
+      <line x1="18" y1="20" x2="18" y2="29" stroke="#2d5240" stroke-width="1.5"/>
+    </svg>
+    <div class="logo-text">
+      <span class="logo-name">Клевер</span>
+      <span class="logo-sub">Кадровое агентство</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#services">Услуги</a></li>
+    <li><a href="#process">Как работаем</a></li>
+    <li><a href="#collab">Процесс</a></li>
+    <li><a href="#contact">Контакт</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Оставить заявку</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-content">
+    <div class="hero-eyebrow">Премиальный executive search</div>
+    <h1>Находим <em>редких специалистов</em> для компаний, которым важен результат</h1>
+    <p class="hero-lead">
+      Кадровое агентство Клевер работает в узких и специфических нишах, где ошибка в подборе стоит дорого. Мы не ищем «кого-нибудь» — мы находим именно вашего кандидата.
+    </p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">Обсудить задачу</a>
+      <a href="#services" class="btn-ghost">Наши услуги</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <span class="stat-num">___ +</span>
+        <span class="stat-label">Закрытых вакансий</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">___ лет</span>
+        <span class="stat-label">На рынке</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">___ %</span>
+        <span class="stat-label">Клиентов возвращаются</span>
+      </div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-card">
+      <span class="hcard-tag">✔ Активная вакансия</span>
+      <div class="hcard-role">Директор по развитию</div>
+      <div class="hcard-company">Конфиденциально · Москва</div>
+      <div class="hcard-divider"></div>
+      <div class="hcard-row"><span>Отрасль</span><strong>Премиум-сегмент</strong></div>
+      <div class="hcard-row"><span>Уровень</span><strong>C-level</strong></div>
+      <div class="hcard-row"><span>Рассмотрено</span><strong>___ резюме</strong></div>
+      <div class="hcard-row"><span>Финальных</span><strong>3 кандидата</strong></div>
+      <div class="hcard-status">
+        <div class="hcard-dot"></div>
+        В финальной стадии отбора
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="why" id="why">
+  <div class="section-label">Почему Клевер</div>
+  <h2 class="section-title">Мы не очередное рекрутинговое агентство</h2>
+  <p class="section-lead">Нас выбирают компании, которым уже приходилось разочаровываться в массовых кандидатах. Наша специализация — узкие ниши, где важна репутация и точность.</p>
+  <div class="why-grid">
+    <div class="why-cell">
+      <span class="why-num">01</span>
+      <span class="why-icon">🎯</span>
+      <h3>Глубокое погружение в нишу</h3>
+      <p>Мы изучаем специфику вашего рынка, конкурентов и корпоративную культуру — прежде чем начать поиск. Это не шаблонный отклик, а индивидуальный подход.</p>
+    </div>
+    <div class="why-cell">
+      <span class="why-num">02</span>
+      <span class="why-icon">🔍</span>
+      <h3>Executive search, не отклики</h3>
+      <p>Топ-специалисты не размещают резюме. Мы находим их сами — через сеть контактов, прямой поиск и рекомендации внутри отраслевых сообществ.</p>
+    </div>
+    <div class="why-cell">
+      <span class="why-num">03</span>
+      <span class="why-icon">🤝</span>
+      <h3>Гарантия замены</h3>
+      <p>Если в течение согласованного срока кандидат не подойдёт — мы заменяем его бесплатно. Потому что уверены в качестве своей работы.</p>
+    </div>
+    <div class="why-cell">
+      <span class="why-num">04</span>
+      <span class="why-icon">🔒</span>
+      <h3>Полная конфиденциальность</h3>
+      <p>Вакансии, кандидаты и переговоры — всё строго конфиденциально. Мы не публикуем кейсы без явного разрешения клиента.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="section-label">Услуги</div>
+  <h2 class="section-title">Что мы делаем</h2>
+  <p class="section-lead">Каждый формат сотрудничества выстроен под конкретный запрос — от разовой задачи до постоянного партнёрства.</p>
+  <div class="services-grid">
+    <div class="service-card featured">
+      <span class="service-badge">Топ-запрос</span>
+      <span class="service-emoji">👑</span>
+      <h3>Executive Search</h3>
+      <p>Закрытый поиск топ-менеджеров и редких специалистов. Прямой выход на пассивных кандидатов, оценка компетенций, сопровождение до выхода на работу.</p>
+      <div class="service-price">от ___ ₽ · срок согласовывается индивидуально</div>
+    </div>
+    <div class="service-card">
+      <span class="service-emoji">⚡</span>
+      <h3>Срочный подбор</h3>
+      <p>Когда позиция горит. Мобилизуем ресурсы агентства на вашу задачу в приоритетном режиме — первые кандидаты через ___ дней.</p>
+      <div class="service-price">от ___ ₽ · первый выход за ___ дней</div>
+    </div>
+    <div class="service-card">
+      <span class="service-emoji">🔄</span>
+      <h3>HR-аутсорсинг</h3>
+      <p>Берём на себя функцию найма полностью: от профиля должности до адаптации. Подходит для компаний без выстроенного HR-отдела.</p>
+      <div class="service-price">от ___ ₽/мес · пакет на ___ вакансий</div>
+    </div>
+    <div class="service-card">
+      <span class="service-emoji">🎓</span>
+      <h3>Оценка и аудит команды</h3>
+      <p>Анализируем текущий состав команды, выявляем сильных сотрудников и зоны риска. Рекомендации по развитию и реструктуризации.</p>
+      <div class="service-price">от ___ ₽ · индивидуальный расчёт</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process" id="process">
+  <div class="section-label">Как работаем</div>
+  <h2 class="section-title">Прозрачный процесс от брифа до результата</h2>
+  <p class="section-lead">Никаких чёрных ящиков. На каждом этапе вы знаете, что происходит, и можете влиять на направление поиска.</p>
+  <div class="process-steps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <h4>Бриф и погружение</h4>
+      <p>Детальная встреча: кого ищем, какая культура компании, что важно, а что критично. Формируем профиль кандидата вместе.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <h4>Картирование рынка</h4>
+      <p>Анализируем конкурентов, ключевых игроков отрасли и составляем список целевых кандидатов ещё до первого звонка.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <h4>Прямой поиск</h4>
+      <p>Работаем с пассивными кандидатами: выходим на них через профессиональные сообщества и личные связи — не через HeadHunter.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <h4>Оценка и отбор</h4>
+      <p>Интервью, проверка кейсов, рекомендации. До вас доходят только кандидаты, прошедшие полный цикл проверки.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">05</div>
+      <h4>Финал и оффер</h4>
+      <p>Сопровождаем переговоры, помогаем с офером и первыми неделями адаптации. До результата — не бросаем.</p>
+    </div>
+  </div>
+</section>
+
+<!-- COLLAB / FIGMA -->
+<section class="collab" id="collab">
+  <div>
+    <div class="section-label">Совместная работа</div>
+    <h2 class="collab-title">Вы видите процесс на каждом шаге — и можете влиять на него</h2>
+    <p class="collab-text">
+      Мы работаем в открытом формате: каждый этап поиска зафиксирован, прокомментирован и доступен вам в режиме реального времени. Никаких «мы работаем, ждите» — только совместное движение к результату.
+    </p>
+    <div class="collab-tools">
+      <span class="tool-badge">🖼 Figma — согласование профиля</span>
+      <span class="tool-badge">📋 Notion — база кандидатов</span>
+      <span class="tool-badge">✈️ Telegram — оперативная связь</span>
+    </div>
+  </div>
+  <div>
+    <div class="collab-mockup">
+      <div class="mock-topbar">
+        <div class="mock-dot" style="background:#ff5f57"></div>
+        <div class="mock-dot" style="background:#ffbd2e"></div>
+        <div class="mock-dot" style="background:#28c840"></div>
+        <span class="mock-title">Клевер — Кандидаты на позицию директора.fig</span>
+      </div>
+      <div class="mock-frame">📊</div>
+      <div class="mock-comments">
+        <div class="mock-comment">
+          <div class="mc-av" style="background:#2d5240">К</div>
+          <span><strong>Клевер:</strong> Добавили 3 новых профиля, готовы к обсуждению в среду</span>
+        </div>
+        <div class="mock-comment">
+          <div class="mc-av" style="background:#b8945a">В</div>
+          <span><strong>Вы:</strong> Второй кандидат очень интересен, можно подробнее?</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<div class="testimonial">
+  <div class="testi-inner">
+    <div class="testi-stars">★★★★★</div>
+    <p class="testi-quote">
+      «Мы обратились в Клевер после двух неудачных попыток с другими агентствами. Задача была нетривиальная — нам был нужен человек с очень редкой экспертизой. Клевер закрыл позицию за ___ недель. Кандидат до сих пор в команде.»
+    </p>
+    <div class="testi-author">
+      <div class="testi-av">🏢</div>
+      <div>
+        <div class="testi-name">___ ___ ___</div>
+        <div class="testi-pos">Генеральный директор, [название компании]</div>
+      </div>
+    </div>
+    <span class="testi-placeholder">⬡ место для реального отзыва вашего клиента</span>
+  </div>
+</div>
+
+<!-- FORM -->
+<section class="form-section" id="contact">
+  <div class="form-intro">
+    <div class="section-label">Оставить заявку</div>
+    <h2 class="section-title">Расскажите нам о задаче</h2>
+    <p class="form-intro-text">
+      Мы не используем шаблонные ответы. После заявки с вами свяжется менеджер, который специализируется именно на вашей отрасли.
+    </p>
+    <p class="form-intro-text" style="margin-top:12px;">
+      Телефон: <span style="color:rgba(255,255,255,0.7)">+7 ___</span><br>
+      Email: <span style="color:rgba(255,255,255,0.7)">___ @clever-hr.ru</span>
+    </p>
+    <div class="tg-note">
+      <span class="tg-icon">✈️</span>
+      <div class="tg-text">
+        <strong>Заявки принимаем через Telegram-бот.</strong><br>
+        Быстрее всего — написать напрямую в бот: @___ clever_bot. Получите ответ в течение ___ часов в рабочее время.
+      </div>
+    </div>
+  </div>
+  <form onsubmit="return false;">
+    <div class="form-row">
+      <div class="field">
+        <label>Ваше имя</label>
+        <input type="text" placeholder="Александр Петров">
+      </div>
+      <div class="field">
+        <label>Компания</label>
+        <input type="text" placeholder="ООО «Название»">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="field">
+        <label>Телефон</label>
+        <input type="tel" placeholder="+7 ___ ___ __ __">
+      </div>
+      <div class="field">
+        <label>Telegram / Email</label>
+        <input type="text" placeholder="@username или mail@">
+      </div>
+    </div>
+    <div class="field">
+      <label>Тип задачи</label>
+      <select>
+        <option value="" disabled selected>Выберите формат сотрудничества</option>
+        <option>Executive Search (топ-позиция)</option>
+        <option>Срочный подбор специалиста</option>
+        <option>HR-аутсорсинг</option>
+        <option>Оценка команды</option>
+        <option>Другое — опишу в комментарии</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Коротко о задаче</label>
+      <textarea placeholder="Расскажите: какую позицию ищете, в какой отрасли, есть ли особые требования. Чем подробнее — тем точнее наш ответ."></textarea>
+    </div>
+    <button type="submit" class="form-submit">Отправить заявку</button>
+    <p class="form-note">Отправляя форму, вы соглашаетесь на обработку персональных данных.<br>Мы не передаём их третьим лицам.</p>
+  </form>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-logo">Клевер</div>
+      <div class="footer-tagline">Кадровое агентство премиум-класса. Поиск людей, от которых зависит результат.</div>
+    </div>
+    <div class="footer-col">
+      <h5>Услуги</h5>
+      <ul>
+        <li>Executive Search</li>
+        <li>Срочный подбор</li>
+        <li>HR-аутсорсинг</li>
+        <li>Оценка команды</li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Агентство</h5>
+      <ul>
+        <li>О нас</li>
+        <li>Портфолио</li>
+        <li>Отзывы</li>
+        <li>Контакты</li>
+      </ul>
+    </div>
+    <div>
+      <h5 style="font-family:-apple-system,sans-serif;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:16px;">Связь</h5>
+      <div class="footer-contact">Телефон: <span>+7 ___</span></div>
+      <div class="footer-contact">Email: <span>___ @clever-hr.ru</span></div>
+      <div class="footer-contact" style="margin-top:8px;">Telegram: <span>@___ clever_bot</span></div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Кадровое агентство Клевер. Все права защищены.</span>
+    <span>Политика конфиденциальности · Обработка данных</span>
+  </div>
+</footer>
+
+<div style="position:fixed;inset:0;z-index:99998;pointer-events:none;opacity:.10;background-image:url(&quot;data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='420' height='300'><text x='0' y='150' transform='rotate(-28 210 150)' font-family='sans-serif' font-size='22' font-weight='700' fill='%23808080' fill-opacity='0.5'>%D0%94%D0%95%D0%9C%D0%9E%20%C2%B7%20%D0%90%D0%9B%D0%81%D0%9D%D0%90%20%D0%9F%D0%A0%D0%90%D0%A1%D0%9E%D0%9B%D0%9E%D0%92%D0%90%20%C2%B7%20%D0%9E%D0%91%D0%A0%D0%90%D0%97%D0%95%D0%A6</text></svg>&quot;);background-repeat:repeat"></div><div style="position:fixed;left:0;right:0;bottom:0;z-index:99999;pointer-events:none;text-align:center;font:600 12px/1.4 sans-serif;color:#fff;background:rgba(20,24,33,.88);padding:7px 12px">Демо-набросок для оценки · © Алёна Прасолова · не для коммерческого использования · рабочая версия и чистовой дизайн — после старта работы</div></body>
+</html>
