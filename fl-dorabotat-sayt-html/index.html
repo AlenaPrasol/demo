@@ -1,0 +1,753 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Тестирование водителей — демо</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #1C2D5A;
+    --light: #F4F6FA;
+    --accent: #E84B1A;
+    --accent2: #FF6B3D;
+    --text: #2A2A3A;
+    --muted: #6B7280;
+    --white: #ffffff;
+    --border: #DDE3EE;
+    --radius: 14px;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    background: var(--white);
+    color: var(--text);
+    line-height: 1.6;
+    font-size: 16px;
+  }
+
+  /* === DEMO BADGE === */
+  .demo-badge {
+    background: var(--navy);
+    color: rgba(255,255,255,0.85);
+    text-align: center;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    padding: 8px 16px;
+  }
+  .demo-badge span { color: var(--accent2); font-weight: 600; }
+
+  /* === NAV === */
+  nav {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 1px 8px rgba(28,45,90,0.07);
+  }
+  .nav-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .logo {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--navy);
+    letter-spacing: -0.5px;
+  }
+  .logo span { color: var(--accent); }
+  .nav-tabs {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+  .nav-tabs a {
+    text-decoration: none;
+    font-size: 13px;
+    color: var(--muted);
+    padding: 6px 12px;
+    border-radius: 8px;
+    transition: all .2s;
+    white-space: nowrap;
+  }
+  .nav-tabs a:hover { background: var(--light); color: var(--navy); }
+  .nav-tabs a.active {
+    background: var(--accent);
+    color: var(--white);
+    font-weight: 600;
+  }
+
+  /* === HERO === */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, #2B4490 60%, #1C2D5A 100%);
+    color: var(--white);
+    padding: 72px 24px 80px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(232,75,26,0.18) 0%, transparent 70%);
+    top: -100px; right: -100px;
+    border-radius: 50%;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
+    bottom: -60px; left: -60px;
+    border-radius: 50%;
+  }
+  .hero-inner { max-width: 780px; margin: 0 auto; position: relative; z-index: 1; }
+  .hero-tag {
+    display: inline-block;
+    background: rgba(232,75,26,0.25);
+    border: 1px solid rgba(232,75,26,0.5);
+    color: #FF9070;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 20px;
+    margin-bottom: 24px;
+  }
+  .hero h1 {
+    font-size: clamp(28px, 5vw, 52px);
+    font-weight: 900;
+    line-height: 1.15;
+    margin-bottom: 20px;
+    letter-spacing: -1px;
+  }
+  .hero h1 em { color: var(--accent2); font-style: normal; }
+  .hero-sub {
+    font-size: clamp(15px, 2.5vw, 19px);
+    color: rgba(255,255,255,0.78);
+    max-width: 580px;
+    margin: 0 auto 36px;
+  }
+  .hero-btns {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: var(--white);
+    padding: 14px 32px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: all .2s;
+    display: inline-block;
+    box-shadow: 0 4px 20px rgba(232,75,26,0.4);
+  }
+  .btn-primary:hover { background: #c93d12; transform: translateY(-1px); }
+  .btn-outline {
+    background: transparent;
+    color: var(--white);
+    padding: 13px 28px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    border: 2px solid rgba(255,255,255,0.35);
+    cursor: pointer;
+    transition: all .2s;
+    display: inline-block;
+  }
+  .btn-outline:hover { border-color: rgba(255,255,255,0.7); background: rgba(255,255,255,0.08); }
+
+  .hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 56px;
+    flex-wrap: wrap;
+  }
+  .stat { text-align: center; }
+  .stat-num { font-size: 32px; font-weight: 900; color: var(--white); }
+  .stat-num span { color: var(--accent2); }
+  .stat-label { font-size: 12px; color: rgba(255,255,255,0.55); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 2px; }
+
+  /* === SECTIONS === */
+  section { padding: 72px 24px; }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+  .section-tag {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+  .section-title {
+    font-size: clamp(22px, 4vw, 36px);
+    font-weight: 800;
+    color: var(--navy);
+    margin-bottom: 14px;
+    letter-spacing: -0.5px;
+  }
+  .section-sub {
+    font-size: 16px;
+    color: var(--muted);
+    max-width: 540px;
+    margin-bottom: 48px;
+  }
+
+  /* === TABS === */
+  .tabs-section { background: var(--light); }
+  .tabs-toggle {
+    display: flex;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 5px;
+    width: fit-content;
+    margin-bottom: 40px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+  }
+  .tab-btn {
+    padding: 12px 28px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    color: var(--muted);
+    transition: all .2s;
+  }
+  .tab-btn.on {
+    background: var(--navy);
+    color: var(--white);
+    box-shadow: 0 3px 12px rgba(28,45,90,0.25);
+  }
+
+  .tab-content { display: none; }
+  .tab-content.on { display: block; }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    gap: 20px;
+  }
+  .card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    transition: box-shadow .2s, transform .2s;
+  }
+  .card:hover { box-shadow: 0 8px 30px rgba(28,45,90,0.10); transform: translateY(-3px); }
+  .card-icon {
+    font-size: 36px;
+    margin-bottom: 16px;
+    display: block;
+  }
+  .card h3 { font-size: 17px; font-weight: 700; color: var(--navy); margin-bottom: 10px; }
+  .card p { font-size: 14px; color: var(--muted); line-height: 1.65; }
+
+  /* === BENEFITS === */
+  .benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 24px;
+  }
+  .benefit {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .benefit-ico {
+    width: 48px; height: 48px;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+  .benefit-text h4 { font-size: 15px; font-weight: 700; color: var(--navy); margin-bottom: 5px; }
+  .benefit-text p { font-size: 13px; color: var(--muted); }
+
+  /* === HOW IT WORKS === */
+  .how { background: var(--navy); }
+  .how .section-title { color: var(--white); }
+  .how .section-sub { color: rgba(255,255,255,0.55); }
+  .how .section-tag { color: var(--accent2); }
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 32px;
+    position: relative;
+  }
+  .step {
+    text-align: center;
+    position: relative;
+  }
+  .step-num {
+    width: 56px; height: 56px;
+    background: var(--accent);
+    color: var(--white);
+    border-radius: 50%;
+    font-size: 22px;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 18px;
+    box-shadow: 0 4px 16px rgba(232,75,26,0.4);
+  }
+  .step h3 { font-size: 16px; font-weight: 700; color: var(--white); margin-bottom: 8px; }
+  .step p { font-size: 13px; color: rgba(255,255,255,0.55); }
+
+  /* === REVIEW === */
+  .review-block {
+    background: linear-gradient(135deg, var(--light) 0%, #EBF0FF 100%);
+    border-radius: 20px;
+    padding: 48px;
+    max-width: 720px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+  }
+  .quote-mark {
+    font-size: 80px;
+    color: var(--navy);
+    opacity: 0.12;
+    font-family: Georgia, serif;
+    line-height: 1;
+    position: absolute;
+    top: 16px;
+    left: 32px;
+  }
+  .review-text {
+    font-size: 18px;
+    color: var(--navy);
+    font-style: italic;
+    line-height: 1.7;
+    margin-bottom: 24px;
+    position: relative;
+    z-index: 1;
+  }
+  .review-author { font-size: 14px; color: var(--muted); font-weight: 600; }
+  .review-stars { font-size: 20px; margin-bottom: 16px; }
+
+  /* === FORM === */
+  .form-section { background: var(--light); }
+  .form-wrap {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 48px;
+    max-width: 620px;
+    margin: 0 auto;
+    box-shadow: 0 4px 30px rgba(28,45,90,0.08);
+  }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-field { display: flex; flex-direction: column; gap: 6px; }
+  .form-field.full { grid-column: 1 / -1; }
+  label { font-size: 13px; font-weight: 600; color: var(--navy); }
+  input, select, textarea {
+    padding: 12px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 9px;
+    font-size: 15px;
+    color: var(--text);
+    background: var(--white);
+    outline: none;
+    transition: border-color .2s;
+    font-family: inherit;
+  }
+  input:focus, select:focus, textarea:focus { border-color: var(--navy); }
+  textarea { resize: vertical; min-height: 90px; }
+  .form-submit {
+    width: 100%;
+    margin-top: 8px;
+    padding: 15px;
+    font-size: 16px;
+  }
+  .form-note { text-align: center; font-size: 12px; color: var(--muted); margin-top: 14px; }
+
+  /* === FOOTER === */
+  footer {
+    background: #111827;
+    color: rgba(255,255,255,0.5);
+    padding: 48px 24px 32px;
+  }
+  .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .footer-top {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 32px;
+    margin-bottom: 40px;
+  }
+  .footer-brand .logo { color: var(--white); font-size: 20px; }
+  .footer-brand p { font-size: 13px; margin-top: 10px; max-width: 240px; line-height: 1.6; }
+  .footer-col h4 { color: var(--white); font-size: 14px; font-weight: 700; margin-bottom: 14px; }
+  .footer-col a {
+    display: block;
+    color: rgba(255,255,255,0.5);
+    font-size: 13px;
+    text-decoration: none;
+    margin-bottom: 8px;
+    transition: color .2s;
+  }
+  .footer-col a:hover { color: var(--white); }
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 24px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 12px;
+  }
+  .footer-bottom a { color: rgba(255,255,255,0.4); text-decoration: none; }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 640px) {
+    section { padding: 48px 16px; }
+    .form-grid { grid-template-columns: 1fr; }
+    .form-wrap { padding: 28px 20px; }
+    .review-block { padding: 32px 24px; }
+    .tabs-toggle { width: 100%; }
+    .tab-btn { flex: 1; padding: 12px 12px; font-size: 14px; }
+    .hero-stats { gap: 24px; }
+    .footer-top { gap: 24px; }
+    .nav-tabs { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- DEMO BADGE -->
+<div class="demo-badge">
+  Демо-набросок · <span>studio Алёны</span> · не финал — тексты и структура под правку
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <div class="logo">АвтоПрофи<span>.</span></div>
+    <div class="nav-tabs">
+      <a href="#">Главная</a>
+      <a href="#">О компании</a>
+      <a href="#" class="active">Тестирование водителей</a>
+      <a href="#">Контакты</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-tag">🚗 Профессиональная оценка навыков</div>
+    <h1>Тестирование водителей<br><em>онлайн и офлайн</em></h1>
+    <p class="hero-sub">
+      Проверяем теоретические знания и практические навыки вождения — для частных лиц и предприятий с автопарком
+    </p>
+    <div class="hero-btns">
+      <a href="#form" class="btn-primary">Пройти тестирование</a>
+      <a href="#tabs" class="btn-outline">Для организаций →</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">12<span>+</span></div>
+        <div class="stat-label">лет на рынке</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">3 500<span>+</span></div>
+        <div class="stat-label">водителей прошли</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">98<span>%</span></div>
+        <div class="stat-label">успешных допусков</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">от ___<span>₽</span></div>
+        <div class="stat-label">стоимость теста</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TABS: ВОДИТЕЛИ / ОРГАНИЗАЦИИ -->
+<section class="tabs-section" id="tabs">
+  <div class="section-inner">
+    <div class="section-tag">Выберите раздел</div>
+    <h2 class="section-title">Для кого это тестирование?</h2>
+    <p class="section-sub">Разные форматы для частных водителей и корпоративных клиентов с парком транспорта</p>
+
+    <div class="tabs-toggle">
+      <button class="tab-btn on" onclick="showTab('drivers', this)">🚘 Водителям</button>
+      <button class="tab-btn" onclick="showTab('orgs', this)">🏢 Организациям</button>
+    </div>
+
+    <!-- TAB: ВОДИТЕЛИ -->
+    <div class="tab-content on" id="tab-drivers">
+      <div class="cards">
+        <div class="card">
+          <span class="card-icon">📋</span>
+          <h3>Теоретический экзамен</h3>
+          <p>Билеты ПДД в актуальной редакции. Режим тренировки и режим экзамена. Подробный разбор ошибок после прохождения.</p>
+        </div>
+        <div class="card">
+          <span class="card-icon">🧠</span>
+          <h3>Психофизиологическое тестирование</h3>
+          <p>Оцениваем время реакции, концентрацию внимания и стрессоустойчивость за рулём. Сертификат выдаётся в день теста.</p>
+        </div>
+        <div class="card">
+          <span class="card-icon">🎯</span>
+          <h3>Тест на категорию B/C/D</h3>
+          <p>Подтвердите или повысьте категорию. Тесты адаптированы под требования ГИБДД и актуальные нормативы.</p>
+        </div>
+        <div class="card">
+          <span class="card-icon">📄</span>
+          <h3>Справка о профпригодности</h3>
+          <p>Официальный документ для трудоустройства водителем. Нужен для работы в такси, грузоперевозках, пассажирском транспорте.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: ОРГАНИЗАЦИИ -->
+    <div class="tab-content" id="tab-orgs">
+      <div class="cards">
+        <div class="card">
+          <span class="card-icon">🚛</span>
+          <h3>Аттестация водителей автопарка</h3>
+          <p>Регулярная проверка всего персонала: знание маршрутов, ПДД, регламентов безопасности. Отчёт по каждому сотруднику.</p>
+        </div>
+        <div class="card">
+          <span class="card-icon">📊</span>
+          <h3>Анализ и сводный отчёт</h3>
+          <p>Сравнительная аналитика по всему штату, выявление слабых мест, рекомендации по обучению. Удобный PDF или Excel.</p>
+        </div>
+        <div class="card">
+          <span class="card-icon">🔒</span>
+          <h3>Проверка при трудоустройстве</h3>
+          <p>Быстрая входная оценка кандидата: знание ПДД, категории, опыт. Помогает HR отбирать надёжных водителей.</p>
+        </div>
+        <div class="card">
+          <span class="card-icon">🤝</span>
+          <h3>Корпоративный договор</h3>
+          <p>Фиксированная цена при тестировании от ___ человек. Выездное тестирование на вашей территории — от ___ ₽.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BENEFITS -->
+<section>
+  <div class="section-inner">
+    <div class="section-tag">Почему мы</div>
+    <h2 class="section-title">Преимущества нашего подхода</h2>
+    <p class="section-sub">Надёжно, официально и без лишней бюрократии</p>
+    <div class="benefits-grid">
+      <div class="benefit">
+        <div class="benefit-ico">⚡</div>
+        <div class="benefit-text">
+          <h4>Результат за 30 минут</h4>
+          <p>Автоматическая проверка теста. Сертификат получите сразу после прохождения — никаких недель ожидания.</p>
+        </div>
+      </div>
+      <div class="benefit">
+        <div class="benefit-ico">🛡️</div>
+        <div class="benefit-text">
+          <h4>Официальный документ</h4>
+          <p>Выдаём сертификаты установленного образца, принимаемые работодателями и контролирующими органами.</p>
+        </div>
+      </div>
+      <div class="benefit">
+        <div class="benefit-ico">💻</div>
+        <div class="benefit-text">
+          <h4>Онлайн или офлайн</h4>
+          <p>Пройти тест можно из браузера с любого устройства или очно в нашем офисе — на выбор.</p>
+        </div>
+      </div>
+      <div class="benefit">
+        <div class="benefit-ico">📞</div>
+        <div class="benefit-text">
+          <h4>Поддержка 7 дней в неделю</h4>
+          <p>Наши специалисты ответят на вопросы в будни и выходные. Звоните: <strong>+7 ___</strong></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how">
+  <div class="section-inner">
+    <div class="section-tag">Процесс</div>
+    <h2 class="section-title">Как проходит тестирование</h2>
+    <p class="section-sub">Четыре простых шага — от заявки до сертификата</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Оставьте заявку</h3>
+        <p>Заполните форму ниже или позвоните нам. Выберем удобный формат и время.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>Получите доступ</h3>
+        <p>Пришлём ссылку на онлайн-тест или согласуем визит в офис.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>Пройдите тест</h3>
+        <p>В своём темпе. Обычно занимает от 20 до 45 минут в зависимости от вида тестирования.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <h3>Получите документ</h3>
+        <p>Сертификат на почту или на руки. Организациям — полный отчёт по всем водителям.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEW -->
+<section>
+  <div class="section-inner">
+    <div class="section-tag">Отзывы</div>
+    <h2 class="section-title" style="text-align:center; margin-bottom:40px">Что говорят клиенты</h2>
+    <div class="review-block">
+      <div class="quote-mark">"</div>
+      <div class="review-stars">⭐⭐⭐⭐⭐</div>
+      <p class="review-text">
+        «Нам нужно было аттестовать 40 водителей перед сезоном. Организовали всё быстро — тест онлайн, сводный отчёт прислали на следующий день. Сертификаты приняли без вопросов. Рекомендую!»
+      </p>
+      <div class="review-author">— Иван С., директор транспортной компании · [отзыв-заглушка]</div>
+    </div>
+  </div>
+</section>
+
+<!-- FORM -->
+<section class="form-section" id="form">
+  <div class="section-inner">
+    <div class="section-tag">Заявка</div>
+    <h2 class="section-title" style="text-align:center">Записаться на тестирование</h2>
+    <p class="section-sub" style="text-align:center; margin: 0 auto 40px">Оставьте контакты — свяжемся в течение часа и согласуем удобное время</p>
+    <div class="form-wrap">
+      <form onsubmit="return false;">
+        <div class="form-grid">
+          <div class="form-field">
+            <label>Ваше имя</label>
+            <input type="text" placeholder="Александр">
+          </div>
+          <div class="form-field">
+            <label>Телефон</label>
+            <input type="tel" placeholder="+7 ___ ___ __ __">
+          </div>
+          <div class="form-field">
+            <label>E-mail</label>
+            <input type="email" placeholder="mail@example.com">
+          </div>
+          <div class="form-field">
+            <label>Вы подаёте заявку как</label>
+            <select>
+              <option>Частный водитель</option>
+              <option>Организация / автопарк</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label>Вид тестирования</label>
+            <select>
+              <option>Теоретический экзамен ПДД</option>
+              <option>Психофизиологическое тестирование</option>
+              <option>Справка о профпригодности</option>
+              <option>Корпоративная аттестация</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label>Количество водителей</label>
+            <input type="number" placeholder="1" min="1">
+          </div>
+          <div class="form-field full">
+            <label>Комментарий (необязательно)</label>
+            <textarea placeholder="Уточните, если нужны выездное тестирование, определённые сроки или особые условия…"></textarea>
+          </div>
+        </div>
+        <button type="submit" class="btn-primary form-submit">Отправить заявку</button>
+        <p class="form-note">Нажимая кнопку, вы соглашаетесь с обработкой персональных данных</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="logo">АвтоПрофи<span style="color:var(--accent)">.</span></div>
+        <p>Профессиональное тестирование водителей для физических лиц и предприятий с 20__ года.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Водителям</h4>
+        <a href="#">Экзамен ПДД</a>
+        <a href="#">Психотест</a>
+        <a href="#">Справка о допуске</a>
+        <a href="#">Повышение категории</a>
+      </div>
+      <div class="footer-col">
+        <h4>Организациям</h4>
+        <a href="#">Аттестация персонала</a>
+        <a href="#">Корпоративный договор</a>
+        <a href="#">Выездное тестирование</a>
+        <a href="#">Отчёты и аналитика</a>
+      </div>
+      <div class="footer-col">
+        <h4>Контакты</h4>
+        <a href="#">+7 ___</a>
+        <a href="#">info@___.ru</a>
+        <a href="#">г. ___, ул. ___, д. ___</a>
+        <a href="#">Пн–Пт: 9:00–18:00</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 АвтоПрофи — демо-набросок, не финал</span>
+      <div style="display:flex;gap:16px">
+        <a href="#">Политика конфиденциальности</a>
+        <a href="#">Договор оферты</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function showTab(id, btn) {
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('on'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('on'));
+    document.getElementById('tab-' + id).classList.add('on');
+    btn.classList.add('on');
+  }
+</script>
+
+<div style="position:fixed;inset:0;z-index:99998;pointer-events:none;opacity:.10;background-image:url(&quot;data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='420' height='300'><text x='0' y='150' transform='rotate(-28 210 150)' font-family='sans-serif' font-size='22' font-weight='700' fill='%23808080' fill-opacity='0.5'>%D0%94%D0%95%D0%9C%D0%9E%20%C2%B7%20%D0%90%D0%9B%D0%81%D0%9D%D0%90%20%D0%9F%D0%A0%D0%90%D0%A1%D0%9E%D0%9B%D0%9E%D0%92%D0%90%20%C2%B7%20%D0%9E%D0%91%D0%A0%D0%90%D0%97%D0%95%D0%A6</text></svg>&quot;);background-repeat:repeat"></div><div style="position:fixed;left:0;right:0;bottom:0;z-index:99999;pointer-events:none;text-align:center;font:600 12px/1.4 sans-serif;color:#fff;background:rgba(20,24,33,.88);padding:7px 12px">Демо-набросок для оценки · © Алёна Прасолова · не для коммерческого использования · рабочая версия и чистовой дизайн — после старта работы</div></body>
+</html>
