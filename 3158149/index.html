@@ -1,0 +1,569 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Дизайн крафтовых этикеток · таёжная линейка</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --forest:#243328;
+  --forest-mid:#2E4232;
+  --cream:#F5EDD8;
+  --parchment:#EFE4C6;
+  --amber:#B8751E;
+  --amber-light:#D4954A;
+  --bark:#6B3E1A;
+  --text:#1C2A1E;
+  --muted:#617060;
+  --white:#FEFCF6;
+}
+html{scroll-behavior:smooth}
+body{font-family:Georgia,'Times New Roman',serif;background:var(--cream);color:var(--text);line-height:1.72}
+
+/* DEMO BAR */
+.demo-bar{
+  background:var(--bark);
+  color:#e2cba8;
+  text-align:center;
+  font-family:-apple-system,sans-serif;
+  font-size:11px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  padding:9px 16px;
+}
+
+/* HERO */
+.hero{
+  background:var(--forest);
+  color:var(--cream);
+  padding:88px 24px 100px;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.hero::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:radial-gradient(ellipse 80% 60% at 50% -10%,rgba(184,117,30,.18) 0%,transparent 70%);
+  pointer-events:none;
+}
+.hero::after{
+  content:'';
+  position:absolute;
+  bottom:0;left:0;right:0;
+  height:1px;
+  background:linear-gradient(90deg,transparent,rgba(212,149,74,.4),transparent);
+}
+.hero-emblem{margin-bottom:28px}
+.hero-tag{
+  display:inline-block;
+  font-family:-apple-system,sans-serif;
+  font-size:10.5px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--amber-light);
+  border:1px solid rgba(212,149,74,.35);
+  padding:6px 18px;
+  margin-bottom:26px;
+}
+.hero h1{
+  font-size:clamp(2rem,5.5vw,3.6rem);
+  font-weight:normal;
+  line-height:1.18;
+  max-width:720px;
+  margin:0 auto 22px;
+}
+.hero h1 em{color:var(--amber-light);font-style:italic}
+.hero p{
+  font-size:1.1rem;
+  color:rgba(245,237,216,.78);
+  max-width:500px;
+  margin:0 auto 44px;
+}
+.cta-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.btn{
+  display:inline-block;
+  font-family:-apple-system,sans-serif;
+  font-size:13px;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  padding:15px 38px;
+  border:none;
+  cursor:pointer;
+  text-decoration:none;
+  transition:background .2s,color .2s;
+}
+.btn-primary{background:var(--amber);color:var(--white)}
+.btn-primary:hover{background:var(--amber-light)}
+.btn-ghost{background:transparent;border:1px solid rgba(245,237,216,.35);color:var(--cream)}
+.btn-ghost:hover{background:rgba(245,237,216,.08)}
+
+/* SECTIONS */
+section{padding:88px 24px}
+.wrap{max-width:1060px;margin-inline:auto}
+.s-label{
+  font-family:-apple-system,sans-serif;
+  font-size:10px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--amber);
+  margin-bottom:14px;
+}
+.s-title{
+  font-size:clamp(1.7rem,3.8vw,2.5rem);
+  font-weight:normal;
+  line-height:1.28;
+  color:var(--forest);
+  margin-bottom:14px;
+}
+.s-sub{
+  color:var(--muted);
+  max-width:540px;
+  margin-bottom:56px;
+}
+
+/* BENEFITS */
+.benefits{background:var(--white)}
+.benefits-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:2px;
+  background:rgba(42,61,46,.08);
+  border:1px solid rgba(42,61,46,.08);
+}
+.b-card{
+  background:var(--white);
+  padding:36px 30px;
+}
+.b-icon{font-size:1.9rem;margin-bottom:18px;display:block}
+.b-card h3{
+  font-size:1.05rem;
+  font-weight:normal;
+  color:var(--forest);
+  margin-bottom:10px;
+}
+.b-card p{font-size:.88rem;color:var(--muted);line-height:1.65}
+
+/* SAMPLES */
+.samples{background:var(--parchment)}
+.samples-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:24px;
+}
+.sample{background:var(--white);border:1px solid rgba(42,61,46,.1)}
+.sample-thumb{
+  height:190px;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;
+  overflow:hidden;
+}
+.thumb-honey{background:linear-gradient(145deg,#2B1A0D 0%,#5C3210 40%,#8C5A22 80%,#A06A2A 100%)}
+.thumb-cedar{background:linear-gradient(145deg,#0F1E10 0%,#1E3820 45%,#2E5430 80%,#3A6838 100%)}
+.thumb-herbs{background:linear-gradient(145deg,#1A2810 0%,#2C4418 45%,#3E5E24 80%,#527830 100%)}
+.thumb-mumio{background:linear-gradient(145deg,#1A1210 0%,#2E1E18 45%,#4A2E22 80%,#5E3A28 100%)}
+.sample-label{
+  position:absolute;
+  bottom:0;left:0;right:0;
+  background:rgba(0,0,0,.3);
+  color:rgba(255,255,255,.7);
+  font-family:-apple-system,sans-serif;
+  font-size:9px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  text-align:center;
+  padding:6px;
+}
+.sample-info{padding:20px 22px}
+.sample-info h4{font-weight:normal;font-size:1rem;margin-bottom:6px;color:var(--forest)}
+.sample-info p{font-size:.83rem;color:var(--muted)}
+
+/* PROCESS */
+.process{background:var(--forest);color:var(--cream)}
+.process .s-title{color:var(--cream)}
+.process .s-sub{color:rgba(245,237,216,.65)}
+.process .s-label{color:var(--amber-light)}
+.steps{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+  gap:0;
+  border-top:1px solid rgba(212,149,74,.25);
+}
+.step{
+  padding:36px 28px;
+  border-right:1px solid rgba(212,149,74,.12);
+  border-bottom:1px solid rgba(212,149,74,.12);
+}
+.step:last-child{border-right:none}
+.step-n{
+  font-family:-apple-system,sans-serif;
+  font-size:3rem;
+  font-weight:700;
+  color:rgba(212,149,74,.2);
+  line-height:1;
+  margin-bottom:14px;
+}
+.step h3{
+  font-size:.95rem;
+  font-weight:normal;
+  color:var(--amber-light);
+  margin-bottom:10px;
+}
+.step p{font-size:.85rem;color:rgba(245,237,216,.62);line-height:1.65}
+
+/* TESTIMONIAL */
+.testi{background:var(--white);text-align:center;padding:88px 24px}
+.testi-inner{max-width:680px;margin-inline:auto}
+.orn{color:var(--amber);font-size:1.4rem;letter-spacing:10px;margin-bottom:40px}
+.big-quote{
+  font-size:5rem;
+  color:var(--amber-light);
+  line-height:.4;
+  margin-bottom:28px;
+  font-family:Georgia,serif;
+}
+.quote-body{
+  font-size:1.15rem;
+  font-style:italic;
+  color:var(--forest);
+  line-height:1.75;
+  margin-bottom:28px;
+}
+.quote-who{
+  font-family:-apple-system,sans-serif;
+  font-size:12px;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+.placeholder-note{
+  font-family:-apple-system,sans-serif;
+  font-size:10px;
+  color:#bbb;
+  margin-top:10px;
+}
+
+/* FORM */
+.form-s{background:var(--cream)}
+.form-wrap{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:72px;
+  align-items:start;
+}
+.form-left h2{
+  font-size:clamp(1.6rem,3vw,2.1rem);
+  font-weight:normal;
+  color:var(--forest);
+  margin-bottom:16px;
+  line-height:1.3;
+}
+.form-left p{color:var(--muted);font-size:.95rem;margin-bottom:32px}
+.price-list{list-style:none;border-top:1px solid rgba(42,61,46,.15)}
+.price-list li{
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  padding:13px 0;
+  border-bottom:1px solid rgba(42,61,46,.1);
+  font-size:.9rem;
+  gap:12px;
+}
+.price-list .pr{
+  color:var(--amber);
+  font-family:-apple-system,sans-serif;
+  font-size:.82rem;
+  white-space:nowrap;
+  flex-shrink:0;
+}
+.price-note{font-size:.8rem;color:var(--muted);margin-top:14px;line-height:1.55}
+form{display:flex;flex-direction:column;gap:14px}
+form input,form textarea,form select{
+  padding:14px 16px;
+  border:1px solid rgba(42,61,46,.22);
+  background:var(--white);
+  font-family:Georgia,serif;
+  font-size:.93rem;
+  color:var(--text);
+  width:100%;
+  outline:none;
+  transition:border-color .2s;
+  appearance:none;
+}
+form input:focus,form textarea:focus,form select:focus{border-color:var(--amber)}
+form textarea{min-height:110px;resize:vertical}
+form .btn{width:100%;text-align:center}
+.form-note{
+  font-family:-apple-system,sans-serif;
+  font-size:.75rem;
+  color:var(--muted);
+  text-align:center;
+}
+
+/* FOOTER */
+footer{
+  background:var(--forest);
+  color:rgba(245,237,216,.6);
+  padding:52px 24px 40px;
+  text-align:center;
+  font-family:-apple-system,sans-serif;
+  font-size:13px;
+}
+.footer-logo{
+  font-family:Georgia,serif;
+  font-size:1.15rem;
+  color:var(--cream);
+  margin-bottom:10px;
+}
+footer p{margin-bottom:6px}
+.footer-links{
+  margin-top:22px;
+  display:flex;
+  gap:28px;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+footer a{color:rgba(245,237,216,.5);text-decoration:none}
+footer a:hover{color:var(--amber-light)}
+.footer-bottom{margin-top:28px;font-size:10px;opacity:.35;letter-spacing:.06em}
+
+/* RESPONSIVE */
+@media(max-width:760px){
+  .form-wrap{grid-template-columns:1fr;gap:48px}
+  .step{border-right:none}
+  section{padding:64px 20px}
+  .testi{padding:64px 20px}
+  .btn-ghost{display:none}
+}
+@media(max-width:480px){
+  .hero{padding:64px 20px 80px}
+  .benefits-grid{grid-template-columns:1fr}
+  .samples-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="demo-bar">Демо-набросок · studio Алёны · не финал</div>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-emblem">
+      <svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="36" cy="36" r="34" stroke="rgba(212,149,74,.25)" stroke-width="1"/>
+        <circle cx="36" cy="36" r="28" stroke="rgba(212,149,74,.15)" stroke-width="1"/>
+        <!-- Stylized pine tree -->
+        <polygon points="36,14 46,32 26,32" fill="rgba(212,149,74,.18)" stroke="rgba(212,149,74,.5)" stroke-width="1.2" stroke-linejoin="round"/>
+        <polygon points="36,22 48,42 24,42" fill="rgba(212,149,74,.15)" stroke="rgba(212,149,74,.45)" stroke-width="1.2" stroke-linejoin="round"/>
+        <polygon points="36,30 50,52 22,52" fill="rgba(212,149,74,.12)" stroke="rgba(212,149,74,.4)" stroke-width="1.2" stroke-linejoin="round"/>
+        <rect x="33" y="52" width="6" height="8" fill="rgba(212,149,74,.3)" rx="1"/>
+      </svg>
+    </div>
+    <div class="hero-tag">Крафтовый дизайн этикеток</div>
+    <h1>Каждый продукт тайги<br>заслуживает своей <em>истории</em></h1>
+    <p>Разрабатываем этикетки для мёда, кедрового ореха, мумие, трав и дикоросов. Крафтовый уровень — не массмаркет.</p>
+    <div class="cta-row">
+      <a href="#form" class="btn btn-primary">Обсудить проект</a>
+      <a href="#process" class="btn btn-ghost">Как работаем</a>
+    </div>
+  </div>
+</header>
+
+<!-- BENEFITS -->
+<section class="benefits">
+  <div class="wrap">
+    <div class="s-label">Почему выбирают нас</div>
+    <div class="s-title">Этикетка — это первый<br>разговор с покупателем</div>
+    <p class="s-sub">Крафтовая упаковка не просто привлекает — она объясняет ценность продукта без единого слова. Именно за этим к нам и приходят.</p>
+    <div class="benefits-grid">
+      <div class="b-card">
+        <span class="b-icon">🌲</span>
+        <h3>Понимаем таёжную эстетику</h3>
+        <p>Работаем с натуральными, экологичными и дикоросными марками. Знаем, как передать дух места без клише и туристических штампов.</p>
+      </div>
+      <div class="b-card">
+        <span class="b-icon">🍯</span>
+        <h3>Единая концепция — разные этикетки</h3>
+        <p>Каждый продукт линейки получает свой характер внутри единого стиля. Как у лучших крафтовых брендов — узнаваемо и самобытно.</p>
+      </div>
+      <div class="b-card">
+        <span class="b-icon">✏️</span>
+        <h3>Редизайн и доработка</h3>
+        <p>Берём ваши текущие этикетки и развиваем их. Или начинаем с нуля — зависит от того, что уже есть и куда хотите прийти.</p>
+      </div>
+      <div class="b-card">
+        <span class="b-icon">🖨️</span>
+        <h3>Готово к печати</h3>
+        <p>Сдаём файлы для типографии и маркетплейсов. Консультируем по бумаге, тиснению и фактурным покрытиям под бюджет.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SAMPLES -->
+<section class="samples">
+  <div class="wrap">
+    <div class="s-label">Примеры направлений</div>
+    <div class="s-title">Линейки, с которыми<br>мы работаем</div>
+    <p class="s-sub">Каждая позиция получает свою подконцепцию в рамках единого визуального языка бренда.</p>
+    <div class="samples-grid">
+      <div class="sample">
+        <div class="sample-thumb thumb-honey">
+          <svg width="56" height="70" viewBox="0 0 56 70" fill="none">
+            <path d="M28 6 L50 18 L50 54 L28 66 L6 54 L6 18 Z" stroke="rgba(212,149,74,.55)" stroke-width="1.2" fill="rgba(212,149,74,.07)"/>
+            <text x="28" y="42" text-anchor="middle" font-size="26" fill="rgba(212,149,74,.85)">🍯</text>
+          </svg>
+          <div class="sample-label">Мёд таёжный</div>
+        </div>
+        <div class="sample-info">
+          <h4>Монофлорный мёд</h4>
+          <p>Орнамент в стиле сот + ботаническая иллюстрация медоноса. Каждый сорт — свой образ, своя цветовая нота.</p>
+        </div>
+      </div>
+      <div class="sample">
+        <div class="sample-thumb thumb-cedar">
+          <svg width="56" height="70" viewBox="0 0 56 70" fill="none">
+            <polygon points="28,8 36,24 52,24 39,34 44,52 28,42 12,52 17,34 4,24 20,24" stroke="rgba(100,200,110,.5)" stroke-width="1.2" fill="rgba(80,160,90,.07)"/>
+            <text x="28" y="42" text-anchor="middle" font-size="24" fill="rgba(140,210,150,.85)">🌰</text>
+          </svg>
+          <div class="sample-label">Кедровый орех</div>
+        </div>
+        <div class="sample-info">
+          <h4>Кедр: орех и масло</h4>
+          <p>Гравюрный стиль с силуэтом кедра. Орех и масло объединены концепцией, но легко читаются как разные продукты.</p>
+        </div>
+      </div>
+      <div class="sample">
+        <div class="sample-thumb thumb-herbs">
+          <svg width="56" height="70" viewBox="0 0 56 70" fill="none">
+            <ellipse cx="28" cy="36" rx="20" ry="26" stroke="rgba(130,200,80,.45)" stroke-width="1.2" fill="rgba(100,170,60,.07)"/>
+            <line x1="28" y1="10" x2="28" y2="62" stroke="rgba(130,200,80,.3)" stroke-width="1"/>
+            <text x="28" y="42" text-anchor="middle" font-size="24" fill="rgba(160,220,120,.85)">🌿</text>
+          </svg>
+          <div class="sample-label">Травы и сборы</div>
+        </div>
+        <div class="sample-info">
+          <h4>Травяные сборы</h4>
+          <p>Аптекарский стиль «экспедиции»: координаты места сбора, ботанический рисунок, скупая типографика.</p>
+        </div>
+      </div>
+      <div class="sample">
+        <div class="sample-thumb thumb-mumio">
+          <svg width="56" height="70" viewBox="0 0 56 70" fill="none">
+            <rect x="8" y="14" width="40" height="44" rx="2" stroke="rgba(180,120,80,.5)" stroke-width="1.2" fill="rgba(140,80,40,.07)"/>
+            <rect x="14" y="20" width="28" height="32" rx="1" stroke="rgba(180,120,80,.3)" stroke-width="1" fill="none"/>
+            <text x="28" y="42" text-anchor="middle" font-size="22" fill="rgba(200,150,100,.85)">🪨</text>
+          </svg>
+          <div class="sample-label">Мумиё</div>
+        </div>
+        <div class="sample-info">
+          <h4>Мумиё и смолы</h4>
+          <p>Лаконичная тёмная этикетка с ощущением камня и горы. Минималистичная типографика, без лишних элементов.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process" id="process">
+  <div class="wrap">
+    <div class="s-label">Как работаем</div>
+    <div class="s-title" style="color:var(--cream)">От первого созвона<br>до файлов в типографию</div>
+    <p class="s-sub">Работаем чётко, без лишних итераций. На каждом этапе вы понимаете, что происходит и что будет дальше.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">01</div>
+        <h3>Бриф и погружение</h3>
+        <p>Разбираемся в продукте, истории бренда, аудитории. Изучаем текущие этикетки, если есть. Обсуждаем референсы.</p>
+      </div>
+      <div class="step">
+        <div class="step-n">02</div>
+        <h3>Концепция</h3>
+        <p>Разрабатываем 2–3 концептуальных направления. Показываем образ, шрифты, цвет, иллюстративный стиль.</p>
+      </div>
+      <div class="step">
+        <div class="step-n">03</div>
+        <h3>Дизайн линейки</h3>
+        <p>По утверждённой концепции делаем этикетки на каждую позицию. Два круга правок включены в стоимость.</p>
+      </div>
+      <div class="step">
+        <div class="step-n">04</div>
+        <h3>Финальные файлы</h3>
+        <p>AI/PDF для типографии, PNG для маркетплейсов. Адаптация под разные форматы упаковки — по запросу.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<section class="testi">
+  <div class="testi-inner">
+    <div class="orn">— ✦ —</div>
+    <div class="big-quote">"</div>
+    <p class="quote-body">Я долго не мог найти дизайнера, который понял бы: крафт — это не просто «сделать под бумагу и добавить текстуру». После первого созвона стало ясно — человек понимает продукт. Этикетки получились такими, что мёд хочется взять с полки, даже не читая состав.</p>
+    <div class="quote-who">— Владелец марки таёжных продуктов · Красноярский край</div>
+    <p class="placeholder-note">[заглушка — заменим на реальный отзыв вашего клиента]</p>
+  </div>
+</section>
+
+<!-- FORM -->
+<section class="form-s" id="form">
+  <div class="wrap">
+    <div class="form-wrap">
+      <div class="form-left">
+        <div class="s-label">Обсудить проект</div>
+        <h2>Расскажите о линейке — предложим решение</h2>
+        <p>Рассматриваем проекты с пониманием крафтового позиционирования. Не беремся за массмаркет — только натуральные, авторские и дикоросные бренды.</p>
+        <ul class="price-list">
+          <li><span>Концепция (1 SKU, 2–3 варианта)</span><span class="pr">от ___ ₽</span></li>
+          <li><span>Дизайн линейки 3–6 позиций</span><span class="pr">от ___ ₽</span></li>
+          <li><span>Редизайн существующей этикетки</span><span class="pr">от ___ ₽</span></li>
+          <li><span>Разработка бренд-концепции</span><span class="pr">от ___ ₽</span></li>
+          <li><span>Доработка в рамках готового стиля</span><span class="pr">от ___ ₽</span></li>
+        </ul>
+        <p class="price-note">Точную стоимость называем после брифинга — итоговая цена зависит от количества SKU, сложности иллюстраций и формата упаковки.</p>
+      </div>
+      <div class="form-right">
+        <form onsubmit="return false">
+          <input type="text" placeholder="Ваше имя">
+          <input type="tel" placeholder="Телефон / WhatsApp: +7 ___">
+          <input type="email" placeholder="Email">
+          <select>
+            <option value="" disabled selected>Что нужно сделать?</option>
+            <option>Разработка концепции и этикеток с нуля</option>
+            <option>Редизайн существующих этикеток</option>
+            <option>Доработка в рамках имеющейся концепции</option>
+            <option>Разработка бренд-концепции</option>
+          </select>
+          <input type="text" placeholder="Продукт / линейка (мёд, орех, мумиё…)">
+          <textarea placeholder="Расскажите о проекте: сколько SKU, есть ли текущие этикетки, какие референсы нравятся, сроки?"></textarea>
+          <button type="submit" class="btn btn-primary">Отправить заявку</button>
+          <p class="form-note">Ответим в течение 1 рабочего дня</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="footer-logo">✦ Студия · дизайн этикеток и упаковки</div>
+    <p>Специализация: крафтовые, натуральные и дикоросные бренды</p>
+    <p>📞 +7 ___ · ✉ ___@___.ru · 📍 Работаем удалённо по всей России</p>
+    <div class="footer-links">
+      <a href="#">Портфолио</a>
+      <a href="#">Условия работы</a>
+      <a href="#">Telegram</a>
+      <a href="#form">Оставить заявку</a>
+    </div>
+    <p class="footer-bottom">Демо-набросок · студия Алёны · не финал проекта</p>
+  </div>
+</footer>
+
+<div style="position:fixed;inset:0;z-index:99998;pointer-events:none;opacity:.10;background-image:url(&quot;data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='420' height='300'><text x='0' y='150' transform='rotate(-28 210 150)' font-family='sans-serif' font-size='22' font-weight='700' fill='%23808080' fill-opacity='0.5'>%D0%94%D0%95%D0%9C%D0%9E%20%C2%B7%20%D0%90%D0%9B%D0%81%D0%9D%D0%90%20%D0%9F%D0%A0%D0%90%D0%A1%D0%9E%D0%9B%D0%9E%D0%92%D0%90%20%C2%B7%20%D0%9E%D0%91%D0%A0%D0%90%D0%97%D0%95%D0%A6</text></svg>&quot;);background-repeat:repeat"></div><div style="position:fixed;left:0;right:0;bottom:0;z-index:99999;pointer-events:none;text-align:center;font:600 12px/1.4 sans-serif;color:#fff;background:rgba(20,24,33,.88);padding:7px 12px">Демо-набросок для оценки · © Алёна Прасолова · не для коммерческого использования · рабочая версия и чистовой дизайн — после старта работы</div></body>
+</html>
