@@ -1,0 +1,829 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Образовательный сайт под ключ — Учебный центр</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --dark: #1a2240;
+    --mid: #2d3f6e;
+    --accent: #f4722b;
+    --light: #f7f9ff;
+    --white: #ffffff;
+    --gray: #6b7a9e;
+    --border: #dde3f5;
+    --fs-xs: 0.78rem;
+    --fs-sm: 0.9rem;
+    --fs-base: 1rem;
+    --fs-md: 1.15rem;
+    --fs-lg: 1.4rem;
+    --fs-xl: 2rem;
+    --fs-2xl: 2.8rem;
+    --r: 14px;
+    --r-sm: 8px;
+  }
+
+  html { scroll-behavior: smooth; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; background: var(--light); color: var(--dark); line-height: 1.6; font-size: var(--fs-base); }
+
+  /* DEMO BANNER */
+  .demo-banner {
+    background: var(--mid);
+    color: #c8d4ff;
+    text-align: center;
+    padding: 8px 16px;
+    font-size: var(--fs-xs);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .demo-banner strong { color: var(--white); }
+
+  /* NAV */
+  nav {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .logo {
+    font-size: var(--fs-lg);
+    font-weight: 800;
+    color: var(--dark);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .logo-icon {
+    width: 38px; height: 38px;
+    background: linear-gradient(135deg, var(--mid), var(--accent));
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem;
+  }
+  .nav-links { display: flex; gap: 24px; list-style: none; }
+  .nav-links a { text-decoration: none; color: var(--gray); font-size: var(--fs-sm); transition: color 0.2s; }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-cta {
+    background: var(--accent);
+    color: var(--white);
+    padding: 10px 22px;
+    border-radius: 8px;
+    font-size: var(--fs-sm);
+    font-weight: 700;
+    text-decoration: none;
+    transition: opacity 0.2s;
+    white-space: nowrap;
+  }
+  .nav-cta:hover { opacity: 0.88; }
+
+  @media(max-width: 680px) {
+    .nav-links { display: none; }
+    .logo span { display: none; }
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, var(--dark) 0%, var(--mid) 60%, #3a5aad 100%);
+    color: var(--white);
+    padding: 80px 24px 90px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: rgba(244,114,43,0.08);
+    top: -200px; right: -150px;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+    bottom: -150px; left: -100px;
+  }
+  .hero-inner { max-width: 780px; margin: 0 auto; position: relative; z-index: 1; }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(244,114,43,0.2);
+    border: 1px solid rgba(244,114,43,0.4);
+    color: #ffb387;
+    padding: 5px 16px;
+    border-radius: 100px;
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .hero h1 {
+    font-size: clamp(1.8rem, 5vw, var(--fs-2xl));
+    font-weight: 900;
+    line-height: 1.2;
+    margin-bottom: 20px;
+  }
+  .hero h1 em { font-style: normal; color: #ffb387; }
+  .hero-sub {
+    font-size: var(--fs-md);
+    color: rgba(255,255,255,0.75);
+    max-width: 600px;
+    margin: 0 auto 36px;
+    line-height: 1.7;
+  }
+  .hero-buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--accent);
+    color: var(--white);
+    padding: 16px 36px;
+    border-radius: 10px;
+    font-size: var(--fs-md);
+    font-weight: 800;
+    text-decoration: none;
+    display: inline-block;
+    transition: transform 0.15s, opacity 0.15s;
+  }
+  .btn-primary:hover { transform: translateY(-2px); opacity: 0.92; }
+  .btn-ghost {
+    background: rgba(255,255,255,0.1);
+    border: 1.5px solid rgba(255,255,255,0.3);
+    color: var(--white);
+    padding: 16px 28px;
+    border-radius: 10px;
+    font-size: var(--fs-md);
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.2s;
+  }
+  .btn-ghost:hover { background: rgba(255,255,255,0.18); }
+
+  .hero-stats {
+    margin-top: 56px;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    padding-top: 40px;
+    border-top: 1px solid rgba(255,255,255,0.12);
+  }
+  .stat { text-align: center; }
+  .stat-num { font-size: 2rem; font-weight: 900; color: var(--white); }
+  .stat-label { font-size: var(--fs-xs); color: rgba(255,255,255,0.55); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 2px; }
+
+  /* SECTION SHARED */
+  section { padding: 72px 24px; }
+  .section-inner { max-width: 1080px; margin: 0 auto; }
+  .section-tag {
+    display: inline-block;
+    background: rgba(244,114,43,0.1);
+    color: var(--accent);
+    padding: 4px 14px;
+    border-radius: 100px;
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    margin-bottom: 14px;
+  }
+  .section-title {
+    font-size: clamp(1.5rem, 3.5vw, 2.1rem);
+    font-weight: 900;
+    color: var(--dark);
+    line-height: 1.25;
+    margin-bottom: 12px;
+  }
+  .section-sub {
+    color: var(--gray);
+    font-size: var(--fs-md);
+    max-width: 580px;
+    line-height: 1.7;
+    margin-bottom: 48px;
+  }
+
+  /* FEATURES */
+  .features { background: var(--white); }
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+  }
+  .feat-card {
+    background: var(--light);
+    border: 1.5px solid var(--border);
+    border-radius: var(--r);
+    padding: 32px 28px;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .feat-card:hover { transform: translateY(-4px); border-color: #b0bde8; }
+  .feat-icon {
+    width: 54px; height: 54px;
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.6rem;
+    margin-bottom: 20px;
+  }
+  .feat-icon.blue { background: linear-gradient(135deg, #dde8ff, #b8ccff); }
+  .feat-icon.orange { background: linear-gradient(135deg, #ffe4d0, #ffc4a0); }
+  .feat-icon.green { background: linear-gradient(135deg, #d0f5e3, #9de8c1); }
+  .feat-icon.purple { background: linear-gradient(135deg, #e8d5ff, #d0b0ff); }
+  .feat-card h3 { font-size: var(--fs-md); font-weight: 800; margin-bottom: 10px; color: var(--dark); }
+  .feat-card p { font-size: var(--fs-sm); color: var(--gray); line-height: 1.65; }
+
+  /* WHAT'S INCLUDED */
+  .included { background: var(--light); }
+  .included-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  @media(max-width: 600px) { .included-grid { grid-template-columns: 1fr; } }
+  .incl-item {
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: var(--r-sm);
+    padding: 18px 20px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .incl-check {
+    width: 26px; height: 26px;
+    min-width: 26px;
+    background: linear-gradient(135deg, #1a7f5a, #28b87e);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: white;
+    font-size: 0.8rem;
+    margin-top: 1px;
+  }
+  .incl-item-text h4 { font-size: var(--fs-sm); font-weight: 700; color: var(--dark); margin-bottom: 3px; }
+  .incl-item-text p { font-size: var(--fs-xs); color: var(--gray); }
+
+  /* HOW WE WORK */
+  .process { background: var(--white); }
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0;
+    position: relative;
+  }
+  .step {
+    text-align: center;
+    padding: 32px 20px;
+    position: relative;
+  }
+  .step:not(:last-child)::after {
+    content: '→';
+    position: absolute;
+    right: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--border);
+    font-size: 1.4rem;
+    font-weight: 300;
+  }
+  @media(max-width: 680px) { .step:not(:last-child)::after { display: none; } }
+  .step-num {
+    width: 52px; height: 52px;
+    background: linear-gradient(135deg, var(--dark), var(--mid));
+    color: white;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: var(--fs-md);
+    font-weight: 900;
+    margin: 0 auto 18px;
+  }
+  .step h3 { font-size: var(--fs-sm); font-weight: 800; margin-bottom: 8px; color: var(--dark); }
+  .step p { font-size: var(--fs-xs); color: var(--gray); line-height: 1.6; }
+
+  /* PRICING */
+  .pricing { background: var(--light); }
+  .pricing-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+  .price-card {
+    background: var(--white);
+    border: 2px solid var(--border);
+    border-radius: var(--r);
+    padding: 36px 28px;
+    position: relative;
+  }
+  .price-card.featured {
+    border-color: var(--accent);
+    background: linear-gradient(160deg, #fff 80%, #fff4ee 100%);
+  }
+  .price-badge {
+    position: absolute;
+    top: -13px; left: 50%;
+    transform: translateX(-50%);
+    background: var(--accent);
+    color: white;
+    font-size: var(--fs-xs);
+    font-weight: 800;
+    padding: 4px 18px;
+    border-radius: 100px;
+    white-space: nowrap;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .price-name { font-size: var(--fs-sm); color: var(--gray); font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.07em; }
+  .price-amount { font-size: 2.2rem; font-weight: 900; color: var(--dark); margin-bottom: 4px; }
+  .price-period { font-size: var(--fs-xs); color: var(--gray); margin-bottom: 24px; }
+  .price-list { list-style: none; margin-bottom: 28px; }
+  .price-list li {
+    font-size: var(--fs-sm);
+    color: var(--gray);
+    padding: 6px 0;
+    padding-left: 22px;
+    position: relative;
+    border-bottom: 1px solid var(--border);
+  }
+  .price-list li::before { content: '✓'; position: absolute; left: 0; color: #28b87e; font-weight: 900; }
+  .price-list li.no { color: #ccc; }
+  .price-list li.no::before { content: '×'; color: #ccc; }
+  .btn-outline {
+    display: block;
+    text-align: center;
+    padding: 13px;
+    border: 2px solid var(--mid);
+    color: var(--mid);
+    border-radius: 9px;
+    font-weight: 700;
+    font-size: var(--fs-sm);
+    text-decoration: none;
+    transition: all 0.2s;
+    cursor: pointer;
+    background: none;
+    width: 100%;
+  }
+  .btn-outline:hover { background: var(--mid); color: white; }
+  .btn-accent-block {
+    display: block;
+    text-align: center;
+    padding: 13px;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 9px;
+    font-weight: 700;
+    font-size: var(--fs-sm);
+    cursor: pointer;
+    width: 100%;
+    transition: opacity 0.2s;
+  }
+  .btn-accent-block:hover { opacity: 0.88; }
+
+  /* TESTIMONIAL */
+  .testimonial { background: linear-gradient(135deg, var(--dark), var(--mid)); padding: 64px 24px; }
+  .testimonial-inner { max-width: 720px; margin: 0 auto; text-align: center; color: white; }
+  .stars { font-size: 1.4rem; margin-bottom: 20px; letter-spacing: 4px; }
+  .quote {
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    font-style: italic;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.9);
+    margin-bottom: 28px;
+  }
+  .quote-mark { font-size: 3rem; line-height: 0.5; vertical-align: -0.4em; color: var(--accent); opacity: 0.7; }
+  .reviewer {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    justify-content: center;
+  }
+  .reviewer-avatar {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #f4722b, #ff9a5c);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem;
+    flex-shrink: 0;
+  }
+  .reviewer-name { font-weight: 700; font-size: var(--fs-sm); }
+  .reviewer-role { font-size: var(--fs-xs); color: rgba(255,255,255,0.55); }
+
+  /* FORM */
+  .form-section { background: var(--white); }
+  .form-wrapper {
+    max-width: 640px;
+    margin: 0 auto;
+    background: var(--light);
+    border: 1.5px solid var(--border);
+    border-radius: 18px;
+    padding: 44px 40px;
+  }
+  @media(max-width: 520px) { .form-wrapper { padding: 30px 20px; } }
+  .form-title { font-size: var(--fs-lg); font-weight: 900; color: var(--dark); margin-bottom: 8px; }
+  .form-sub { font-size: var(--fs-sm); color: var(--gray); margin-bottom: 28px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media(max-width: 500px) { .form-row { grid-template-columns: 1fr; } }
+  .field { margin-bottom: 16px; }
+  .field label { display: block; font-size: var(--fs-xs); font-weight: 700; color: var(--dark); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .field input, .field select, .field textarea {
+    width: 100%;
+    border: 1.5px solid var(--border);
+    border-radius: var(--r-sm);
+    padding: 12px 14px;
+    font-size: var(--fs-sm);
+    color: var(--dark);
+    background: var(--white);
+    font-family: inherit;
+    transition: border-color 0.2s;
+    outline: none;
+    appearance: none;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--mid); }
+  .field textarea { resize: vertical; min-height: 90px; }
+  .form-note { font-size: var(--fs-xs); color: var(--gray); margin-top: 12px; text-align: center; }
+  .submit-btn {
+    width: 100%;
+    background: linear-gradient(135deg, var(--mid), var(--dark));
+    color: white;
+    border: none;
+    padding: 16px;
+    border-radius: 10px;
+    font-size: var(--fs-md);
+    font-weight: 800;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: opacity 0.2s;
+  }
+  .submit-btn:hover { opacity: 0.88; }
+
+  /* FOOTER */
+  footer {
+    background: var(--dark);
+    color: rgba(255,255,255,0.5);
+    padding: 40px 24px;
+    text-align: center;
+    font-size: var(--fs-xs);
+  }
+  .footer-inner { max-width: 1080px; margin: 0 auto; }
+  .footer-logo { font-size: var(--fs-md); font-weight: 900; color: white; margin-bottom: 12px; }
+  .footer-contacts { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
+  .footer-contacts a { color: rgba(255,255,255,0.6); text-decoration: none; font-size: var(--fs-sm); }
+  .footer-contacts a:hover { color: white; }
+  .footer-divider { border: none; border-top: 1px solid rgba(255,255,255,0.1); margin: 20px 0; }
+  .footer-fine { font-size: 0.72rem; line-height: 1.8; }
+</style>
+</head>
+<body>
+
+<!-- DEMO BANNER -->
+<div class="demo-banner">
+  Демо-набросок · <strong>studio Алёны</strong> · не финал — черновик под задачу клиента
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">
+    <div class="logo-icon">🎓</div>
+    <span>ПроОбучение<sup style="font-size:0.5em;vertical-align:super;color:var(--accent)">центр</sup></span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#features">Возможности</a></li>
+    <li><a href="#included">Что входит</a></li>
+    <li><a href="#process">Этапы</a></li>
+    <li><a href="#pricing">Стоимость</a></li>
+  </ul>
+  <a href="#form" class="nav-cta">Обсудить проект</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">🚀 Разработка образовательных платформ</div>
+    <h1>Запускаем учебный центр<br><em>в онлайн за 6–8 недель</em></h1>
+    <p class="hero-sub">
+      Создадим полноценную платформу дистанционного обучения с личными кабинетами,
+      каталогом курсов, онлайн-оплатой, тестами и выдачей удостоверений.
+      Всё — с нуля и под ваш бренд.
+    </p>
+    <div class="hero-buttons">
+      <a href="#form" class="btn-primary">Получить расчёт стоимости</a>
+      <a href="#included" class="btn-ghost">Смотреть возможности</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">40+</div>
+        <div class="stat-label">проектов сдано</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">6–8</div>
+        <div class="stat-label">недель до запуска</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">3 года</div>
+        <div class="stat-label">поддержки</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">без шаблонов</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+  <div class="section-inner">
+    <div style="text-align:center; margin-bottom:48px;">
+      <div class="section-tag">Ключевые возможности</div>
+      <h2 class="section-title">Всё что нужно учебному центру — уже в платформе</h2>
+      <p class="section-sub" style="margin:0 auto;">Не конструктор и не коробка — именно ваша система, собранная под ваши процессы и требования.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feat-card">
+        <div class="feat-icon blue">📚</div>
+        <h3>Каталог курсов</h3>
+        <p>Удобный каталог с фильтрами по направлениям, форматам и категориям. Карточки курсов, описания, программы, отзывы. Слушатель найдёт нужный курс за секунды.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon orange">💳</div>
+        <h3>Онлайн-оплата</h3>
+        <p>Интеграция с Сбербанком, Тинькофф, ЮКасса или другим провайдером. Счета, чеки, история транзакций в личном кабинете. Рассрочка — по договорённости.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon green">👤</div>
+        <h3>Личный кабинет</h3>
+        <p>Слушатель видит свои курсы, прогресс, результаты тестов и полученные документы. Администратор — всю аналитику, управление пользователями и контентом.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon purple">🎓</div>
+        <h3>Документы об обучении</h3>
+        <p>Ручная выдача удостоверений, дипломов и сертификатов через панель администратора. Слушатель видит документ в кабинете и может скачать PDF.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INCLUDED -->
+<section class="included" id="included">
+  <div class="section-inner">
+    <div class="section-tag">Что входит в разработку</div>
+    <h2 class="section-title">Полный состав платформы</h2>
+    <p class="section-sub">Всё под ключ — от дизайна до настройки сервера и первичного обучения вашей команды.</p>
+    <div class="included-grid">
+      <div class="incl-item">
+        <div class="incl-check">✓</div>
+        <div class="incl-item-text">
+          <h4>Прохождение обучения онлайн</h4>
+          <p>Текстовые уроки, структурированные по модулям. Прогресс сохраняется автоматически.</p>
+        </div>
+      </div>
+      <div class="incl-item">
+        <div class="incl-check">✓</div>
+        <div class="incl-item-text">
+          <h4>Итоговое тестирование</h4>
+          <p>Тест с ограничением по времени, баллами и порогом прохождения. Результат — в личном кабинете.</p>
+        </div>
+      </div>
+      <div class="incl-item">
+        <div class="incl-check">✓</div>
+        <div class="incl-item-text">
+          <h4>Загрузка дипломных работ</h4>
+          <p>Для программ профпереподготовки: загрузка файлов слушателем, проверка и комментарии куратором.</p>
+        </div>
+      </div>
+      <div class="incl-item">
+        <div class="incl-check">✓</div>
+        <div class="incl-item-text">
+          <h4>Панель администратора</h4>
+          <p>Управление курсами, слушателями, выдача документов, просмотр оплат — всё в одном месте.</p>
+        </div>
+      </div>
+      <div class="incl-item">
+        <div class="incl-check">✓</div>
+        <div class="incl-item-text">
+          <h4>Адаптивный дизайн</h4>
+          <p>Удобно на телефоне, планшете и компьютере. Брендирование под ваш учебный центр.</p>
+        </div>
+      </div>
+      <div class="incl-item">
+        <div class="incl-check">✓</div>
+        <div class="incl-item-text">
+          <h4>Настройка сервера и домена</h4>
+          <p>Разворачиваем на вашем хостинге или подбираем подходящий. SSL, резервные копии.</p>
+        </div>
+      </div>
+      <div class="incl-item">
+        <div class="incl-check">✓</div>
+        <div class="incl-item-text">
+          <h4>Обучение команды</h4>
+          <p>Видеоинструкции и онлайн-встреча по работе с платформой для ваших менеджеров.</p>
+        </div>
+      </div>
+      <div class="incl-item">
+        <div class="incl-check">✓</div>
+        <div class="incl-item-text">
+          <h4>Техподдержка 3 месяца</h4>
+          <p>Правки, консультации, устранение ошибок — включены в стоимость после сдачи проекта.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process" id="process">
+  <div class="section-inner">
+    <div style="text-align:center; margin-bottom:48px;">
+      <div class="section-tag">Как работаем</div>
+      <h2 class="section-title">От брифа до готовой платформы — 5 этапов</h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Бриф и ТЗ</h3>
+        <p>Изучаем ваш центр, аудиторию и требования. Составляем детальное техзадание с функциями.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>Дизайн</h3>
+        <p>Прототип и дизайн в Figma. Согласовываем цвета, структуру и каждый экран с вами.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>Разработка</h3>
+        <p>Верстаем и программируем. Открываем тестовый доступ — смотрите прогресс вживую.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <h3>Наполнение</h3>
+        <p>Помогаем залить первые курсы, настроить оплату и проверить все сценарии работы.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <h3>Запуск</h3>
+        <p>Переносим на боевой сервер, проводим финальное тестирование, обучаем команду.</p>
+      </div>
+    </div>
+
+    <div style="background:var(--light); border:1.5px solid var(--border); border-radius:var(--r); padding:28px 32px; margin-top:40px; display:flex; gap:20px; align-items:flex-start; flex-wrap:wrap;">
+      <div style="font-size:2.2rem;">🛠️</div>
+      <div>
+        <strong style="display:block; margin-bottom:6px; font-size:var(--fs-md);">На чём реализуем</strong>
+        <p style="color:var(--gray); font-size:var(--fs-sm); line-height:1.7;">
+          Платформа строится на <strong style="color:var(--dark);">Laravel (PHP) + Vue.js</strong> — это надёжный стек для сложных образовательных систем с нужными вам функциями.
+          Альтернативно — <strong style="color:var(--dark);">Moodle с кастомной темой</strong>, если важна быстрая MVP-версия и бюджет ограничен.
+          Выбор технологии обсуждаем исходя из ваших задач, планируемого числа слушателей и сроков.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="section-inner">
+    <div style="text-align:center; margin-bottom:48px;">
+      <div class="section-tag">Стоимость и сроки</div>
+      <h2 class="section-title">Два варианта старта</h2>
+      <p class="section-sub" style="margin:0 auto;">Точная стоимость — после изучения ТЗ. Ниже ориентировочные вилки по аналогичным проектам.</p>
+    </div>
+    <div class="pricing-cards">
+      <div class="price-card">
+        <div class="price-name">Базовый / Moodle</div>
+        <div class="price-amount">от ___ ₽</div>
+        <div class="price-period">Срок: 3–4 недели</div>
+        <ul class="price-list">
+          <li>Каталог курсов и личный кабинет</li>
+          <li>Онлайн-обучение (тексты)</li>
+          <li>Итоговое тестирование</li>
+          <li>Загрузка дипломных работ</li>
+          <li>Ручная выдача документов</li>
+          <li>Адаптивный дизайн</li>
+          <li class="no">Онлайн-оплата на сайте</li>
+          <li class="no">Кастомная разработка под ключ</li>
+        </ul>
+        <button class="btn-outline" onclick="document.getElementById('form').scrollIntoView()">Обсудить</button>
+      </div>
+      <div class="price-card featured">
+        <div class="price-badge">Рекомендуем</div>
+        <div class="price-name">Полный / Laravel + Vue</div>
+        <div class="price-amount">от ___ ₽</div>
+        <div class="price-period">Срок: 6–8 недель</div>
+        <ul class="price-list">
+          <li>Всё из базового варианта</li>
+          <li>Онлайн-оплата (ЮКасса / Тинькофф)</li>
+          <li>Расширенный личный кабинет</li>
+          <li>Панель выдачи удостоверений и дипломов</li>
+          <li>Аналитика и отчёты для администратора</li>
+          <li>Уникальный дизайн под бренд</li>
+          <li>Обучение команды + видеоинструкции</li>
+          <li>Поддержка 3 месяца</li>
+        </ul>
+        <button class="btn-accent-block" onclick="document.getElementById('form').scrollIntoView()">Получить расчёт</button>
+      </div>
+    </div>
+    <p style="text-align:center; margin-top:24px; color:var(--gray); font-size:var(--fs-xs);">
+      * Цены — ориентировочные. Точная стоимость рассчитывается после изучения требований и ТЗ.
+    </p>
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<section class="testimonial">
+  <div class="testimonial-inner">
+    <div class="stars">★★★★★</div>
+    <p class="quote">
+      <span class="quote-mark">"</span>
+      Запустили платформу для повышения квалификации медицинских работников.
+      Команда разобралась в нашей специфике с первой встречи — итоговые тесты,
+      выдача удостоверений и вся логика работает именно так, как нам нужно.
+      За три месяца обучение прошли больше 200 человек без единого сбоя.
+      <span class="quote-mark">"</span>
+    </p>
+    <div class="reviewer">
+      <div class="reviewer-avatar">👩</div>
+      <div>
+        <div class="reviewer-name">Марина Соколова</div>
+        <div class="reviewer-role">Руководитель учебного отдела, [Название центра — заглушка]</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORM -->
+<section class="form-section" id="form">
+  <div class="section-inner">
+    <div class="form-wrapper">
+      <h2 class="form-title">Обсудим ваш проект</h2>
+      <p class="form-sub">Оставьте контакты — свяжемся в течение 2 часов и разберём детали вашего учебного центра. Без обязательств.</p>
+      <form onsubmit="return false;">
+        <div class="form-row">
+          <div class="field">
+            <label>Ваше имя</label>
+            <input type="text" placeholder="Иван Петров">
+          </div>
+          <div class="field">
+            <label>Телефон</label>
+            <input type="tel" placeholder="+7 ___">
+          </div>
+        </div>
+        <div class="field">
+          <label>Email</label>
+          <input type="email" placeholder="mail@uchcentr.ru">
+        </div>
+        <div class="field">
+          <label>Название или описание учебного центра</label>
+          <input type="text" placeholder="Центр дополнительного образования «Профессионал»">
+        </div>
+        <div class="field">
+          <label>Что хотите на платформе / особые требования</label>
+          <textarea placeholder="Курсы по профпереподготовке, около 300 слушателей в год, нужна выдача удостоверений..."></textarea>
+        </div>
+        <div class="field">
+          <label>Предпочтительный бюджет</label>
+          <select>
+            <option value="">— выберите диапазон —</option>
+            <option>до ___ ₽ (базовая версия)</option>
+            <option>___ – ___ ₽ (стандарт)</option>
+            <option>от ___ ₽ (расширенный функционал)</option>
+            <option>Обсуждается, нужна смета</option>
+          </select>
+        </div>
+        <button type="submit" class="submit-btn">Отправить заявку →</button>
+        <p class="form-note">Нажимая кнопку, вы соглашаетесь с политикой обработки персональных данных</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">🎓 ПроОбучение<sup style="font-size:0.5em;">центр</sup></div>
+    <div class="footer-contacts">
+      <a href="tel:+7___">+7 ___</a>
+      <a href="mailto:info@___">info@___.ru</a>
+      <a href="#">Примеры работ</a>
+      <a href="#">Политика конфиденциальности</a>
+    </div>
+    <hr class="footer-divider">
+    <p class="footer-fine">
+      © 2026 [Название студии — заглушка] · Разработка образовательных платформ и сайтов под ключ<br>
+      Это демонстрационная страница. Все контакты, цены и название — плейсхолдеры, не публичная оферта.
+    </p>
+  </div>
+</footer>
+
+<div style="position:fixed;inset:0;z-index:99998;pointer-events:none;opacity:.10;background-image:url(&quot;data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='420' height='300'><text x='0' y='150' transform='rotate(-28 210 150)' font-family='sans-serif' font-size='22' font-weight='700' fill='%23808080' fill-opacity='0.5'>%D0%94%D0%95%D0%9C%D0%9E%20%C2%B7%20%D0%90%D0%9B%D0%81%D0%9D%D0%90%20%D0%9F%D0%A0%D0%90%D0%A1%D0%9E%D0%9B%D0%9E%D0%92%D0%90%20%C2%B7%20%D0%9E%D0%91%D0%A0%D0%90%D0%97%D0%95%D0%A6</text></svg>&quot;);background-repeat:repeat"></div><div style="position:fixed;left:0;right:0;bottom:0;z-index:99999;pointer-events:none;text-align:center;font:600 12px/1.4 sans-serif;color:#fff;background:rgba(20,24,33,.88);padding:7px 12px">Демо-набросок для оценки · © Алёна Прасолова · не для коммерческого использования · рабочая версия и чистовой дизайн — после старта работы</div></body>
+</html>
