@@ -1,0 +1,700 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Telegram Ads для стартапа — настройка и ведение рекламы</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --blue: #229ED9;
+    --dark: #0E1B2A;
+    --mid: #1C2E40;
+    --accent: #F7A600;
+    --light: #F4F8FB;
+    --text: #1A2B3C;
+    --muted: #6B8499;
+    --white: #ffffff;
+    --radius: 14px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    background: var(--light);
+    color: var(--text);
+    line-height: 1.65;
+    font-size: 16px;
+  }
+
+  /* DEMO BAR */
+  .demo-bar {
+    background: var(--dark);
+    color: #8BAFC8;
+    text-align: center;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    padding: 7px 16px;
+  }
+  .demo-bar span { color: var(--accent); font-weight: 600; }
+
+  /* HEADER / HERO */
+  .hero {
+    background: linear-gradient(135deg, #0E1B2A 0%, #1C3A52 55%, #0E2A3E 100%);
+    color: var(--white);
+    padding: 80px 20px 90px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 420px; height: 420px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(34,158,217,0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -100px; left: -60px;
+    width: 340px; height: 340px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(247,166,0,0.10) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-tag {
+    display: inline-block;
+    background: rgba(34,158,217,0.18);
+    border: 1px solid rgba(34,158,217,0.4);
+    color: #7ED4F7;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 100px;
+    margin-bottom: 28px;
+  }
+  .hero h1 {
+    font-size: clamp(28px, 5vw, 52px);
+    font-weight: 800;
+    line-height: 1.15;
+    max-width: 760px;
+    margin: 0 auto 20px;
+    letter-spacing: -0.02em;
+  }
+  .hero h1 em {
+    color: var(--accent);
+    font-style: normal;
+  }
+  .hero-sub {
+    font-size: clamp(15px, 2.5vw, 19px);
+    color: #8BAFC8;
+    max-width: 560px;
+    margin: 0 auto 40px;
+  }
+  .btn-primary {
+    display: inline-block;
+    background: var(--blue);
+    color: var(--white);
+    font-size: 16px;
+    font-weight: 700;
+    padding: 16px 36px;
+    border-radius: 100px;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+    cursor: pointer;
+    border: none;
+  }
+  .btn-primary:hover { background: #1A8EC5; transform: translateY(-2px); }
+  .btn-ghost {
+    display: inline-block;
+    background: transparent;
+    color: #8BAFC8;
+    font-size: 14px;
+    padding: 16px 24px;
+    border-radius: 100px;
+    text-decoration: none;
+    transition: color 0.2s;
+    cursor: pointer;
+    border: none;
+  }
+  .btn-ghost:hover { color: var(--white); }
+  .hero-actions { display: flex; gap: 8px; align-items: center; justify-content: center; flex-wrap: wrap; }
+
+  .hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: clamp(24px, 5vw, 64px);
+    flex-wrap: wrap;
+    margin-top: 56px;
+    padding-top: 40px;
+    border-top: 1px solid rgba(255,255,255,0.07);
+  }
+  .stat-item { text-align: center; }
+  .stat-num {
+    font-size: clamp(26px, 4vw, 36px);
+    font-weight: 800;
+    color: var(--white);
+    letter-spacing: -0.02em;
+  }
+  .stat-num span { color: var(--accent); }
+  .stat-label { font-size: 13px; color: #6B8499; margin-top: 2px; }
+
+  /* SECTION BASE */
+  .section { padding: clamp(56px, 8vw, 96px) 20px; }
+  .section-inner { max-width: 1040px; margin: 0 auto; }
+  .section-title {
+    font-size: clamp(22px, 3.5vw, 34px);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+  .section-sub {
+    font-size: 16px;
+    color: var(--muted);
+    margin-bottom: 48px;
+    max-width: 520px;
+  }
+  .label {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 10px;
+  }
+
+  /* BENEFITS */
+  .benefits { background: var(--white); }
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+  }
+  .card {
+    background: var(--light);
+    border-radius: var(--radius);
+    padding: 28px 24px;
+    border: 1px solid #E3ECF2;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .card:hover { box-shadow: 0 8px 32px rgba(34,158,217,0.10); transform: translateY(-3px); }
+  .card-icon {
+    font-size: 32px;
+    margin-bottom: 16px;
+    display: block;
+  }
+  .card h3 {
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--dark);
+  }
+  .card p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+  /* HOW WE WORK */
+  .how { background: var(--light); }
+  .steps { display: flex; flex-direction: column; gap: 0; }
+  .step {
+    display: grid;
+    grid-template-columns: 52px 1fr;
+    gap: 20px;
+    align-items: flex-start;
+    padding: 24px 0;
+    border-bottom: 1px solid #E3ECF2;
+    position: relative;
+  }
+  .step:last-child { border-bottom: none; }
+  .step-num {
+    width: 52px; height: 52px;
+    background: linear-gradient(135deg, var(--blue), #1A8EC5);
+    color: var(--white);
+    font-size: 18px;
+    font-weight: 800;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 4px 16px rgba(34,158,217,0.25);
+  }
+  .step-body h3 {
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    color: var(--dark);
+  }
+  .step-body p { font-size: 14px; color: var(--muted); }
+  .step-tag {
+    display: inline-block;
+    background: rgba(247,166,0,0.12);
+    color: #B07700;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 100px;
+    margin-top: 6px;
+  }
+
+  /* SERVICES / PRICING */
+  .services { background: var(--dark); color: var(--white); }
+  .services .section-title { color: var(--white); }
+  .services .section-sub { color: #6B8499; }
+  .services .label { color: #7ED4F7; }
+  .prices-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+  }
+  .price-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: var(--radius);
+    padding: 32px 28px;
+    position: relative;
+    transition: border-color 0.2s;
+  }
+  .price-card:hover { border-color: rgba(34,158,217,0.4); }
+  .price-card.featured {
+    border-color: var(--blue);
+    background: rgba(34,158,217,0.07);
+  }
+  .price-badge {
+    position: absolute;
+    top: -12px; right: 20px;
+    background: var(--accent);
+    color: var(--dark);
+    font-size: 11px;
+    font-weight: 800;
+    padding: 4px 12px;
+    border-radius: 100px;
+    letter-spacing: 0.04em;
+  }
+  .price-card h3 { font-size: 18px; font-weight: 700; color: var(--white); margin-bottom: 8px; }
+  .price-card .price {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--accent);
+    margin: 16px 0;
+    letter-spacing: -0.02em;
+  }
+  .price-card .price small {
+    font-size: 14px;
+    font-weight: 400;
+    color: #6B8499;
+    letter-spacing: 0;
+  }
+  .price-list { list-style: none; margin-top: 16px; }
+  .price-list li {
+    font-size: 14px;
+    color: #8BAFC8;
+    padding: 6px 0;
+    padding-left: 20px;
+    position: relative;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .price-list li:last-child { border-bottom: none; }
+  .price-list li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--blue);
+    font-weight: 700;
+  }
+
+  /* TESTIMONIAL */
+  .testimonial { background: var(--white); }
+  .review-box {
+    max-width: 640px;
+    margin: 0 auto;
+    background: var(--light);
+    border-radius: var(--radius);
+    padding: 36px 40px;
+    border-left: 4px solid var(--blue);
+    position: relative;
+  }
+  .review-quote {
+    font-size: 40px;
+    color: var(--blue);
+    line-height: 1;
+    margin-bottom: 12px;
+    opacity: 0.3;
+  }
+  .review-text {
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--text);
+    font-style: italic;
+    margin-bottom: 24px;
+  }
+  .review-author {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .review-avatar {
+    width: 44px; height: 44px;
+    background: linear-gradient(135deg, var(--blue), #1A3A52);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .review-name { font-weight: 700; font-size: 15px; }
+  .review-role { font-size: 13px; color: var(--muted); }
+  .review-placeholder {
+    display: inline-block;
+    font-size: 11px;
+    color: var(--muted);
+    background: #E3ECF2;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-top: 4px;
+  }
+
+  /* FORM */
+  .form-section { background: linear-gradient(135deg, #0E1B2A, #1C3A52); color: var(--white); }
+  .form-section .section-title { color: var(--white); }
+  .form-section .section-sub { color: #8BAFC8; }
+  .form-section .label { color: #7ED4F7; }
+  .form-wrap {
+    max-width: 600px;
+    margin: 0 auto;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: var(--radius);
+    padding: 40px;
+  }
+  .form-row { margin-bottom: 20px; }
+  .form-row label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #8BAFC8;
+    margin-bottom: 7px;
+    letter-spacing: 0.03em;
+  }
+  .form-control {
+    width: 100%;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 10px;
+    padding: 13px 16px;
+    font-size: 15px;
+    color: var(--white);
+    outline: none;
+    transition: border-color 0.2s;
+    font-family: inherit;
+    resize: vertical;
+  }
+  .form-control::placeholder { color: #3A5568; }
+  .form-control:focus { border-color: var(--blue); }
+  .form-note {
+    font-size: 12px;
+    color: #3A5568;
+    margin-top: 8px;
+    line-height: 1.5;
+  }
+  .form-submit {
+    width: 100%;
+    background: var(--blue);
+    color: var(--white);
+    border: none;
+    border-radius: 100px;
+    padding: 16px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-family: inherit;
+    margin-top: 8px;
+  }
+  .form-submit:hover { background: #1A8EC5; }
+
+  /* FOOTER */
+  footer {
+    background: #080F17;
+    color: #3A5568;
+    padding: 36px 20px;
+    text-align: center;
+    font-size: 13px;
+  }
+  footer strong { color: #6B8499; }
+  footer .footer-divider {
+    width: 40px;
+    height: 2px;
+    background: var(--blue);
+    margin: 16px auto;
+    border-radius: 2px;
+    opacity: 0.4;
+  }
+
+  @media (max-width: 600px) {
+    .review-box { padding: 24px 20px; }
+    .form-wrap { padding: 28px 20px; }
+    .hero { padding: 60px 16px 70px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="demo-bar">
+  Демо-набросок · <span>studio Алёны</span> · не финал — покажем уровень до оплаты
+</div>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-tag">📣 Telegram Ads · eLama · Reage</div>
+  <h1>Запустим рекламу стартапа<br>в <em>Telegram</em> — с нуля до результата</h1>
+  <p class="hero-sub">
+    Разрабатываем стратегию, настраиваем кампании через eLama,
+    тестируем гипотезы и оптимизируем под ваш сайт.
+  </p>
+  <div class="hero-actions">
+    <a href="#form" class="btn-primary">Обсудить проект</a>
+    <a href="#how" class="btn-ghost">Как работаем →</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-item">
+      <div class="stat-num">3<span>+</span></div>
+      <div class="stat-label">года в Telegram Ads</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">40<span>+</span></div>
+      <div class="stat-label">запущено кампаний</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">eLama</div>
+      <div class="stat-label">сертифицированный партнёр</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">до 5<span>₽</span></div>
+      <div class="stat-label">CPС в нишевых каналах</div>
+    </div>
+  </div>
+</header>
+
+<!-- BENEFITS -->
+<section class="section benefits">
+  <div class="section-inner">
+    <span class="label">Почему мы</span>
+    <h2 class="section-title">Что получает Reage, работая с нами</h2>
+    <p class="section-sub">Не просто «нажали кнопки» — системный подход от аналитики до масштабирования.</p>
+    <div class="cards-grid">
+      <div class="card">
+        <span class="card-icon">🎯</span>
+        <h3>Глубокое погружение в продукт</h3>
+        <p>Изучаем Reage, аудиторию и конкурентов до запуска — не настраиваем вслепую.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">🔬</span>
+        <h3>Тест гипотез по системе</h3>
+        <p>Запускаем несколько связок, быстро выявляем рабочие и масштабируем их.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">📊</span>
+        <h3>Прозрачная аналитика</h3>
+        <p>Еженедельные отчёты с реальными цифрами: CPM, CTR, CPC, конверсии сайта.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">🚀</span>
+        <h3>Готовность к масштабу</h3>
+        <p>Даём рекомендации по следующим шагам — как наращивать бюджет без просадки CPL.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW WE WORK -->
+<section class="section how" id="how">
+  <div class="section-inner">
+    <span class="label">Процесс</span>
+    <h2 class="section-title">Как мы запустим вашу рекламу</h2>
+    <p class="section-sub">8 шагов от брифинга до оптимизированных кампаний.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h3>Погружение в Reage</h3>
+          <p>Изучаем продукт, целевую аудиторию, лендинг и конкурентное окружение. Согласовываем позиционирование.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h3>Стратегия продвижения</h3>
+          <p>Составляем медиаплан: аудитории, каналы, гео, форматы. Согласовываем KPI и бюджет.</p>
+          <span class="step-tag">Доставляем за 2–3 дня</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h3>Подбор каналов и аудиторий</h3>
+          <p>Парсим релевантные Telegram-каналы, формируем таргетинги по интересам и поведению.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h3>Настройка через eLama</h3>
+          <p>Создаём кампании в рекламном кабинете eLama, прописываем UTM-метки для отслеживания трафика на сайт.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <h3>Запуск тестовых кампаний</h3>
+          <p>Запускаем 3–5 связок с разными объявлениями. Даём накопить статистику.</p>
+          <span class="step-tag">Тест 7–10 дней</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">6</div>
+        <div class="step-body">
+          <h3>Анализ и оптимизация</h3>
+          <p>Отключаем неэффективные связки, усиливаем работающие. Корректируем ставки и тексты объявлений.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">7</div>
+        <div class="step-body">
+          <h3>Регулярная отчётность</h3>
+          <p>Еженедельные отчёты с аналитикой по переходам на сайт, стоимости клика и конверсиям.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">8</div>
+        <div class="step-body">
+          <h3>Рекомендации по масштабированию</h3>
+          <p>По итогу теста — письменный план роста: как и куда масштабировать бюджет.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES / PRICING -->
+<section class="section services" id="services">
+  <div class="section-inner">
+    <span class="label">Стоимость</span>
+    <h2 class="section-title">Варианты сотрудничества</h2>
+    <p class="section-sub">Выберите формат под ваш этап — от разового запуска до постоянного ведения.</p>
+    <div class="prices-grid">
+      <div class="price-card">
+        <h3>Стратегия + Настройка</h3>
+        <div class="price">от ___ ₽ <small>/ разово</small></div>
+        <ul class="price-list">
+          <li>Аудит продукта и ЦА</li>
+          <li>Медиаплан и стратегия</li>
+          <li>Настройка кампаний в eLama</li>
+          <li>UTM-разметка и аналитика</li>
+          <li>Запуск тестовых кампаний</li>
+          <li>Итоговый отчёт</li>
+        </ul>
+      </div>
+      <div class="price-card featured">
+        <div class="price-badge">Популярно</div>
+        <h3>Ведение кампаний</h3>
+        <div class="price">от ___ ₽ <small>/ месяц</small></div>
+        <ul class="price-list">
+          <li>Всё из тарифа «Настройка»</li>
+          <li>Ежедневный мониторинг</li>
+          <li>Оптимизация ставок и объявлений</li>
+          <li>Тест новых гипотез</li>
+          <li>Еженедельные отчёты</li>
+          <li>Рекомендации по масштабу</li>
+        </ul>
+      </div>
+      <div class="price-card">
+        <h3>Разовая консультация</h3>
+        <div class="price">от ___ ₽ <small>/ час</small></div>
+        <ul class="price-list">
+          <li>Аудит текущих кампаний</li>
+          <li>Ответы на вопросы по eLama</li>
+          <li>Чек-лист ошибок</li>
+          <li>Рекомендации в письменном виде</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<section class="section testimonial">
+  <div class="section-inner" style="text-align:center;">
+    <span class="label">Отзыв</span>
+    <h2 class="section-title" style="margin-bottom:36px;">Что говорят клиенты</h2>
+    <div class="review-box">
+      <div class="review-quote">"</div>
+      <p class="review-text">
+        Запустили рекламу на наш B2B-сервис через Telegram Ads — за месяц получили более 200 целевых переходов на сайт при CPС ниже прогнозного. Специалист сам предложил несколько нестандартных аудиторий, которые сработали лучше всего. Рекомендую.
+      </p>
+      <div class="review-author">
+        <div class="review-avatar">👤</div>
+        <div>
+          <div class="review-name">Андрей К.</div>
+          <div class="review-role">Co-founder, SaaS-стартап</div>
+          <div class="review-placeholder">⚠ заглушка — заменить реальным отзывом</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORM -->
+<section class="section form-section" id="form">
+  <div class="section-inner" style="text-align:center;">
+    <span class="label">Контакт</span>
+    <h2 class="section-title">Обсудим запуск рекламы для Reage?</h2>
+    <p class="section-sub" style="margin: 0 auto 40px; max-width:480px;">
+      Оставьте заявку — расскажем про опыт, покажем кейсы и назовём стоимость под ваш бюджет.
+    </p>
+    <div class="form-wrap">
+      <div class="form-row">
+        <label>Ваше имя</label>
+        <input class="form-control" type="text" placeholder="Как к вам обращаться">
+      </div>
+      <div class="form-row">
+        <label>Telegram или email</label>
+        <input class="form-control" type="text" placeholder="@username или почта">
+      </div>
+      <div class="form-row">
+        <label>Рекламный бюджет</label>
+        <input class="form-control" type="text" placeholder="Например, от ___ ₽ в месяц">
+      </div>
+      <div class="form-row">
+        <label>Коротко о задаче</label>
+        <textarea class="form-control" rows="4" placeholder="Что нужно сделать, есть ли уже кабинет eLama, что пробовали..."></textarea>
+      </div>
+      <p class="form-note">
+        📌 Форма — демонстрационная. Реальный отклик отправьте через Kwork или напрямую.
+      </p>
+      <button class="form-submit">Отправить заявку →</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <strong>Специалист по Telegram Ads</strong>
+  <div class="footer-divider"></div>
+  <div style="margin-bottom:8px;">📞 +7 ___ · ✉ ваш@email.ru</div>
+  <div>© 2026 · Настройка и ведение Telegram Ads через eLama</div>
+  <div style="margin-top:12px; font-size:11px;">
+    Демо-набросок создан студией Алёны Прасоловой · не публичный финальный дизайн
+  </div>
+</footer>
+
+<div style="position:fixed;inset:0;z-index:99998;pointer-events:none;opacity:.10;background-image:url(&quot;data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='420' height='300'><text x='0' y='150' transform='rotate(-28 210 150)' font-family='sans-serif' font-size='22' font-weight='700' fill='%23808080' fill-opacity='0.5'>%D0%94%D0%95%D0%9C%D0%9E%20%C2%B7%20%D0%90%D0%9B%D0%81%D0%9D%D0%90%20%D0%9F%D0%A0%D0%90%D0%A1%D0%9E%D0%9B%D0%9E%D0%92%D0%90%20%C2%B7%20%D0%9E%D0%91%D0%A0%D0%90%D0%97%D0%95%D0%A6</text></svg>&quot;);background-repeat:repeat"></div><div style="position:fixed;left:0;right:0;bottom:0;z-index:99999;pointer-events:none;text-align:center;font:600 12px/1.4 sans-serif;color:#fff;background:rgba(20,24,33,.88);padding:7px 12px">Демо-набросок для оценки · © Алёна Прасолова · не для коммерческого использования · рабочая версия и чистовой дизайн — после старта работы</div></body>
+</html>
