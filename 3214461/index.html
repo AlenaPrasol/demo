@@ -1,0 +1,830 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Иллюстрации для образовательного центра — дизайнер-иллюстратор</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1C1B2E;
+    --soft: #F5F0E8;
+    --brand: #2E4FAD;
+    --accent: #F4672B;
+    --brand-light: #E8EEF9;
+    --muted: #6B6880;
+    --r: 14px;
+  }
+
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    background: var(--soft);
+    color: var(--ink);
+    line-height: 1.65;
+    font-size: 17px;
+  }
+
+  /* ── DEMO STRIP ── */
+  .demo-strip {
+    background: var(--ink);
+    color: #fff;
+    text-align: center;
+    font-size: 12px;
+    letter-spacing: .08em;
+    padding: 7px 16px;
+    font-family: system-ui, sans-serif;
+  }
+  .demo-strip span { color: var(--accent); font-weight: 700; }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+  section { padding: 72px 0; }
+
+  /* ── NAV ── */
+  nav {
+    background: #fff;
+    border-bottom: 1px solid #E2DDD5;
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .nav-logo {
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--brand);
+    letter-spacing: -.02em;
+  }
+  .nav-logo em { color: var(--accent); font-style: normal; }
+  nav a {
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 14px;
+    font-family: system-ui, sans-serif;
+    opacity: .7;
+    transition: opacity .2s;
+  }
+  nav a:hover { opacity: 1; }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, #1C2B6B 0%, #2E4FAD 55%, #3A6BC4 100%);
+    color: #fff;
+    padding: 80px 0 88px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    right: -60px; top: -40px;
+    width: 480px; height: 480px;
+    background: radial-gradient(circle, rgba(244,103,43,.25) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-tag {
+    display: inline-block;
+    background: rgba(244,103,43,.85);
+    color: #fff;
+    font-size: 12px;
+    font-family: system-ui, sans-serif;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-size: clamp(28px, 5vw, 50px);
+    line-height: 1.18;
+    font-weight: 700;
+    max-width: 640px;
+    margin-bottom: 20px;
+  }
+  .hero h1 em {
+    font-style: normal;
+    color: #FFD166;
+    border-bottom: 3px solid rgba(255,209,102,.4);
+  }
+  .hero p {
+    font-size: 18px;
+    opacity: .88;
+    max-width: 520px;
+    margin-bottom: 36px;
+    font-family: system-ui, sans-serif;
+    line-height: 1.6;
+  }
+  .btn {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: system-ui, sans-serif;
+    padding: 16px 36px;
+    border-radius: var(--r);
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: transform .15s, box-shadow .15s;
+    box-shadow: 0 6px 24px rgba(244,103,43,.45);
+  }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(244,103,43,.55); }
+  .btn-outline {
+    background: transparent;
+    border: 2px solid rgba(255,255,255,.5);
+    color: #fff;
+    box-shadow: none;
+    margin-left: 14px;
+  }
+  .btn-outline:hover { border-color: #fff; box-shadow: none; }
+
+  .hero-stats {
+    display: flex;
+    gap: 40px;
+    margin-top: 52px;
+    flex-wrap: wrap;
+  }
+  .stat { }
+  .stat strong {
+    display: block;
+    font-size: 32px;
+    font-weight: 700;
+    color: #FFD166;
+    line-height: 1;
+  }
+  .stat span {
+    font-size: 13px;
+    opacity: .75;
+    font-family: system-ui, sans-serif;
+  }
+
+  /* ── ILLUSTRATIONS PREVIEW ── */
+  .illus-row {
+    display: flex;
+    gap: 16px;
+    margin-top: 52px;
+    flex-wrap: wrap;
+  }
+  .illus-card {
+    flex: 1 1 120px;
+    background: rgba(255,255,255,.1);
+    border: 1.5px solid rgba(255,255,255,.2);
+    border-radius: 12px;
+    padding: 20px 14px;
+    text-align: center;
+    font-family: system-ui, sans-serif;
+    font-size: 13px;
+    opacity: .9;
+  }
+  .illus-card .ic { font-size: 36px; display: block; margin-bottom: 8px; }
+
+  /* ── SECTION LABEL ── */
+  .section-label {
+    font-size: 12px;
+    font-family: system-ui, sans-serif;
+    font-weight: 700;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+  .section-title {
+    font-size: clamp(24px, 4vw, 38px);
+    font-weight: 700;
+    line-height: 1.22;
+    color: var(--ink);
+  }
+  .section-sub {
+    font-size: 17px;
+    color: var(--muted);
+    margin-top: 14px;
+    max-width: 540px;
+    font-family: system-ui, sans-serif;
+  }
+  .section-head { margin-bottom: 52px; }
+
+  /* ── WHY BLOCK ── */
+  .why { background: #fff; }
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 24px;
+  }
+  .card {
+    background: var(--soft);
+    border-radius: var(--r);
+    padding: 32px 28px;
+    border: 1.5px solid #E5DFCF;
+    transition: transform .2s, box-shadow .2s;
+  }
+  .card:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(28,27,46,.08); }
+  .card-icon { font-size: 40px; margin-bottom: 16px; }
+  .card h3 { font-size: 19px; margin-bottom: 10px; font-weight: 700; }
+  .card p { font-size: 15px; color: var(--muted); font-family: system-ui, sans-serif; line-height: 1.6; }
+
+  /* ── WHAT I DRAW ── */
+  .what { background: var(--brand-light); }
+  .work-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+  }
+  .work-item {
+    background: #fff;
+    border-radius: var(--r);
+    overflow: hidden;
+    border: 1.5px solid #D6DCF0;
+  }
+  .work-thumb {
+    height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 64px;
+    position: relative;
+  }
+  .work-thumb::after {
+    content: 'иллюстрация-заглушка';
+    position: absolute;
+    bottom: 8px;
+    right: 10px;
+    font-size: 10px;
+    font-family: system-ui, sans-serif;
+    color: rgba(255,255,255,.7);
+    background: rgba(0,0,0,.25);
+    padding: 2px 8px;
+    border-radius: 6px;
+    letter-spacing: .04em;
+  }
+  .t1 { background: linear-gradient(135deg, #667eea, #764ba2); }
+  .t2 { background: linear-gradient(135deg, #f093fb, #f5576c); }
+  .t3 { background: linear-gradient(135deg, #4facfe, #00f2fe); }
+  .t4 { background: linear-gradient(135deg, #43e97b, #38f9d7); }
+  .t5 { background: linear-gradient(135deg, #fa709a, #fee140); }
+  .t6 { background: linear-gradient(135deg, #a18cd1, #fbc2eb); }
+
+  .work-body { padding: 20px 22px; }
+  .work-body h4 { font-size: 17px; font-weight: 700; margin-bottom: 6px; }
+  .work-body p { font-size: 14px; color: var(--muted); font-family: system-ui, sans-serif; }
+
+  /* ── PROCESS ── */
+  .process { background: #fff; }
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0;
+    position: relative;
+  }
+  .step {
+    padding: 32px 24px;
+    text-align: center;
+    position: relative;
+  }
+  .step:not(:last-child)::after {
+    content: '→';
+    position: absolute;
+    right: -10px;
+    top: 40px;
+    font-size: 24px;
+    color: var(--brand);
+    opacity: .3;
+  }
+  .step-num {
+    width: 52px; height: 52px;
+    background: var(--brand);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0 auto 18px;
+    font-family: system-ui, sans-serif;
+  }
+  .step h4 { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+  .step p { font-size: 14px; color: var(--muted); font-family: system-ui, sans-serif; }
+
+  /* ── PRICE ── */
+  .price { background: var(--soft); }
+  .price-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+  }
+  .price-card {
+    background: #fff;
+    border: 1.5px solid #E5DFCF;
+    border-radius: var(--r);
+    padding: 36px 28px;
+    text-align: center;
+  }
+  .price-card.featured {
+    background: var(--brand);
+    color: #fff;
+    border-color: var(--brand);
+    transform: scale(1.03);
+    box-shadow: 0 16px 48px rgba(46,79,173,.25);
+  }
+  .price-card.featured .price-sub,
+  .price-card.featured .price-list li { color: rgba(255,255,255,.75); }
+  .price-name { font-size: 14px; font-family: system-ui, sans-serif; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 12px; opacity: .7; }
+  .price-val { font-size: 38px; font-weight: 700; line-height: 1; margin-bottom: 6px; }
+  .price-val sup { font-size: 20px; vertical-align: super; font-weight: 400; }
+  .price-sub { font-size: 13px; color: var(--muted); font-family: system-ui, sans-serif; margin-bottom: 24px; }
+  .price-list { list-style: none; text-align: left; margin-bottom: 28px; }
+  .price-list li {
+    font-size: 14px;
+    font-family: system-ui, sans-serif;
+    color: var(--muted);
+    padding: 6px 0;
+    border-bottom: 1px solid #F0EBE0;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .price-card.featured .price-list li { border-bottom-color: rgba(255,255,255,.15); }
+  .price-list li::before { content: '✓'; color: var(--accent); font-weight: 700; flex-shrink: 0; }
+  .price-card.featured .price-list li::before { color: #FFD166; }
+  .btn-price {
+    display: block;
+    width: 100%;
+    background: var(--accent);
+    color: #fff;
+    font-weight: 700;
+    font-family: system-ui, sans-serif;
+    padding: 14px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    transition: opacity .2s;
+  }
+  .btn-price:hover { opacity: .88; }
+  .btn-price.outline {
+    background: transparent;
+    border: 2px solid var(--brand);
+    color: var(--brand);
+  }
+  .price-card.featured .btn-price.outline {
+    border-color: rgba(255,255,255,.6);
+    color: #fff;
+  }
+
+  /* ── REVIEW ── */
+  .review { background: linear-gradient(135deg, #1C2B6B 0%, #2E4FAD 100%); color: #fff; }
+  .review-box {
+    max-width: 680px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .review-stars { font-size: 28px; margin-bottom: 20px; letter-spacing: 4px; }
+  .review-text {
+    font-size: clamp(18px, 3vw, 24px);
+    line-height: 1.5;
+    font-style: italic;
+    margin-bottom: 28px;
+    opacity: .92;
+  }
+  .review-author {
+    font-family: system-ui, sans-serif;
+    font-size: 14px;
+    opacity: .65;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+  }
+  .review-author strong {
+    display: block;
+    font-size: 16px;
+    color: #FFD166;
+    margin-bottom: 4px;
+    text-transform: none;
+    letter-spacing: 0;
+    font-style: normal;
+  }
+  .review-placeholder {
+    display: inline-block;
+    margin-top: 20px;
+    font-size: 11px;
+    background: rgba(255,255,255,.12);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-family: system-ui, sans-serif;
+    letter-spacing: .05em;
+  }
+
+  /* ── FORM ── */
+  .form-sec { background: var(--soft); }
+  .form-wrap {
+    background: #fff;
+    border-radius: 20px;
+    padding: 52px 48px;
+    border: 1.5px solid #E5DFCF;
+    max-width: 640px;
+    margin: 0 auto;
+    box-shadow: 0 8px 48px rgba(28,27,46,.07);
+  }
+  .form-wrap h2 { font-size: 30px; margin-bottom: 8px; }
+  .form-wrap p { font-size: 16px; color: var(--muted); font-family: system-ui, sans-serif; margin-bottom: 32px; }
+  .form-row { margin-bottom: 18px; }
+  label {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    font-family: system-ui, sans-serif;
+    letter-spacing: .04em;
+    margin-bottom: 7px;
+    color: var(--ink);
+  }
+  input, textarea, select {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1.5px solid #DDD8CC;
+    border-radius: 10px;
+    font-size: 16px;
+    font-family: Georgia, serif;
+    background: var(--soft);
+    color: var(--ink);
+    outline: none;
+    transition: border-color .2s;
+  }
+  input:focus, textarea:focus, select:focus { border-color: var(--brand); background: #fff; }
+  textarea { min-height: 110px; resize: vertical; }
+  .form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-submit {
+    width: 100%;
+    background: var(--accent);
+    color: #fff;
+    font-size: 17px;
+    font-weight: 700;
+    font-family: system-ui, sans-serif;
+    padding: 18px;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: transform .15s, box-shadow .15s;
+    box-shadow: 0 6px 24px rgba(244,103,43,.4);
+  }
+  .form-submit:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(244,103,43,.5); }
+  .form-note {
+    text-align: center;
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 14px;
+    font-family: system-ui, sans-serif;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ink);
+    color: rgba(255,255,255,.5);
+    padding: 40px 24px;
+    font-size: 14px;
+    font-family: system-ui, sans-serif;
+  }
+  .footer-in {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .footer-logo { color: #fff; font-weight: 700; font-size: 17px; font-family: Georgia, serif; }
+  .footer-logo em { color: var(--accent); font-style: normal; }
+  footer a { color: rgba(255,255,255,.55); text-decoration: none; }
+
+  /* ── MOBILE ── */
+  @media (max-width: 600px) {
+    section { padding: 52px 0; }
+    .hero { padding: 56px 0 64px; }
+    .hero-stats { gap: 24px; }
+    .form-wrap { padding: 32px 24px; }
+    .form-row-2 { grid-template-columns: 1fr; }
+    .steps { grid-template-columns: 1fr 1fr; }
+    .step::after { display: none; }
+    .price-card.featured { transform: none; }
+    .btn-outline { margin-left: 0; margin-top: 12px; display: block; }
+    nav { padding: 14px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- DEMO STRIP -->
+<div class="demo-strip">
+  Демо-набросок · <span>studio Алёны</span> · не финал — черновик для обсуждения
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Марина <em>Иллюстратор</em></div>
+  <div style="display:flex;gap:24px;flex-wrap:wrap;">
+    <a href="#what">Что создам</a>
+    <a href="#process">Как работаем</a>
+    <a href="#price">Стоимость</a>
+    <a href="#form">Написать</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <span class="hero-tag">✏️ Живые иллюстрации · вручную</span>
+    <h1>Нарисую фирменные иллюстрации для <em>«Текстуры»</em> своей рукой</h1>
+    <p>Уникальные векторные персонажи учеников и учителей, графические элементы по теме обучения — всё в вашей цветовой палитре, без нейросетей и шаблонов.</p>
+    <div>
+      <a href="#form" class="btn">Обсудить задачу</a>
+      <a href="#what" class="btn btn-outline">Посмотреть примеры</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <strong>7+</strong>
+        <span>лет в иллюстрации</span>
+      </div>
+      <div class="stat">
+        <strong>40+</strong>
+        <span>брендов оформлено</span>
+      </div>
+      <div class="stat">
+        <strong>100%</strong>
+        <span>ручная работа</span>
+      </div>
+    </div>
+
+    <div class="illus-row">
+      <div class="illus-card">
+        <span class="ic">🧑‍🎓</span>
+        персонажи учеников
+      </div>
+      <div class="illus-card">
+        <span class="ic">👩‍🏫</span>
+        персонажи учителей
+      </div>
+      <div class="illus-card">
+        <span class="ic">📚</span>
+        элементы «школа»
+      </div>
+      <div class="illus-card">
+        <span class="ic">🎨</span>
+        плашки и паттерны
+      </div>
+      <div class="illus-card">
+        <span class="ic">✏️</span>
+        линии и узоры
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section class="why">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-label">Почему это важно</div>
+      <h2 class="section-title">Не шаблон, не нейросеть — живой стиль</h2>
+      <p class="section-sub">Образовательному центру важна узнаваемость. Я создаю то, что работает на бренд, а не то, что «сошло сойдёт».</p>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-icon">✋</div>
+        <h3>Рисую сам, не генерирую</h3>
+        <p>Каждый персонаж и элемент создаётся вручную в векторном редакторе — никаких Midjourney, ChatGPT и прочих генераторов. Вы отличите такое от всех конкурентов.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🎨</div>
+        <h3>Ваша палитра и стиль</h3>
+        <p>Изучаю ваш логотип, цвета и референсы до первого эскиза. Иллюстрации органично вписываются в уже готовый фирменный стиль «Текстуры».</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔄</div>
+        <h3>Правки включены</h3>
+        <p>Показываю черновик, обсуждаем, дорабатываю. Не сдаю работу пока вас не устроит результат — два круга правок в цене.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">📦</div>
+        <h3>Сразу готово к работе</h3>
+        <p>Отдаю исходники в AI или SVG, плюс PNG в нескольких размерах для соцсетей, сторис, полиграфии и сайта.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT I DRAW -->
+<section class="what" id="what">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-label">Что создам для «Текстуры»</div>
+      <h2 class="section-title">Полный комплект графики для контента</h2>
+      <p class="section-sub">Под ваше полноценное ТЗ — персонажи, тематические элементы и паттерны для фона макетов постов и сторис.</p>
+    </div>
+    <div class="work-grid">
+      <div class="work-item">
+        <div class="work-thumb t1">🧑‍💻</div>
+        <div class="work-body">
+          <h4>5–7 персонажей учеников</h4>
+          <p>Разные возраста, позы, эмоции — радость от результата, сосредоточенность на задаче, уверенность на экзамене.</p>
+        </div>
+      </div>
+      <div class="work-item">
+        <div class="work-thumb t2">👩‍🏫</div>
+        <div class="work-body">
+          <h4>5–7 персонажей педагогов</h4>
+          <p>Тёплые, современные, авторитетные. Создадут ощущение живого, человечного центра — не безликой онлайн-школы.</p>
+        </div>
+      </div>
+      <div class="work-item">
+        <div class="work-thumb t3">📐</div>
+        <div class="work-body">
+          <h4>5–7 тематических элементов</h4>
+          <p>Книги, колбы, глобус, формулы, аттестат — символы знаний в едином стиле для декора постов и презентаций.</p>
+        </div>
+      </div>
+      <div class="work-item">
+        <div class="work-thumb t4">〰️</div>
+        <div class="work-body">
+          <h4>Линии и разделители</h4>
+          <p>Фирменные волнистые линии, стрелки и акценты — чтобы структурировать макеты в едином ключе.</p>
+        </div>
+      </div>
+      <div class="work-item">
+        <div class="work-thumb t5">▬</div>
+        <div class="work-body">
+          <h4>Плашки и подложки</h4>
+          <p>Цветные фигуры и блоки под текст с цитатами, ценами, расписанием — вписаны в вашу палитру.</p>
+        </div>
+      </div>
+      <div class="work-item">
+        <div class="work-thumb t6">✦</div>
+        <div class="work-body">
+          <h4>Паттерны для фона</h4>
+          <p>Тайловые узоры из мелких тематических элементов — готовый бесшовный фон для сторис и баннеров.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process" id="process">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-label">Как работаем</div>
+      <h2 class="section-title">Без сюрпризов — понятный процесс</h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h4>Бриф и ТЗ</h4>
+        <p>Знакомлюсь с вашими референсами и полным техзаданием. Задаю уточняющие вопросы.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h4>Эскизы карандашом</h4>
+        <p>Рисую 2–3 концепции стиля персонажей для вашего согласования — до финальной отрисовки.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h4>Векторная отрисовка</h4>
+        <p>Утверждённый стиль переношу в вектор. Все элементы в единой системе пропорций и цвета.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <h4>Правки и сдача</h4>
+        <p>Принимаю обратную связь, вношу правки. Передаю все исходники с лицензией на коммерческое использование.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICE -->
+<section class="price" id="price">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-label">Стоимость</div>
+      <h2 class="section-title">Прозрачные пакеты под задачу</h2>
+      <p class="section-sub">Выберите объём или напишите — сориентирую по вашему ТЗ точнее.</p>
+    </div>
+    <div class="price-grid">
+      <div class="price-card">
+        <div class="price-name">Старт</div>
+        <div class="price-val">от <sup></sup>___ ₽</div>
+        <div class="price-sub">базовый комплект</div>
+        <ul class="price-list">
+          <li>3 персонажа (ученик + учитель)</li>
+          <li>3 тематических элемента</li>
+          <li>Базовые линии и плашки</li>
+          <li>PNG + SVG</li>
+          <li>1 круг правок</li>
+        </ul>
+        <button class="btn-price outline">Написать</button>
+      </div>
+      <div class="price-card featured">
+        <div class="price-name">По вашему ТЗ</div>
+        <div class="price-val">от <sup></sup>___ ₽</div>
+        <div class="price-sub">полный комплект</div>
+        <ul class="price-list">
+          <li>5–7 персонажей учеников</li>
+          <li>5–7 персонажей педагогов</li>
+          <li>5–7 тематических элементов</li>
+          <li>Линии, плашки, паттерны</li>
+          <li>2 круга правок</li>
+          <li>AI + SVG + PNG всех размеров</li>
+        </ul>
+        <button class="btn-price outline">Обсудить детали</button>
+      </div>
+      <div class="price-card">
+        <div class="price-name">Расширенный</div>
+        <div class="price-val">от <sup></sup>___ ₽</div>
+        <div class="price-sub">+ анимация и гайдлайн</div>
+        <ul class="price-list">
+          <li>Всё из пакета «По ТЗ»</li>
+          <li>Анимированные варианты (Lottie)</li>
+          <li>Гайд по применению элементов</li>
+          <li>Поддержка 1 месяц</li>
+          <li>3 круга правок</li>
+        </ul>
+        <button class="btn-price outline">Написать</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEW -->
+<section class="review">
+  <div class="container">
+    <div class="review-box">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">«Марина нарисовала для нас целую серию персонажей для детского клуба. Никакого ощущения "сгенерированности" — живые, тёплые образы, которые дети сразу полюбили. Работали по чёткому ТЗ, уложились в срок, правки вносила без вопросов.»</p>
+      <div class="review-author">
+        <strong>Наталья К.</strong>
+        руководитель детского развивающего клуба
+        <span class="review-placeholder">отзыв-заглушка · сюда встанет реальный</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORM -->
+<section class="form-sec" id="form">
+  <div class="container">
+    <div class="form-wrap">
+      <h2>Обсудим ваш проект</h2>
+      <p>Напишите — изучу ваше ТЗ и референсы, отвечу с предварительной оценкой в течение дня.</p>
+      <div class="form-row-2">
+        <div class="form-row">
+          <label for="name">Ваше имя</label>
+          <input type="text" id="name" placeholder="Как к вам обращаться?">
+        </div>
+        <div class="form-row">
+          <label for="org">Организация</label>
+          <input type="text" id="org" placeholder="«Текстура» или другая">
+        </div>
+      </div>
+      <div class="form-row">
+        <label for="contact">Как связаться</label>
+        <input type="text" id="contact" placeholder="Telegram, почта или +7 ___">
+      </div>
+      <div class="form-row">
+        <label for="scope">Объём задачи</label>
+        <select id="scope">
+          <option value="">Выберите пакет или опишите своими словами</option>
+          <option>Базовый — несколько персонажей</option>
+          <option>Полный — по моему ТЗ (персонажи + элементы + паттерны)</option>
+          <option>Расширенный — с анимацией и гайдлайном</option>
+          <option>Хочу обсудить индивидуально</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label for="msg">Дополнительно</label>
+        <textarea id="msg" placeholder="Расскажите про сроки, особые пожелания или прикрепите ссылку на референсы"></textarea>
+      </div>
+      <button class="form-submit">✏️ Отправить заявку</button>
+      <p class="form-note">Нажимая кнопку, вы соглашаетесь на обратную связь. Форма визуальная — свяжитесь напрямую: <strong>+7 ___</strong> или <strong>@___telegram</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-in">
+    <div>
+      <div class="footer-logo">Марина <em>Иллюстратор</em></div>
+      <div style="margin-top:6px;">Дизайнер-иллюстратор · рисую вручную · с 2017 года</div>
+    </div>
+    <div style="text-align:right;">
+      <div><a href="#">+7 ___</a> · <a href="#">@___telegram</a></div>
+      <div style="margin-top:6px;font-size:12px;opacity:.4;">Демо-набросок · studio Алёны · для обсуждения с клиентом</div>
+    </div>
+  </div>
+</footer>
+
+<div style="position:fixed;inset:0;z-index:99998;pointer-events:none;opacity:.10;background-image:url(&quot;data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='420' height='300'><text x='0' y='150' transform='rotate(-28 210 150)' font-family='sans-serif' font-size='22' font-weight='700' fill='%23808080' fill-opacity='0.5'>%D0%94%D0%95%D0%9C%D0%9E%20%C2%B7%20%D0%90%D0%9B%D0%81%D0%9D%D0%90%20%D0%9F%D0%A0%D0%90%D0%A1%D0%9E%D0%9B%D0%9E%D0%92%D0%90%20%C2%B7%20%D0%9E%D0%91%D0%A0%D0%90%D0%97%D0%95%D0%A6</text></svg>&quot;);background-repeat:repeat"></div><div style="position:fixed;left:0;right:0;bottom:0;z-index:99999;pointer-events:none;text-align:center;font:600 12px/1.4 sans-serif;color:#fff;background:rgba(20,24,33,.88);padding:7px 12px">Демо-набросок для оценки · © Алёна Прасолова · не для коммерческого использования · рабочая версия и чистовой дизайн — после старта работы</div></body>
+</html>
