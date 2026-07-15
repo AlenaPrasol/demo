@@ -1,0 +1,848 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Таргетолог — недвижимость Пхукет & Бали</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0f1e35;
+    --sand: #f7f3ed;
+    --accent: #d4854a;
+    --accent2: #e8b87a;
+    --text: #1c2a3a;
+    --muted: #6b7a8d;
+    --white: #ffffff;
+    --card: #ffffff;
+    --radius: 14px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    background: var(--sand);
+    color: var(--text);
+    line-height: 1.65;
+    font-size: 16px;
+  }
+
+  /* DEMO BANNER */
+  .demo-bar {
+    background: var(--navy);
+    color: rgba(255,255,255,0.75);
+    text-align: center;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    padding: 7px 16px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .demo-bar span { color: var(--accent2); font-weight: 600; }
+
+  /* NAV */
+  nav {
+    background: var(--white);
+    border-bottom: 1px solid rgba(15,30,53,0.08);
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 62px;
+  }
+  .logo {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--navy);
+    letter-spacing: -0.02em;
+  }
+  .logo em { color: var(--accent); font-style: normal; }
+  .nav-cta {
+    background: var(--accent);
+    color: var(--white);
+    border: none;
+    padding: 9px 20px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background .2s;
+  }
+  .nav-cta:hover { background: #bf6e38; }
+
+  /* HERO */
+  .hero {
+    background: var(--navy);
+    position: relative;
+    overflow: hidden;
+    padding: 80px 24px 90px;
+    text-align: center;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 60% at 50% 110%, rgba(212,133,74,.35) 0%, transparent 70%),
+                radial-gradient(ellipse 50% 40% at 80% 20%, rgba(232,184,122,.12) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .hero-tag {
+    display: inline-block;
+    background: rgba(212,133,74,.18);
+    color: var(--accent2);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 100px;
+    margin-bottom: 24px;
+    border: 1px solid rgba(212,133,74,.3);
+  }
+  .hero h1 {
+    color: var(--white);
+    font-size: clamp(28px, 6vw, 52px);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    max-width: 720px;
+    margin: 0 auto 20px;
+  }
+  .hero h1 em { color: var(--accent2); font-style: normal; }
+  .hero p {
+    color: rgba(255,255,255,.65);
+    font-size: clamp(15px, 2.5vw, 18px);
+    max-width: 540px;
+    margin: 0 auto 36px;
+  }
+  .hero-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--accent), #bf6e38);
+    color: var(--white);
+    padding: 15px 32px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: transform .15s, box-shadow .15s;
+    box-shadow: 0 4px 20px rgba(212,133,74,.4);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(212,133,74,.5); }
+  .btn-ghost {
+    background: rgba(255,255,255,.08);
+    color: rgba(255,255,255,.85);
+    padding: 15px 28px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    border: 1px solid rgba(255,255,255,.18);
+    cursor: pointer;
+    transition: background .2s;
+  }
+  .btn-ghost:hover { background: rgba(255,255,255,.15); }
+
+  .hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    margin-top: 56px;
+    padding-top: 40px;
+    border-top: 1px solid rgba(255,255,255,.1);
+  }
+  .stat { text-align: center; }
+  .stat-num {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--accent2);
+    letter-spacing: -0.02em;
+  }
+  .stat-label { font-size: 12px; color: rgba(255,255,255,.5); margin-top: 2px; }
+
+  /* SECTIONS */
+  section { padding: 72px 24px; }
+  .container { max-width: 1060px; margin: 0 auto; }
+  .section-tag {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-size: clamp(22px, 4vw, 36px);
+    font-weight: 800;
+    color: var(--navy);
+    letter-spacing: -0.02em;
+    margin-bottom: 14px;
+    line-height: 1.2;
+  }
+  .section-sub {
+    color: var(--muted);
+    font-size: 16px;
+    max-width: 560px;
+    margin-bottom: 48px;
+  }
+
+  /* BENEFITS */
+  .benefits { background: var(--white); }
+  .benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 20px;
+  }
+  .benefit-card {
+    background: var(--sand);
+    border-radius: var(--radius);
+    padding: 28px 24px;
+    border: 1px solid rgba(15,30,53,.07);
+    transition: transform .2s, box-shadow .2s;
+  }
+  .benefit-card:hover { transform: translateY(-3px); box-shadow: 0 8px 32px rgba(15,30,53,.1); }
+  .benefit-icon {
+    font-size: 32px;
+    margin-bottom: 16px;
+    display: block;
+  }
+  .benefit-card h3 {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+  .benefit-card p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+  /* HOW WE WORK */
+  .how { background: var(--sand); }
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0;
+    position: relative;
+  }
+  .step {
+    padding: 32px 28px;
+    position: relative;
+  }
+  .step-num {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 800;
+    font-size: 15px;
+    margin-bottom: 16px;
+    flex-shrink: 0;
+  }
+  .step h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 8px;
+  }
+  .step p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+  /* SERVICES */
+  .services { background: var(--navy); padding: 72px 24px; }
+  .services .section-title { color: var(--white); }
+  .services .section-sub { color: rgba(255,255,255,.5); }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+  }
+  .service-item {
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: var(--radius);
+    padding: 28px 24px;
+    transition: background .2s;
+  }
+  .service-item:hover { background: rgba(255,255,255,.1); }
+  .service-item h3 {
+    color: var(--white);
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .service-item h3 span { font-size: 20px; }
+  .service-item ul {
+    list-style: none;
+    padding: 0;
+  }
+  .service-item ul li {
+    font-size: 13px;
+    color: rgba(255,255,255,.55);
+    padding: 4px 0;
+    padding-left: 14px;
+    position: relative;
+  }
+  .service-item ul li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--accent2);
+    font-size: 11px;
+  }
+
+  /* CASES */
+  .cases { background: var(--white); }
+  .cases-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .case-card {
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid rgba(15,30,53,.08);
+    background: var(--sand);
+  }
+  .case-thumb {
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    background: linear-gradient(135deg, #1a3a5c, #0f1e35);
+  }
+  .case-body { padding: 22px 20px; }
+  .case-geo {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+  .case-body h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 12px;
+    line-height: 1.3;
+  }
+  .case-metrics {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .metric { text-align: left; }
+  .metric-val {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+  }
+  .metric-name { font-size: 11px; color: var(--muted); }
+
+  /* TESTIMONIAL */
+  .testimonial {
+    background: linear-gradient(135deg, #1a3a5c 0%, #0f1e35 100%);
+    text-align: center;
+    padding: 72px 24px;
+  }
+  .quote-icon { font-size: 40px; margin-bottom: 20px; opacity: .6; }
+  .quote-text {
+    font-size: clamp(17px, 3vw, 22px);
+    color: rgba(255,255,255,.85);
+    max-width: 640px;
+    margin: 0 auto 28px;
+    font-style: italic;
+    line-height: 1.55;
+  }
+  .quote-author {
+    font-size: 14px;
+    color: rgba(255,255,255,.4);
+  }
+  .quote-author strong { color: var(--accent2); font-style: normal; }
+
+  /* PRICING */
+  .pricing { background: var(--sand); }
+  .pricing-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+    max-width: 800px;
+  }
+  .price-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 32px 28px;
+    border: 1px solid rgba(15,30,53,.1);
+  }
+  .price-card.featured {
+    border-color: var(--accent);
+    position: relative;
+    box-shadow: 0 8px 32px rgba(212,133,74,.2);
+  }
+  .price-badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--accent);
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .06em;
+    padding: 4px 14px;
+    border-radius: 100px;
+    white-space: nowrap;
+  }
+  .price-tier {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+  .price-val {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--navy);
+    letter-spacing: -0.03em;
+    margin-bottom: 4px;
+  }
+  .price-note { font-size: 12px; color: var(--muted); margin-bottom: 20px; }
+  .price-features { list-style: none; }
+  .price-features li {
+    font-size: 13px;
+    color: var(--text);
+    padding: 6px 0;
+    padding-left: 20px;
+    position: relative;
+    border-bottom: 1px solid rgba(15,30,53,.05);
+  }
+  .price-features li:last-child { border: none; }
+  .price-features li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  /* FORM */
+  .form-section { background: var(--white); }
+  .form-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+  .form-info h2 {
+    font-size: clamp(22px, 4vw, 34px);
+    font-weight: 800;
+    color: var(--navy);
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+    line-height: 1.2;
+  }
+  .form-info p { color: var(--muted); font-size: 15px; margin-bottom: 28px; }
+  .form-promise {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .promise-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--text);
+  }
+  .promise-item span:first-child { font-size: 18px; }
+
+  form { display: flex; flex-direction: column; gap: 14px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  label { display: block; font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 5px; letter-spacing: .04em; }
+  input, textarea, select {
+    width: 100%;
+    background: var(--sand);
+    border: 1.5px solid rgba(15,30,53,.12);
+    border-radius: 9px;
+    padding: 12px 14px;
+    font-size: 14px;
+    color: var(--text);
+    font-family: inherit;
+    transition: border-color .2s;
+    outline: none;
+    -webkit-appearance: none;
+  }
+  input:focus, textarea:focus, select:focus { border-color: var(--accent); background: var(--white); }
+  textarea { resize: vertical; min-height: 90px; }
+  .submit-btn {
+    background: linear-gradient(135deg, var(--accent), #bf6e38);
+    color: white;
+    border: none;
+    padding: 15px 28px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+    box-shadow: 0 4px 20px rgba(212,133,74,.35);
+    transition: transform .15s;
+  }
+  .submit-btn:hover { transform: translateY(-2px); }
+  .form-disclaimer { font-size: 11px; color: var(--muted); text-align: center; }
+
+  /* FOOTER */
+  footer {
+    background: var(--navy);
+    padding: 48px 24px;
+    text-align: center;
+  }
+  .footer-logo {
+    font-size: 18px;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 10px;
+    letter-spacing: -0.02em;
+  }
+  .footer-logo em { color: var(--accent2); font-style: normal; }
+  .footer-sub { font-size: 13px; color: rgba(255,255,255,.4); margin-bottom: 24px; }
+  .footer-contacts { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; margin-bottom: 28px; }
+  .footer-contacts a { color: rgba(255,255,255,.55); font-size: 14px; text-decoration: none; transition: color .2s; }
+  .footer-contacts a:hover { color: var(--accent2); }
+  .footer-note { font-size: 11px; color: rgba(255,255,255,.2); }
+
+  /* RESPONSIVE */
+  @media (max-width: 680px) {
+    section { padding: 52px 18px; }
+    .form-wrap { grid-template-columns: 1fr; gap: 32px; }
+    .form-row { grid-template-columns: 1fr; }
+    .hero-stats { gap: 24px; }
+    .steps { grid-template-columns: 1fr; }
+    .step { padding: 20px 16px; }
+    nav { padding: 0 16px; }
+    .hero { padding: 56px 18px 64px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- DEMO BANNER -->
+<div class="demo-bar">
+  Демо-набросок · <span>studio Алёны</span> · не финал · показывает уровень до оплаты
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Трафик<em>.</em>Недвижимость</div>
+  <a href="#form" class="nav-cta">Обсудить задачу</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-tag">🌴 Пхукет · Бали · зарубежная недвижимость</div>
+    <h1>Лиды на покупку<br>зарубежной недвижимости —<br><em>под ключ</em></h1>
+    <p>Настраиваю рекламу для русскоязычных инвесторов и покупателей. От стратегии до масштабирования рабочих связок.</p>
+    <div class="hero-btns">
+      <a href="#form" class="btn-primary">Обсудить проект</a>
+      <a href="#cases" class="btn-ghost">Смотреть кейсы</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">от ___ ₽</div>
+        <div class="stat-label">средний CPL в нише</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">3+ года</div>
+        <div class="stat-label">работы с недвижимостью</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">___+</div>
+        <div class="stat-label">лидов за последний год</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">4 канала</div>
+        <div class="stat-label">VK, TG, Meta, Google</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BENEFITS -->
+<section class="benefits">
+  <div class="container">
+    <div class="section-tag">Почему это работает</div>
+    <h2 class="section-title">Трафик, который закрывается в сделки</h2>
+    <p class="section-sub">Зарубежная недвижимость — длинный цикл и высокий чек. Каждый шаг настроен под реальные продажи, а не просто «лиды».</p>
+    <div class="benefits-grid">
+      <div class="benefit-card">
+        <span class="benefit-icon">🎯</span>
+        <h3>Знаю аудиторию покупателей</h3>
+        <p>Русскоязычные инвесторы, релоканты, те, кто рассматривает Пхукет и Бали — понимаю боли, страхи и мотивы каждого сегмента.</p>
+      </div>
+      <div class="benefit-card">
+        <span class="benefit-icon">📊</span>
+        <h3>Контроль качества лидов</h3>
+        <p>Слежу за обратной связью от отдела продаж и корректирую таргетинг. Не гонюсь за количеством — важно качество и конверсия в сделку.</p>
+      </div>
+      <div class="benefit-card">
+        <span class="benefit-icon">⚙️</span>
+        <h3>Полный цикл без посредников</h3>
+        <p>Стратегия, аналитика, креативы, посадочные страницы, запуск, оптимизация — всё в одних руках. Не надо координировать несколько подрядчиков.</p>
+      </div>
+      <div class="benefit-card">
+        <span class="benefit-icon">📈</span>
+        <h3>Масштабирование рабочих связок</h3>
+        <p>Нашли связку, которая даёт результат — масштабируем бюджет без потери качества. Опыт работы с бюджетами от ___ до ___ ₽/мес.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW WE WORK -->
+<section class="how">
+  <div class="container">
+    <div class="section-tag">Процесс работы</div>
+    <h2 class="section-title">Как мы выстраиваем трафик</h2>
+    <p class="section-sub">Системный подход — от погружения в продукт до стабильного потока качественных заявок.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Погружение и анализ</h3>
+        <p>Изучаю ваш продукт, аудиторию, конкурентов. Анализирую офферы и посадочные страницы — нахожу слабые места и точки роста.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>Стратегия и связки</h3>
+        <p>Разрабатываю рекламные гипотезы под каждый сегмент: инвестор, покупатель для жизни, релокант. Выбираем каналы и форматы.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>Запуск тестового</h3>
+        <p>Тест на минимальном бюджете, быстрая проверка гипотез. За 2–3 недели определяем, что работает, и фиксируем результаты.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <h3>Оптимизация и рост</h3>
+        <p>Масштабируем рабочие связки, отключаем убыточные. Регулярные отчёты с метриками CPL, качеством лидов и прогнозом продаж.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services">
+  <div class="container">
+    <div class="section-tag" style="color:var(--accent2);">Что входит в работу</div>
+    <h2 class="section-title">Полный пакет услуг</h2>
+    <p class="section-sub">Беру ведение под ключ или подключаюсь к отдельным задачам — обсудим на созвоне.</p>
+    <div class="services-grid">
+      <div class="service-item">
+        <h3><span>🗺️</span> Стратегия и аналитика</h3>
+        <ul>
+          <li>Анализ аудиторий по сегментам</li>
+          <li>Конкурентный анализ офферов</li>
+          <li>Выбор каналов и форматов</li>
+          <li>Настройка сквозной аналитики</li>
+          <li>Контроль CPL по воронке</li>
+        </ul>
+      </div>
+      <div class="service-item">
+        <h3><span>🎨</span> Креативы и лендинги</h3>
+        <ul>
+          <li>ТЗ на баннеры и видео</li>
+          <li>Тексты объявлений под сегменты</li>
+          <li>Анализ и правки посадочных</li>
+          <li>Квизы и лид-формы</li>
+          <li>A/B-тест заголовков и CTA</li>
+        </ul>
+      </div>
+      <div class="service-item">
+        <h3><span>🚀</span> Запуск и оптимизация</h3>
+        <ul>
+          <li>Настройка рекламных кабинетов</li>
+          <li>Запуск по стратегии</li>
+          <li>Ежедневный мониторинг</li>
+          <li>Оптимизация ставок и аудиторий</li>
+          <li>Масштабирование рабочих связок</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CASES -->
+<section class="cases" id="cases">
+  <div class="container">
+    <div class="section-tag">Кейсы</div>
+    <h2 class="section-title">Результаты в похожих проектах</h2>
+    <p class="section-sub">Ниже — примеры реальных проектов. Детали, скриншоты и цифры — на созвоне.</p>
+    <div class="cases-grid">
+      <div class="case-card">
+        <div class="case-thumb">🏝️</div>
+        <div class="case-body">
+          <div class="case-geo">Пхукет · ВКонтакте + Telegram Ads</div>
+          <h3>Лиды на виллы и апартаменты от ___$ для русскоязычных покупателей</h3>
+          <div class="case-metrics">
+            <div class="metric"><div class="metric-val">___ ₽</div><div class="metric-name">CPL</div></div>
+            <div class="metric"><div class="metric-val">___</div><div class="metric-name">лидов/мес</div></div>
+            <div class="metric"><div class="metric-val">___ ₽</div><div class="metric-name">бюджет/мес</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="case-card">
+        <div class="case-thumb">🌺</div>
+        <div class="case-body">
+          <div class="case-geo">Бали · Meta Ads (FB/Instagram)</div>
+          <h3>Инвесторы в коммерческую недвижимость и апарт-отели на Бали</h3>
+          <div class="case-metrics">
+            <div class="metric"><div class="metric-val">___ ₽</div><div class="metric-name">CPL</div></div>
+            <div class="metric"><div class="metric-val">___</div><div class="metric-name">лидов/мес</div></div>
+            <div class="metric"><div class="metric-val">___ сделок</div><div class="metric-name">за квартал</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="case-card">
+        <div class="case-thumb">🏙️</div>
+        <div class="case-body">
+          <div class="case-geo">ОАЭ / Турция · комплекс каналов</div>
+          <h3>Смежная ниша: зарубежная недвижимость, высокий чек, длинный цикл</h3>
+          <div class="case-metrics">
+            <div class="metric"><div class="metric-val">___ ₽</div><div class="metric-name">CPL</div></div>
+            <div class="metric"><div class="metric-val">___</div><div class="metric-name">лидов/мес</div></div>
+            <div class="metric"><div class="metric-val">___x</div><div class="metric-name">ROAS</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<section class="testimonial">
+  <div class="container">
+    <div class="quote-icon">❝</div>
+    <p class="quote-text">
+      Работаем уже полгода — наконец-то нашли специалиста, который понимает нашу аудиторию. Лиды стали качественнее, отдел продаж доволен. CPL снизился примерно на треть по сравнению с предыдущим таргетологом.
+    </p>
+    <div class="quote-author"><strong>Руководитель отдела маркетинга</strong> · агентство зарубежной недвижимости · <em>(имя по запросу)</em></div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing">
+  <div class="container">
+    <div class="section-tag">Стоимость</div>
+    <h2 class="section-title">Форматы сотрудничества</h2>
+    <p class="section-sub">Начинаем с тестового — чтобы вы убедились в результате. Долгосрочное ведение — по договору.</p>
+    <div class="pricing-cards">
+      <div class="price-card">
+        <div class="price-tier">Тестовый запуск</div>
+        <div class="price-val">от ___ ₽</div>
+        <div class="price-note">2–3 недели · одна площадка</div>
+        <ul class="price-features">
+          <li>Анализ аудиторий и офферов</li>
+          <li>2–3 рекламные связки</li>
+          <li>Настройка и запуск</li>
+          <li>Аналитика и отчёт по итогам</li>
+          <li>Рекомендации для масштаба</li>
+        </ul>
+      </div>
+      <div class="price-card featured">
+        <div class="price-badge">Популярный</div>
+        <div class="price-tier">Ведение под ключ</div>
+        <div class="price-val">от ___ ₽/мес</div>
+        <div class="price-note">от 3 месяцев · 1–2 площадки</div>
+        <ul class="price-features">
+          <li>Полная стратегия и аналитика</li>
+          <li>Креативы и тексты объявлений</li>
+          <li>Настройка + оптимизация</li>
+          <li>Контроль CPL и качества лидов</li>
+          <li>Еженедельные отчёты</li>
+          <li>Масштабирование рабочих связок</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORM -->
+<section class="form-section" id="form">
+  <div class="container">
+    <div class="form-wrap">
+      <div class="form-info">
+        <div class="section-tag">Заявка</div>
+        <h2>Обсудим вашу задачу?</h2>
+        <p>Расскажите о проекте — отвечу в течение нескольких часов. На первом созвоне обозначу стратегию и примерные цифры.</p>
+        <div class="form-promise">
+          <div class="promise-item"><span>📞</span> <span>Ответ в течение часа в рабочее время</span></div>
+          <div class="promise-item"><span>📋</span> <span>Бесплатный аудит текущей рекламы при наличии</span></div>
+          <div class="promise-item"><span>🔒</span> <span>NDA по запросу, данные не разглашаем</span></div>
+          <div class="promise-item"><span>💬</span> <span>Telegram · WhatsApp · +7 ___</span></div>
+        </div>
+      </div>
+      <form onsubmit="return false;">
+        <div class="form-row">
+          <div>
+            <label>Ваше имя</label>
+            <input type="text" placeholder="Иван Иванов">
+          </div>
+          <div>
+            <label>Телефон / Telegram</label>
+            <input type="text" placeholder="+7 ___ или @nickname">
+          </div>
+        </div>
+        <div>
+          <label>Компания / проект</label>
+          <input type="text" placeholder="Агентство недвижимости, девелопер...">
+        </div>
+        <div>
+          <label>Рекламный канал (приоритет)</label>
+          <select>
+            <option value="">Выберите канал</option>
+            <option>ВКонтакте</option>
+            <option>Telegram Ads</option>
+            <option>Meta (FB / Instagram)</option>
+            <option>Google / YouTube</option>
+            <option>Несколько каналов — обсудим</option>
+          </select>
+        </div>
+        <div>
+          <label>Расскажите о задаче</label>
+          <textarea placeholder="Что продаёте, текущий бюджет, география, какие результаты нужны..."></textarea>
+        </div>
+        <button type="submit" class="submit-btn">Отправить заявку →</button>
+        <p class="form-disclaimer">Нажимая кнопку, вы соглашаетесь с обработкой данных</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Трафик<em>.</em>Недвижимость</div>
+  <div class="footer-sub">Таргетированная реклама · Зарубежная недвижимость · Пхукет & Бали</div>
+  <div class="footer-contacts">
+    <a href="#">Telegram: @___</a>
+    <a href="#">WhatsApp: +7 ___</a>
+    <a href="#">Email: ___@mail.com</a>
+  </div>
+  <div class="footer-note">© 2026 · Демо-страница · Все цены и показатели — плейсхолдеры, уточняются на созвоне</div>
+</footer>
+
+<div style="position:fixed;inset:0;z-index:99998;pointer-events:none;opacity:.10;background-image:url(&quot;data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='420' height='300'><text x='0' y='150' transform='rotate(-28 210 150)' font-family='sans-serif' font-size='22' font-weight='700' fill='%23808080' fill-opacity='0.5'>%D0%94%D0%95%D0%9C%D0%9E%20%C2%B7%20%D0%90%D0%9B%D0%81%D0%9D%D0%90%20%D0%9F%D0%A0%D0%90%D0%A1%D0%9E%D0%9B%D0%9E%D0%92%D0%90%20%C2%B7%20%D0%9E%D0%91%D0%A0%D0%90%D0%97%D0%95%D0%A6</text></svg>&quot;);background-repeat:repeat"></div><div style="position:fixed;left:0;right:0;bottom:0;z-index:99999;pointer-events:none;text-align:center;font:600 12px/1.4 sans-serif;color:#fff;background:rgba(20,24,33,.88);padding:7px 12px">Демо-набросок для оценки · © Алёна Прасолова · не для коммерческого использования · рабочая версия и чистовой дизайн — после старта работы</div></body>
+</html>
