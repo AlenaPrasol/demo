@@ -1,0 +1,804 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Новый сайт под ваш брендбук — студия Алёны</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --dark: #1a1a2e;
+    --mid: #16213e;
+    --light: #f8f7f4;
+    --muted: #8a8a9a;
+    --accent: #e8623a;
+    --accent2: #f0a04b;
+    --white: #ffffff;
+    --radius: 12px;
+    --max: 1100px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+    background: var(--light);
+    color: var(--dark);
+    line-height: 1.6;
+    font-size: 16px;
+  }
+
+  /* DEMO BANNER */
+  .demo-bar {
+    background: var(--dark);
+    color: #aaa;
+    text-align: center;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    padding: 8px 16px;
+  }
+  .demo-bar span { color: var(--accent2); }
+
+  /* NAV */
+  nav {
+    background: var(--white);
+    border-bottom: 1px solid #ebebeb;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .logo-nav {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--dark);
+    letter-spacing: -0.02em;
+  }
+  .logo-nav em { color: var(--accent); font-style: normal; }
+  nav ul { list-style: none; display: flex; gap: 28px; }
+  nav ul li a {
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 14px;
+    font-weight: 500;
+    transition: color .2s;
+  }
+  nav ul li a:hover { color: var(--dark); }
+  .nav-btn {
+    background: var(--accent);
+    color: var(--white);
+    border: none;
+    border-radius: 8px;
+    padding: 9px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity .2s;
+  }
+  .nav-btn:hover { opacity: .85; }
+  @media(max-width:700px){
+    nav ul { display: none; }
+  }
+
+  /* HERO */
+  .hero {
+    background: var(--dark);
+    color: var(--white);
+    padding: 80px 24px 72px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 110%, #e8623a22 0%, transparent 70%),
+                radial-gradient(ellipse 60% 40% at 80% 20%, #f0a04b18 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .hero-tag {
+    display: inline-block;
+    background: rgba(232,98,58,.18);
+    color: var(--accent2);
+    border: 1px solid rgba(240,160,75,.3);
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: .06em;
+    padding: 5px 16px;
+    margin-bottom: 28px;
+  }
+  .hero h1 {
+    font-size: clamp(32px, 5vw, 58px);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    max-width: 820px;
+    margin: 0 auto 20px;
+  }
+  .hero h1 mark {
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero p {
+    font-size: clamp(16px, 2vw, 20px);
+    color: #b0b0c8;
+    max-width: 600px;
+    margin: 0 auto 40px;
+  }
+  .hero-btns {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: var(--white);
+    border: none;
+    border-radius: 10px;
+    padding: 15px 36px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform .2s, box-shadow .2s;
+    box-shadow: 0 6px 24px rgba(232,98,58,.4);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(232,98,58,.5); }
+  .btn-ghost {
+    background: transparent;
+    color: #b0b0c8;
+    border: 1px solid rgba(255,255,255,.2);
+    border-radius: 10px;
+    padding: 15px 28px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: border-color .2s, color .2s;
+  }
+  .btn-ghost:hover { border-color: rgba(255,255,255,.5); color: var(--white); }
+
+  .hero-stats {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 56px;
+    padding-top: 40px;
+    border-top: 1px solid rgba(255,255,255,.08);
+  }
+  .stat { text-align: center; }
+  .stat strong { display: block; font-size: 28px; font-weight: 800; color: var(--white); }
+  .stat span { font-size: 13px; color: var(--muted); }
+
+  /* SECTION BASE */
+  section { padding: 80px 24px; }
+  .container { max-width: var(--max); margin: 0 auto; }
+  .section-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-size: clamp(26px, 3.5vw, 42px);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 16px;
+  }
+  .section-sub {
+    font-size: 17px;
+    color: var(--muted);
+    max-width: 560px;
+  }
+  .section-header { margin-bottom: 56px; }
+
+  /* WHY / BENEFITS */
+  .benefits { background: var(--white); }
+  .benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+  }
+  .benefit-card {
+    background: var(--light);
+    border-radius: var(--radius);
+    padding: 32px 28px;
+    border: 1px solid #ebebeb;
+    transition: box-shadow .2s, transform .2s;
+  }
+  .benefit-card:hover { box-shadow: 0 8px 28px rgba(0,0,0,.07); transform: translateY(-3px); }
+  .benefit-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #e8623a18, #f0a04b14);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(232,98,58,.15);
+  }
+  .benefit-card h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
+  }
+  .benefit-card p { font-size: 15px; color: var(--muted); line-height: 1.65; }
+
+  /* URGENCY BANNER */
+  .urgency {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: var(--white);
+    padding: 40px 24px;
+  }
+  .urgency-inner {
+    max-width: var(--max);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .urgency h3 { font-size: 22px; font-weight: 800; margin-bottom: 6px; }
+  .urgency p { font-size: 15px; opacity: .9; }
+  .btn-white {
+    background: var(--white);
+    color: var(--accent);
+    border: none;
+    border-radius: 10px;
+    padding: 14px 30px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: opacity .2s;
+    flex-shrink: 0;
+  }
+  .btn-white:hover { opacity: .9; }
+
+  /* SERVICES / HOW WE WORK */
+  .services { background: var(--light); }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2px;
+    background: #ebebeb;
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .service-item {
+    background: var(--white);
+    padding: 36px 32px;
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+  }
+  .step-num {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--dark);
+    color: var(--white);
+    font-size: 14px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .service-item h4 { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+  .service-item p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+  /* WHAT INCLUDED */
+  .included { background: var(--dark); color: var(--white); }
+  .included .section-sub { color: #8a8a9a; max-width: 680px; }
+  .included-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-top: 40px;
+  }
+  .included-item {
+    background: rgba(255,255,255,.05);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: var(--radius);
+    padding: 24px 20px;
+    font-size: 15px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .check {
+    width: 22px;
+    height: 22px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* REVIEW */
+  .reviews { background: var(--white); }
+  .review-card {
+    background: var(--light);
+    border: 1px solid #ebebeb;
+    border-radius: 16px;
+    padding: 40px;
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .review-stars { font-size: 24px; margin-bottom: 20px; }
+  .review-text {
+    font-size: 18px;
+    font-style: italic;
+    color: var(--dark);
+    line-height: 1.7;
+    margin-bottom: 24px;
+  }
+  .reviewer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+  .reviewer-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #c9b99a, #a0856a);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+  }
+  .reviewer-name { font-weight: 700; font-size: 15px; }
+  .reviewer-role { font-size: 13px; color: var(--muted); }
+
+  /* PRICING */
+  .pricing { background: var(--light); }
+  .pricing-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .price-card {
+    background: var(--white);
+    border: 1px solid #ebebeb;
+    border-radius: 16px;
+    padding: 36px 28px;
+    text-align: center;
+  }
+  .price-card.featured {
+    background: var(--dark);
+    color: var(--white);
+    border: none;
+    box-shadow: 0 16px 48px rgba(26,26,46,.25);
+    transform: scale(1.03);
+  }
+  .price-card-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .price-card h3 { font-size: 20px; font-weight: 800; margin-bottom: 20px; }
+  .price-amount {
+    font-size: 36px;
+    font-weight: 800;
+    margin-bottom: 4px;
+    letter-spacing: -0.02em;
+  }
+  .price-amount sub { font-size: 16px; font-weight: 500; }
+  .price-note { font-size: 13px; color: var(--muted); margin-bottom: 28px; }
+  .price-card.featured .price-note { color: #8a8a9a; }
+  .price-list { list-style: none; text-align: left; margin-bottom: 32px; }
+  .price-list li {
+    padding: 7px 0;
+    font-size: 14px;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    gap: 8px;
+  }
+  .price-card.featured .price-list li { border-color: rgba(255,255,255,.08); }
+  .btn-outline {
+    width: 100%;
+    background: transparent;
+    border: 1.5px solid #ddd;
+    border-radius: 10px;
+    padding: 13px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    color: var(--dark);
+    transition: border-color .2s;
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+  .btn-accent-full {
+    width: 100%;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border: none;
+    border-radius: 10px;
+    padding: 14px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    color: var(--white);
+    box-shadow: 0 4px 16px rgba(232,98,58,.4);
+    transition: opacity .2s;
+  }
+  .btn-accent-full:hover { opacity: .9; }
+
+  /* FORM */
+  .form-section { background: var(--dark); color: var(--white); }
+  .form-section .section-sub { color: #8a8a9a; }
+  .form-wrap {
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 20px;
+    padding: 48px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  @media(max-width:600px){ .form-wrap { padding: 28px 20px; } }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media(max-width:500px){ .form-row { grid-template-columns: 1fr; } }
+  .form-group { margin-bottom: 16px; }
+  .form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #aaa;
+    margin-bottom: 8px;
+    letter-spacing: .04em;
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    background: rgba(255,255,255,.07);
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 10px;
+    padding: 13px 16px;
+    font-size: 15px;
+    color: var(--white);
+    outline: none;
+    font-family: inherit;
+    transition: border-color .2s;
+  }
+  .form-group input::placeholder,
+  .form-group textarea::placeholder { color: rgba(255,255,255,.3); }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus { border-color: var(--accent); }
+  .form-group select { appearance: none; color: rgba(255,255,255,.5); }
+  .form-group textarea { resize: vertical; min-height: 100px; }
+  .form-submit {
+    width: 100%;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: var(--white);
+    border: none;
+    border-radius: 12px;
+    padding: 17px;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 8px;
+    box-shadow: 0 6px 24px rgba(232,98,58,.35);
+    transition: transform .2s;
+  }
+  .form-submit:hover { transform: translateY(-1px); }
+  .form-note { text-align: center; font-size: 12px; color: rgba(255,255,255,.3); margin-top: 14px; }
+
+  /* FOOTER */
+  footer {
+    background: var(--mid);
+    color: #777;
+    padding: 36px 24px;
+    text-align: center;
+    font-size: 14px;
+    border-top: 1px solid rgba(255,255,255,.06);
+  }
+  footer strong { color: #aaa; }
+  footer a { color: var(--accent2); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<div class="demo-bar">Демо-набросок · <span>studio Алёны</span> · не финал — только показываем уровень до оплаты</div>
+
+<nav>
+  <div class="logo-nav">[Ваш<em>Бренд</em>]</div>
+  <ul>
+    <li><a href="#benefits">Почему мы</a></li>
+    <li><a href="#how">Как работаем</a></li>
+    <li><a href="#price">Стоимость</a></li>
+    <li><a href="#form">Заявка</a></li>
+  </ul>
+  <button class="nav-btn" onclick="document.getElementById('form').scrollIntoView({behavior:'smooth'})">Обсудить проект</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-tag">⚡ Срочный дизайн + Bitrix-верстка</div>
+  <h1>Запускаем <mark>новый сайт</mark><br>под ваш брендбук — быстро</h1>
+  <p>Берём ваш логотип и гайдлайн, делаем продающий дизайн и чистую верстку на Bitrix — без долгих согласований и лишних правок.</p>
+  <div class="hero-btns">
+    <button class="btn-primary" onclick="document.getElementById('form').scrollIntoView({behavior:'smooth'})">Обсудить мой проект →</button>
+    <button class="btn-ghost" onclick="document.getElementById('how').scrollIntoView({behavior:'smooth'})">Как мы работаем</button>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><strong>48 ч</strong><span>минимальный старт</span></div>
+    <div class="stat"><strong>80+</strong><span>сайтов сдано</span></div>
+    <div class="stat"><strong>3 правки</strong><span>включено в цену</span></div>
+    <div class="stat"><strong>Bitrix</strong><span>официальный партнёр</span></div>
+  </div>
+</section>
+
+<!-- URGENCY BANNER -->
+<div class="urgency">
+  <div class="urgency-inner">
+    <div>
+      <h3>Срок горит? Это как раз про нас.</h3>
+      <p>Берём срочные задачи — при наличии готового брендбука стартуем в течение суток.</p>
+    </div>
+    <button class="btn-white" onclick="document.getElementById('form').scrollIntoView({behavior:'smooth'})">Взять в работу сегодня</button>
+  </div>
+</div>
+
+<!-- BENEFITS -->
+<section class="benefits" id="benefits">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">Почему выбирают нас</div>
+      <h2 class="section-title">Дизайн, который<br>реально продаёт</h2>
+      <p class="section-sub">Не просто красиво — каждый экран выстроен по логике конверсии.</p>
+    </div>
+    <div class="benefits-grid">
+      <div class="benefit-card">
+        <div class="benefit-icon">🎨</div>
+        <h3>Берём брендбук — не придумываем</h3>
+        <p>Работаем строго в вашем стиле. Логотип, цвета, шрифты — всё в единой системе. Никаких «а давайте попробуем другой цвет».</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">⚡</div>
+        <h3>Срочно — без потери качества</h3>
+        <p>Умеем работать в сжатые сроки. Мобилизуем команду, держим вас в курсе на каждом этапе, сдаём в срок.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">📱</div>
+        <h3>Адаптив и скорость</h3>
+        <p>Верстаем под все экраны — телефон, планшет, десктоп. Оптимизируем PageSpeed, чтобы Google любил ваш сайт.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">🔧</div>
+        <h3>Bitrix с нуля или перенос</h3>
+        <p>Знаем Bitrix как свои пять пальцев. Вёрстка компонентов, интеграция с каталогом и CRM — сдаём готовым к работе.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW WE WORK -->
+<section class="services" id="how">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">Процесс</div>
+      <h2 class="section-title">Как мы делаем сайт</h2>
+      <p class="section-sub">Прозрачный процесс — вы всегда знаете, на каком этапе проект.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-item">
+        <div class="step-num">1</div>
+        <div>
+          <h4>Бриф и брендбук</h4>
+          <p>Получаем от вас логотип, брендбук, примеры нравящихся сайтов и задачи бизнеса. Фиксируем ТЗ письменно.</p>
+        </div>
+      </div>
+      <div class="service-item">
+        <div class="step-num">2</div>
+        <div>
+          <h4>Прототип и концепция</h4>
+          <p>Делаем структуру страниц и один ключевой экран — утверждаем направление до полного дизайна.</p>
+        </div>
+      </div>
+      <div class="service-item">
+        <div class="step-num">3</div>
+        <div>
+          <h4>Полный дизайн в Figma</h4>
+          <p>Собираем все страницы, мобильные версии, состояния кнопок и форм. Сдаём макет на согласование.</p>
+        </div>
+      </div>
+      <div class="service-item">
+        <div class="step-num">4</div>
+        <div>
+          <h4>Верстка на Bitrix</h4>
+          <p>Нарезаем и верстаем компоненты, подключаем к CMS. Итог — живой сайт, готовый к наполнению.</p>
+        </div>
+      </div>
+      <div class="service-item">
+        <div class="step-num">5</div>
+        <div>
+          <h4>Правки и финальная сдача</h4>
+          <p>Три раунда правок включены. После финального ОК — передаём доступы и документацию.</p>
+        </div>
+      </div>
+      <div class="service-item">
+        <div class="step-num">6</div>
+        <div>
+          <h4>Поддержка после запуска</h4>
+          <p>Остаёмся на связи. Мелкие доработки в течение 30 дней — бесплатно.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT'S INCLUDED -->
+<section class="included">
+  <div class="container">
+    <div class="section-label">Что входит</div>
+    <h2 class="section-title">Всё, чтобы сайт заработал</h2>
+    <p class="section-sub">Никаких скрытых доплат — видите полный список ещё до старта.</p>
+    <div class="included-grid">
+      <div class="included-item"><div class="check">✓</div><div>Дизайн в Figma (все страницы)</div></div>
+      <div class="included-item"><div class="check">✓</div><div>Адаптивная верстка (мобилка + планшет)</div></div>
+      <div class="included-item"><div class="check">✓</div><div>Интеграция с Bitrix CMS</div></div>
+      <div class="included-item"><div class="check">✓</div><div>Подключение форм обратной связи</div></div>
+      <div class="included-item"><div class="check">✓</div><div>SEO-разметка (title, meta, schema)</div></div>
+      <div class="included-item"><div class="check">✓</div><div>Оптимизация скорости загрузки</div></div>
+      <div class="included-item"><div class="check">✓</div><div>Кросс-браузерное тестирование</div></div>
+      <div class="included-item"><div class="check">✓</div><div>3 раунда правок включены</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEW -->
+<section class="reviews">
+  <div class="container">
+    <div class="section-header" style="text-align:center">
+      <div class="section-label">Отзыв</div>
+      <h2 class="section-title">Что говорят клиенты</h2>
+    </div>
+    <div class="review-card">
+      <div class="review-stars">⭐⭐⭐⭐⭐</div>
+      <p class="review-text">«Обратились со срочной задачей — у нас уже был брендбук, нужен был сайт за 10 дней. Команда уложилась в срок, дизайн получился именно таким, как мы хотели. Всё чисто сверстано на Bitrix, менеджеры сразу начали работать в CMS. Очень довольны!»</p>
+      <div class="reviewer">
+        <div class="reviewer-avatar">👤</div>
+        <div>
+          <div class="reviewer-name">Ольга К., директор по маркетингу</div>
+          <div class="reviewer-role">Торговая компания, Москва — [заглушка отзыва]</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="price">
+  <div class="container">
+    <div class="section-header" style="text-align:center">
+      <div class="section-label">Стоимость</div>
+      <h2 class="section-title">Прозрачные цены</h2>
+      <p class="section-sub" style="margin:0 auto">Итоговая цена зависит от объёма. Оцениваем бесплатно после брифа.</p>
+    </div>
+    <div class="pricing-cards">
+      <div class="price-card">
+        <div class="price-card-label">Старт</div>
+        <h3>Лендинг</h3>
+        <div class="price-amount">от ___ <sub>₽</sub></div>
+        <div class="price-note">1 страница + мобилка</div>
+        <ul class="price-list">
+          <li>✓ Дизайн в Figma</li>
+          <li>✓ Верстка на Bitrix</li>
+          <li>✓ Адаптив</li>
+          <li>✓ 2 правки</li>
+          <li style="color:#ccc">— Каталог</li>
+          <li style="color:#ccc">— CRM-интеграция</li>
+        </ul>
+        <button class="btn-outline">Обсудить</button>
+      </div>
+      <div class="price-card featured">
+        <div class="price-card-label">Популярно</div>
+        <h3>Корпоративный сайт</h3>
+        <div class="price-amount">от ___ <sub>₽</sub></div>
+        <div class="price-note">5–10 страниц, полный дизайн</div>
+        <ul class="price-list">
+          <li>✓ Дизайн всех страниц</li>
+          <li>✓ Верстка на Bitrix</li>
+          <li>✓ Адаптив и SEO-разметка</li>
+          <li>✓ 3 правки включены</li>
+          <li>✓ Формы + почта</li>
+          <li>✓ Поддержка 30 дней</li>
+        </ul>
+        <button class="btn-accent-full">Хочу такой сайт</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORM -->
+<section class="form-section" id="form">
+  <div class="container">
+    <div class="section-header" style="text-align:center">
+      <div class="section-label">Заявка</div>
+      <h2 class="section-title">Расскажите о вашем проекте</h2>
+      <p class="section-sub" style="margin:0 auto;color:#8a8a9a">Отвечаем в течение 2 часов в рабочее время. Оценка проекта — бесплатно.</p>
+    </div>
+    <div class="form-wrap">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Ваше имя</label>
+          <input type="text" placeholder="Как вас зовут?">
+        </div>
+        <div class="form-group">
+          <label>Телефон</label>
+          <input type="tel" placeholder="+7 ___">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Что нужно сделать?</label>
+        <select>
+          <option value="" disabled selected>Выберите тип работы</option>
+          <option>Дизайн + верстка на Bitrix</option>
+          <option>Только дизайн в Figma</option>
+          <option>Только верстка</option>
+          <option>Редизайн существующего сайта</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Срок запуска</label>
+        <input type="text" placeholder="Например: нужно за 2 недели">
+      </div>
+      <div class="form-group">
+        <label>Ссылка на брендбук / логотип</label>
+        <input type="text" placeholder="Google Drive, Figma или другое">
+      </div>
+      <div class="form-group">
+        <label>Что ещё важно знать?</label>
+        <textarea placeholder="Примеры сайтов, которые нравятся, особые пожелания…"></textarea>
+      </div>
+      <button class="form-submit" type="button">Отправить заявку →</button>
+      <p class="form-note">Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p><strong>[Ваш Бренд]</strong> — дизайн и верстка на Bitrix</p>
+  <p style="margin-top:8px">
+    📞 <a href="tel:+7">+7 ___</a> &nbsp;·&nbsp;
+    ✉️ <a href="mailto:info@">info@___</a> &nbsp;·&nbsp;
+    г. ___
+  </p>
+  <p style="margin-top:16px;font-size:12px;color:#444">
+    Демо создано студией <a href="#">Алёны Прасоловой</a> как черновик до оплаты · Все тексты и цены — заглушки
+  </p>
+</footer>
+
+<div style="position:fixed;inset:0;z-index:99998;pointer-events:none;opacity:.10;background-image:url(&quot;data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='420' height='300'><text x='0' y='150' transform='rotate(-28 210 150)' font-family='sans-serif' font-size='22' font-weight='700' fill='%23808080' fill-opacity='0.5'>%D0%94%D0%95%D0%9C%D0%9E%20%C2%B7%20%D0%90%D0%9B%D0%81%D0%9D%D0%90%20%D0%9F%D0%A0%D0%90%D0%A1%D0%9E%D0%9B%D0%9E%D0%92%D0%90%20%C2%B7%20%D0%9E%D0%91%D0%A0%D0%90%D0%97%D0%95%D0%A6</text></svg>&quot;);background-repeat:repeat"></div><div style="position:fixed;left:0;right:0;bottom:0;z-index:99999;pointer-events:none;text-align:center;font:600 12px/1.4 sans-serif;color:#fff;background:rgba(20,24,33,.88);padding:7px 12px">Демо-набросок для оценки · © Алёна Прасолова · не для коммерческого использования · рабочая версия и чистовой дизайн — после старта работы</div></body>
+</html>
