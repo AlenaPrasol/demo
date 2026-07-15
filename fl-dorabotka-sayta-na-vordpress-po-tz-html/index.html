@@ -1,0 +1,616 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Доработка сайта на WordPress — быстро и по ТЗ</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --dark: #1a1f2e;
+    --mid: #2d3550;
+    --accent: #6c63ff;
+    --accent2: #a78bfa;
+    --light: #f4f3ff;
+    --muted: #8b93b0;
+    --white: #ffffff;
+    --radius: 14px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    background: var(--dark);
+    color: var(--white);
+    line-height: 1.6;
+    font-size: 16px;
+  }
+
+  /* DEMO BANNER */
+  .demo-banner {
+    background: linear-gradient(90deg, #2d1b69, #4c1d95);
+    text-align: center;
+    padding: 8px 16px;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    color: var(--accent2);
+    border-bottom: 1px solid #3d2d7a;
+  }
+
+  /* HEADER / HERO */
+  .hero {
+    background: linear-gradient(135deg, #1a1f2e 0%, #2d3550 60%, #1e1a3a 100%);
+    padding: 80px 24px 90px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -80px; left: 50%; transform: translateX(-50%);
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(108,99,255,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .badge {
+    display: inline-block;
+    background: rgba(108,99,255,0.15);
+    border: 1px solid rgba(108,99,255,0.4);
+    color: var(--accent2);
+    border-radius: 20px;
+    padding: 5px 16px;
+    font-size: 13px;
+    margin-bottom: 28px;
+    letter-spacing: 0.3px;
+  }
+
+  .hero h1 {
+    font-size: clamp(28px, 5vw, 52px);
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero h1 span {
+    background: linear-gradient(90deg, #6c63ff, #a78bfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero p {
+    font-size: 18px;
+    color: var(--muted);
+    max-width: 520px;
+    margin: 0 auto 36px;
+  }
+
+  .btn {
+    display: inline-block;
+    background: linear-gradient(135deg, #6c63ff, #a78bfa);
+    color: #fff;
+    padding: 16px 40px;
+    border-radius: 50px;
+    font-size: 17px;
+    font-weight: 700;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 8px 32px rgba(108,99,255,0.35);
+  }
+
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(108,99,255,0.5); }
+
+  .hero-meta {
+    margin-top: 28px;
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    flex-wrap: wrap;
+    color: var(--muted);
+    font-size: 14px;
+  }
+
+  .hero-meta span { display: flex; align-items: center; gap: 6px; }
+
+  /* SECTIONS */
+  section { padding: 72px 24px; }
+  .container { max-width: 1000px; margin: 0 auto; }
+
+  .section-label {
+    text-align: center;
+    color: var(--accent2);
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  h2 {
+    font-size: clamp(22px, 3.5vw, 36px);
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 48px;
+    line-height: 1.3;
+  }
+
+  /* BENEFITS */
+  .benefits { background: var(--mid); }
+
+  .grid-4 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 24px;
+  }
+
+  .card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: var(--radius);
+    padding: 28px 24px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .card:hover {
+    border-color: rgba(108,99,255,0.4);
+    transform: translateY(-4px);
+  }
+
+  .card-icon {
+    font-size: 36px;
+    margin-bottom: 14px;
+    display: block;
+  }
+
+  .card h3 {
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .card p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* HOW WE WORK */
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+  }
+
+  .step {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: var(--radius);
+    padding: 24px;
+  }
+
+  .step-num {
+    width: 40px; height: 40px;
+    min-width: 40px;
+    background: linear-gradient(135deg, #6c63ff, #a78bfa);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800;
+    font-size: 16px;
+  }
+
+  .step-text h4 { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+  .step-text p { font-size: 13px; color: var(--muted); }
+
+  /* WHAT'S INCLUDED */
+  .included { background: var(--mid); }
+
+  .tags-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+  }
+
+  .tag {
+    background: rgba(108,99,255,0.1);
+    border: 1px solid rgba(108,99,255,0.3);
+    border-radius: 8px;
+    padding: 10px 18px;
+    font-size: 14px;
+    color: var(--light);
+  }
+
+  /* TESTIMONIAL */
+  .testimonial-block {
+    background: linear-gradient(135deg, rgba(108,99,255,0.1), rgba(167,139,250,0.05));
+    border: 1px solid rgba(108,99,255,0.2);
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 680px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .stars { font-size: 24px; margin-bottom: 20px; }
+
+  .testimonial-text {
+    font-size: 18px;
+    line-height: 1.7;
+    color: var(--light);
+    margin-bottom: 24px;
+    font-style: italic;
+  }
+
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+  }
+
+  .avatar {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #6c63ff, #a78bfa);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+  }
+
+  .author-info strong { display: block; font-size: 15px; }
+  .author-info span { font-size: 13px; color: var(--muted); }
+
+  /* PRICE */
+  .price-block {
+    background: var(--mid);
+    text-align: center;
+  }
+
+  .price-card {
+    background: linear-gradient(135deg, rgba(108,99,255,0.12), rgba(167,139,250,0.06));
+    border: 2px solid rgba(108,99,255,0.35);
+    border-radius: 20px;
+    padding: 44px 40px;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .price-big {
+    font-size: clamp(40px, 8vw, 64px);
+    font-weight: 900;
+    background: linear-gradient(90deg, #6c63ff, #a78bfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .price-note { font-size: 14px; color: var(--muted); margin-bottom: 28px; }
+
+  .checklist {
+    list-style: none;
+    text-align: left;
+    margin-bottom: 32px;
+  }
+
+  .checklist li {
+    padding: 8px 0;
+    font-size: 15px;
+    display: flex;
+    gap: 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    color: var(--light);
+  }
+
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: '✓'; color: var(--accent2); font-weight: 700; }
+
+  /* FORM */
+  .form-section { text-align: center; }
+
+  .form-wrap {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px;
+    padding: 44px 40px;
+    max-width: 540px;
+    margin: 0 auto;
+  }
+
+  .form-wrap p {
+    color: var(--muted);
+    margin-bottom: 28px;
+    font-size: 15px;
+  }
+
+  .form-group {
+    margin-bottom: 16px;
+    text-align: left;
+  }
+
+  .form-group label {
+    display: block;
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    width: 100%;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 10px;
+    padding: 13px 16px;
+    color: var(--white);
+    font-size: 15px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus {
+    border-color: var(--accent);
+  }
+
+  .form-group textarea { height: 100px; resize: vertical; }
+
+  .form-group select option { background: var(--dark); }
+
+  .btn-full {
+    width: 100%;
+    padding: 16px;
+    font-size: 17px;
+    margin-top: 8px;
+  }
+
+  .form-disclaimer {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 12px;
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid rgba(255,255,255,0.07);
+    padding: 36px 24px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  footer strong { color: var(--white); }
+  .footer-contacts { margin: 12px 0; font-size: 15px; }
+  .footer-contacts a { color: var(--accent2); text-decoration: none; }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .hero { padding: 56px 20px 64px; }
+    section { padding: 52px 20px; }
+    .form-wrap, .price-card { padding: 28px 20px; }
+    .testimonial-block { padding: 28px 20px; }
+    .hero-meta { gap: 16px; }
+    .step { flex-direction: column; gap: 10px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- DEMO BANNER -->
+<div class="demo-banner">
+  ✏️ Демо-набросок · studio Алёны · не финал — только для согласования концепции
+</div>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="container">
+    <div class="badge">WordPress-разработка · быстро и по ТЗ</div>
+    <h1>Доработаю ваш сайт на WordPress<br><span>точно по техническому заданию</span></h1>
+    <p>Кастомные правки, доработка функционала и вёрстки — без воды, без «ждите неделю», с отчётом по каждому пункту ТЗ.</p>
+    <a href="#form" class="btn">Обсудить задачу →</a>
+    <div class="hero-meta">
+      <span>⚡ Старт в течение суток</span>
+      <span>📋 Работаю по вашему ТЗ</span>
+      <span>✅ Сдача с проверкой</span>
+    </div>
+  </div>
+</header>
+
+<!-- BENEFITS -->
+<section class="benefits">
+  <div class="container">
+    <p class="section-label">Почему выбирают меня</p>
+    <h2>Чего ждать от работы</h2>
+    <div class="grid-4">
+      <div class="card">
+        <span class="card-icon">🎯</span>
+        <h3>Строго по ТЗ</h3>
+        <p>Никаких отступлений. Каждый пункт из технического задания — выполнен и задокументирован.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">🔒</span>
+        <h3>Без поломок</h3>
+        <p>Перед правками делаю бэкап. Сайт остаётся рабочим на всём протяжении задачи.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">💬</span>
+        <h3>На связи</h3>
+        <p>Отвечаю в течение 2–3 часов. Рассказываю, что сделано и почему именно так.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">🔄</span>
+        <h3>Правки включены</h3>
+        <p>Если что-то пошло не так — исправлю. Сдача только после вашего «окей».</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW WE WORK -->
+<section>
+  <div class="container">
+    <p class="section-label">Процесс</p>
+    <h2>Как проходит работа</h2>
+    <div class="steps-grid">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-text">
+          <h4>Получаю ТЗ</h4>
+          <p>Вы присылаете техзадание, я изучаю и задаю уточняющие вопросы, если нужно.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-text">
+          <h4>Делаю бэкап</h4>
+          <p>Перед началом сохраняю полную копию сайта — на случай непредвиденного.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-text">
+          <h4>Выполняю задачи</h4>
+          <p>Работаю по каждому пункту ТЗ, фиксирую прогресс и сообщаю о готовности.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-text">
+          <h4>Сдаю с проверкой</h4>
+          <p>Показываю результат, принимаю правки и закрываю задачу только после вашего подтверждения.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT'S INCLUDED -->
+<section class="included">
+  <div class="container">
+    <p class="section-label">Что умею</p>
+    <h2>Виды доработок WordPress</h2>
+    <div class="tags-grid">
+      <div class="tag">⚙️ Правки PHP/JS</div>
+      <div class="tag">🎨 Доработка вёрстки</div>
+      <div class="tag">🔌 Настройка плагинов</div>
+      <div class="tag">📱 Адаптивность</div>
+      <div class="tag">🛒 WooCommerce</div>
+      <div class="tag">📝 Custom Post Types</div>
+      <div class="tag">🔗 REST API / интеграции</div>
+      <div class="tag">🚀 Оптимизация скорости</div>
+      <div class="tag">🔐 Права доступа</div>
+      <div class="tag">📐 ACF / метаполя</div>
+      <div class="tag">🌍 WPML / мультиязычность</div>
+      <div class="tag">🧩 Дочерние темы</div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<section>
+  <div class="container">
+    <p class="section-label">Отзывы</p>
+    <h2>Что говорят заказчики</h2>
+    <div class="testimonial-block">
+      <div class="stars">⭐⭐⭐⭐⭐</div>
+      <p class="testimonial-text">«Обратился с кучей мелких задач по WooCommerce — всё сделано чётко, без лишних вопросов. Сайт не сломали, сдали в срок. Буду обращаться ещё.»</p>
+      <div class="testimonial-author">
+        <div class="avatar">👤</div>
+        <div class="author-info">
+          <strong>Алексей М.</strong>
+          <span>Интернет-магазин, Москва</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICE -->
+<section class="price-block">
+  <div class="container">
+    <p class="section-label">Стоимость</p>
+    <h2>Прозрачная цена</h2>
+    <div class="price-card">
+      <div class="price-big">от ___ ₽</div>
+      <div class="price-note">Финальная сумма — после изучения вашего ТЗ</div>
+      <ul class="checklist">
+        <li>Полное выполнение всех пунктов ТЗ</li>
+        <li>Бэкап перед началом работ</li>
+        <li>Отчёт по каждому пункту</li>
+        <li>Правки до вашего «окей»</li>
+        <li>Связь в процессе работы</li>
+        <li>Старт в течение 24 часов</li>
+      </ul>
+      <a href="#form" class="btn btn-full">Получить оценку задачи</a>
+    </div>
+  </div>
+</section>
+
+<!-- FORM -->
+<section class="form-section" id="form">
+  <div class="container">
+    <p class="section-label">Заявка</p>
+    <h2>Отправьте техзадание</h2>
+    <div class="form-wrap">
+      <p>Опишите задачу или прикрепите ТЗ — отвечу с оценкой сроков и стоимости.</p>
+      <form onsubmit="return false;">
+        <div class="form-group">
+          <label>Ваше имя</label>
+          <input type="text" placeholder="Как к вам обращаться?">
+        </div>
+        <div class="form-group">
+          <label>Контакт для связи</label>
+          <input type="text" placeholder="Телефон, Telegram или email">
+        </div>
+        <div class="form-group">
+          <label>Ссылка на сайт</label>
+          <input type="text" placeholder="https://ваш-сайт.ru">
+        </div>
+        <div class="form-group">
+          <label>Кратко о задаче / ссылка на ТЗ</label>
+          <textarea placeholder="Что нужно сделать? Можно скинуть ссылку на Google Docs или описать суть..."></textarea>
+        </div>
+        <div class="form-group">
+          <label>Желаемые сроки</label>
+          <select>
+            <option>Как можно быстрее</option>
+            <option>В течение 3 дней</option>
+            <option>В течение недели</option>
+            <option>Гибко, обсудим</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-full">Отправить задачу →</button>
+        <p class="form-disclaimer">Нажимая кнопку, вы соглашаетесь на обработку контактных данных</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <strong>WordPress-разработчик · доработки по ТЗ</strong>
+    <div class="footer-contacts">
+      📞 +7 ___ · ✉️ <a href="#">___ @mail.ru</a> · Telegram: <a href="#">@___</a>
+    </div>
+    <p>© 2026 · Работаю на биржах и напрямую · Все правки до сдачи включены</p>
+    <p style="margin-top: 8px; font-size: 11px; color: #555e7a;">Демо-набросок, подготовленный studio Алёны · не для публикации</p>
+  </div>
+</footer>
+
+<div style="position:fixed;inset:0;z-index:99998;pointer-events:none;opacity:.10;background-image:url(&quot;data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='420' height='300'><text x='0' y='150' transform='rotate(-28 210 150)' font-family='sans-serif' font-size='22' font-weight='700' fill='%23808080' fill-opacity='0.5'>%D0%94%D0%95%D0%9C%D0%9E%20%C2%B7%20%D0%90%D0%9B%D0%81%D0%9D%D0%90%20%D0%9F%D0%A0%D0%90%D0%A1%D0%9E%D0%9B%D0%9E%D0%92%D0%90%20%C2%B7%20%D0%9E%D0%91%D0%A0%D0%90%D0%97%D0%95%D0%A6</text></svg>&quot;);background-repeat:repeat"></div><div style="position:fixed;left:0;right:0;bottom:0;z-index:99999;pointer-events:none;text-align:center;font:600 12px/1.4 sans-serif;color:#fff;background:rgba(20,24,33,.88);padding:7px 12px">Демо-набросок для оценки · © Алёна Прасолова · не для коммерческого использования · рабочая версия и чистовой дизайн — после старта работы</div></body>
+</html>
