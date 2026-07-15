@@ -1,0 +1,604 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Тестирование сайтов и сервисов</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --dark: #1a1f36;
+    --mid: #2d3561;
+    --accent: #f5a623;
+    --light: #f7f8fc;
+    --white: #ffffff;
+    --gray: #8892a4;
+    --radius: 16px;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    background: var(--light);
+    color: var(--dark);
+    line-height: 1.6;
+    font-size: 16px;
+  }
+
+  .demo-bar {
+    background: var(--dark);
+    color: var(--gray);
+    text-align: center;
+    font-size: 12px;
+    padding: 8px 16px;
+    letter-spacing: 0.04em;
+  }
+  .demo-bar span { color: var(--accent); }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, var(--dark) 0%, var(--mid) 60%, #3d4a8a 100%);
+    color: var(--white);
+    padding: 80px 24px 90px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(245,166,35,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; left: -60px;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(245,166,35,0.1) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(245,166,35,0.2);
+    border: 1px solid rgba(245,166,35,0.4);
+    color: var(--accent);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 6px 18px;
+    border-radius: 100px;
+    margin-bottom: 28px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .hero h1 {
+    font-size: clamp(28px, 6vw, 52px);
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 20px;
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .hero h1 em {
+    font-style: normal;
+    color: var(--accent);
+  }
+  .hero-sub {
+    font-size: clamp(15px, 2.5vw, 19px);
+    color: rgba(255,255,255,0.75);
+    max-width: 520px;
+    margin: 0 auto 40px;
+  }
+  .btn {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--dark);
+    font-size: 16px;
+    font-weight: 700;
+    padding: 16px 40px;
+    border-radius: 100px;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+    border: none;
+  }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(245,166,35,0.4); }
+  .hero-note {
+    margin-top: 20px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.45);
+  }
+
+  /* STATS */
+  .stats {
+    background: var(--white);
+    padding: 40px 24px;
+    border-bottom: 1px solid #e8eaf0;
+  }
+  .stats-grid {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .stat {
+    text-align: center;
+    padding: 20px 32px;
+    flex: 1;
+    min-width: 140px;
+  }
+  .stat-num {
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--mid);
+    display: block;
+  }
+  .stat-label {
+    font-size: 13px;
+    color: var(--gray);
+    margin-top: 4px;
+  }
+
+  /* SECTION */
+  section { padding: 72px 24px; }
+  .container { max-width: 1060px; margin: 0 auto; }
+  .section-tag {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-size: clamp(22px, 4vw, 36px);
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 16px;
+    color: var(--dark);
+  }
+  .section-lead {
+    font-size: 17px;
+    color: var(--gray);
+    max-width: 580px;
+    margin-bottom: 48px;
+  }
+
+  /* BENEFITS */
+  .benefits { background: var(--light); }
+  .benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+  }
+  .benefit-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 32px 28px;
+    border: 1px solid #e8eaf0;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .benefit-card:hover { box-shadow: 0 8px 32px rgba(45,53,97,0.1); transform: translateY(-4px); }
+  .benefit-icon {
+    font-size: 36px;
+    margin-bottom: 20px;
+    display: block;
+  }
+  .benefit-card h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: var(--dark);
+  }
+  .benefit-card p { font-size: 15px; color: var(--gray); line-height: 1.6; }
+
+  /* HOW WE WORK */
+  .how { background: var(--white); }
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 32px;
+    counter-reset: step;
+  }
+  .step {
+    position: relative;
+    padding-top: 24px;
+    counter-increment: step;
+  }
+  .step::before {
+    content: counter(step);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px; height: 44px;
+    background: linear-gradient(135deg, var(--mid), #3d4a8a);
+    color: var(--white);
+    font-size: 18px;
+    font-weight: 800;
+    border-radius: 12px;
+    margin-bottom: 20px;
+  }
+  .step h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; color: var(--dark); }
+  .step p { font-size: 14px; color: var(--gray); line-height: 1.6; }
+
+  /* SERVICES */
+  .services { background: var(--light); }
+  .services-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .service-item {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 28px;
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    border: 1px solid #e8eaf0;
+  }
+  .service-dot {
+    flex-shrink: 0;
+    width: 10px; height: 10px;
+    background: var(--accent);
+    border-radius: 50%;
+    margin-top: 8px;
+  }
+  .service-item h3 { font-size: 16px; font-weight: 700; margin-bottom: 6px; color: var(--dark); }
+  .service-item p { font-size: 14px; color: var(--gray); }
+  .service-price {
+    margin-top: 12px;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--mid);
+  }
+
+  /* REVIEW */
+  .review { background: linear-gradient(135deg, var(--dark) 0%, var(--mid) 100%); }
+  .review-inner {
+    max-width: 680px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .review-stars { font-size: 28px; margin-bottom: 28px; }
+  .review-text {
+    font-size: clamp(18px, 3vw, 24px);
+    font-weight: 500;
+    color: var(--white);
+    line-height: 1.5;
+    margin-bottom: 32px;
+    font-style: italic;
+  }
+  .reviewer {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .reviewer-avatar {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), #e88e00);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+  .reviewer-info { text-align: left; }
+  .reviewer-name { font-weight: 700; color: var(--white); font-size: 15px; }
+  .reviewer-role { color: rgba(255,255,255,0.55); font-size: 13px; }
+
+  /* FORM */
+  .form-section { background: var(--white); }
+  .form-wrap {
+    max-width: 600px;
+    margin: 0 auto;
+    background: var(--light);
+    border-radius: 24px;
+    padding: 48px 40px;
+    border: 1px solid #e8eaf0;
+  }
+  .form-title {
+    font-size: 24px;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 8px;
+    color: var(--dark);
+  }
+  .form-sub {
+    text-align: center;
+    color: var(--gray);
+    font-size: 15px;
+    margin-bottom: 36px;
+  }
+  .form-group { margin-bottom: 20px; }
+  .form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: 8px;
+    letter-spacing: 0.02em;
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    padding: 14px 18px;
+    border-radius: 12px;
+    border: 1.5px solid #dde0ea;
+    background: var(--white);
+    font-size: 15px;
+    color: var(--dark);
+    outline: none;
+    transition: border-color 0.2s;
+    font-family: inherit;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus { border-color: var(--mid); }
+  .form-group textarea { resize: vertical; min-height: 110px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .btn-full { width: 100%; padding: 18px; font-size: 17px; border-radius: 14px; }
+  .form-privacy {
+    text-align: center;
+    font-size: 12px;
+    color: var(--gray);
+    margin-top: 16px;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--dark);
+    color: rgba(255,255,255,0.6);
+    padding: 40px 24px;
+    text-align: center;
+  }
+  .footer-logo {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+  .footer-logo span { color: var(--accent); }
+  footer p { font-size: 14px; margin-bottom: 6px; }
+  .footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+  .footer-links a { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 13px; }
+  .footer-links a:hover { color: var(--accent); }
+
+  @media (max-width: 600px) {
+    .hero { padding: 60px 20px 70px; }
+    section { padding: 52px 20px; }
+    .form-wrap { padding: 32px 20px; }
+    .form-row { grid-template-columns: 1fr; }
+    .stat { padding: 16px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="demo-bar">Демо-набросок · <span>studio Алёны</span> · не финал — только для согласования идеи</div>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="container">
+    <div class="hero-badge">🔍 QA &amp; тестирование</div>
+    <h1>Протестируем ваш сайт<br>или сервис — <em>честно и быстро</em></h1>
+    <p class="hero-sub">Проверим, как работает ваш продукт глазами реального пользователя. Найдём баги, неудобства и ошибки до того, как их найдут ваши клиенты.</p>
+    <a href="#form" class="btn">Оставить заявку на тест</a>
+    <p class="hero-note">⚡ Результат — в течение 24 часов · Без сложных технических требований</p>
+  </div>
+</header>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stats-grid">
+    <div class="stat">
+      <span class="stat-num">24ч</span>
+      <div class="stat-label">время выполнения</div>
+    </div>
+    <div class="stat">
+      <span class="stat-num">50+</span>
+      <div class="stat-label">точек проверки</div>
+    </div>
+    <div class="stat">
+      <span class="stat-num">от&nbsp;___&nbsp;₽</span>
+      <div class="stat-label">стоимость теста</div>
+    </div>
+    <div class="stat">
+      <span class="stat-num">100%</span>
+      <div class="stat-label">подробный отчёт</div>
+    </div>
+  </div>
+</div>
+
+<!-- BENEFITS -->
+<section class="benefits">
+  <div class="container">
+    <div class="section-tag">Почему важно</div>
+    <h2 class="section-title">Зачем тестировать<br>до запуска?</h2>
+    <p class="section-lead">Баг, который вы не заметили — заметит ваш клиент. И, скорее всего, уйдёт к конкурентам.</p>
+    <div class="benefits-grid">
+      <div class="benefit-card">
+        <span class="benefit-icon">🐛</span>
+        <h3>Находим скрытые баги</h3>
+        <p>Кнопки, которые не кликаются. Формы, которые не отправляются. Страницы с ошибкой 500. Всё это — репутационные потери.</p>
+      </div>
+      <div class="benefit-card">
+        <span class="benefit-icon">📱</span>
+        <h3>Проверяем на мобилке</h3>
+        <p>Больше 60% трафика идёт с телефона. Мы тестируем на разных устройствах и браузерах, чтобы сайт работал для всех.</p>
+      </div>
+      <div class="benefit-card">
+        <span class="benefit-icon">🚀</span>
+        <h3>Смотрим на скорость</h3>
+        <p>Если страница грузится дольше 3 секунд — пользователь уходит. Фиксируем тормоза и даём рекомендации.</p>
+      </div>
+      <div class="benefit-card">
+        <span class="benefit-icon">📋</span>
+        <h3>Даём чёткий отчёт</h3>
+        <p>Никаких расплывчатых комментариев. Конкретный список: что сломано, где сломано, как выглядит — со скриншотами.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW WE WORK -->
+<section class="how">
+  <div class="container">
+    <div class="section-tag">Процесс</div>
+    <h2 class="section-title">Как проходит тестирование</h2>
+    <p class="section-lead">Просто и без лишней бюрократии — от заявки до готового отчёта.</p>
+    <div class="steps">
+      <div class="step">
+        <h3>Получаем ссылку</h3>
+        <p>Вы оставляете заявку и даёте ссылку на сайт или сервис. Если нужен доступ — сообщаете логин и пароль.</p>
+      </div>
+      <div class="step">
+        <h3>Проводим тест</h3>
+        <p>Проходим по сценариям реального пользователя: регистрация, навигация, заказ, оплата, обратная связь.</p>
+      </div>
+      <div class="step">
+        <h3>Фиксируем всё</h3>
+        <p>Делаем скриншоты и записи экрана для каждой найденной проблемы. Ничего не теряется.</p>
+      </div>
+      <div class="step">
+        <h3>Отправляем отчёт</h3>
+        <p>Готовый документ со списком проблем и рекомендациями — в течение 24 часов после оплаты.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services">
+  <div class="container">
+    <div class="section-tag">Услуги</div>
+    <h2 class="section-title">Что именно проверяем</h2>
+    <p class="section-lead">Выберите нужный формат или закажите комплексный тест.</p>
+    <div class="services-list">
+      <div class="service-item">
+        <div class="service-dot"></div>
+        <div>
+          <h3>Функциональное тестирование</h3>
+          <p>Работает ли всё, что должно работать: кнопки, формы, корзина, авторизация, фильтры.</p>
+          <div class="service-price">от ___ ₽</div>
+        </div>
+      </div>
+      <div class="service-item">
+        <div class="service-dot"></div>
+        <div>
+          <h3>Мобильное тестирование</h3>
+          <p>Проверяем отображение и работу на смартфонах iOS и Android, разных разрешениях экрана.</p>
+          <div class="service-price">от ___ ₽</div>
+        </div>
+      </div>
+      <div class="service-item">
+        <div class="service-dot"></div>
+        <div>
+          <h3>UX-проверка</h3>
+          <p>Насколько удобен сайт? Где пользователь теряется, что непонятно, что раздражает — субъективный взгляд со стороны.</p>
+          <div class="service-price">от ___ ₽</div>
+        </div>
+      </div>
+      <div class="service-item">
+        <div class="service-dot"></div>
+        <div>
+          <h3>Кросс-браузерное тестирование</h3>
+          <p>Chrome, Firefox, Safari, Edge — проверяем, что сайт одинаково выглядит везде.</p>
+          <div class="service-price">от ___ ₽</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEW -->
+<section class="review">
+  <div class="container">
+    <div class="review-inner">
+      <div class="review-stars">⭐⭐⭐⭐⭐</div>
+      <p class="review-text">«Нашли 12 проблем, которые я сам не замечал месяцами. Отчёт пришёл уже через 18 часов — чёткий, с картинками. Отдал разработчику и за неделю всё починили. Рекомендую.»</p>
+      <div class="reviewer">
+        <div class="reviewer-avatar">👤</div>
+        <div class="reviewer-info">
+          <div class="reviewer-name">Михаил К.</div>
+          <div class="reviewer-role">Владелец интернет-магазина · Москва</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORM -->
+<section class="form-section" id="form">
+  <div class="container">
+    <div class="form-wrap">
+      <h2 class="form-title">Оставьте заявку на тест</h2>
+      <p class="form-sub">Ответим в течение 2 часов и уточним детали</p>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Ваше имя</label>
+          <input type="text" placeholder="Иван Петров">
+        </div>
+        <div class="form-group">
+          <label>Телефон или Telegram</label>
+          <input type="text" placeholder="+7 ___ ___ __ __">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Ссылка на сайт / сервис</label>
+        <input type="text" placeholder="https://ваш-сайт.ru">
+      </div>
+      <div class="form-group">
+        <label>Что хотите проверить?</label>
+        <select>
+          <option value="">— Выберите тип тестирования —</option>
+          <option>Функциональное тестирование</option>
+          <option>Мобильное тестирование</option>
+          <option>UX-проверка удобства</option>
+          <option>Кросс-браузерное тестирование</option>
+          <option>Полный комплекс</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Комментарий (необязательно)</label>
+        <textarea placeholder="Что особенно важно проверить? Есть ли конкретные сценарии или страницы?"></textarea>
+      </div>
+      <button class="btn btn-full" type="button">Отправить заявку →</button>
+      <p class="form-privacy">Нажимая кнопку, вы соглашаетесь на обработку персональных данных. Мы не передаём их третьим лицам.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-logo">🔍 <span>Тест</span>Студио</div>
+    <p>Тестирование сайтов и онлайн-сервисов</p>
+    <p>📞 +7 ___ ___ __ __ · ✉️ ___@___.ru</p>
+    <div class="footer-links">
+      <a href="#">О нас</a>
+      <a href="#">Услуги</a>
+      <a href="#">Примеры отчётов</a>
+      <a href="#">Контакты</a>
+    </div>
+    <p style="margin-top:28px;font-size:12px;color:rgba(255,255,255,0.3);">© 2026 · Демо-версия лендинга</p>
+  </div>
+</footer>
+
+<div style="position:fixed;inset:0;z-index:99998;pointer-events:none;opacity:.10;background-image:url(&quot;data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='420' height='300'><text x='0' y='150' transform='rotate(-28 210 150)' font-family='sans-serif' font-size='22' font-weight='700' fill='%23808080' fill-opacity='0.5'>%D0%94%D0%95%D0%9C%D0%9E%20%C2%B7%20%D0%90%D0%9B%D0%81%D0%9D%D0%90%20%D0%9F%D0%A0%D0%90%D0%A1%D0%9E%D0%9B%D0%9E%D0%92%D0%90%20%C2%B7%20%D0%9E%D0%91%D0%A0%D0%90%D0%97%D0%95%D0%A6</text></svg>&quot;);background-repeat:repeat"></div><div style="position:fixed;left:0;right:0;bottom:0;z-index:99999;pointer-events:none;text-align:center;font:600 12px/1.4 sans-serif;color:#fff;background:rgba(20,24,33,.88);padding:7px 12px">Демо-набросок для оценки · © Алёна Прасолова · не для коммерческого использования · рабочая версия и чистовой дизайн — после старта работы</div></body>
+</html>
