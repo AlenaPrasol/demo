@@ -1,0 +1,771 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Копия сайта на Тильде — быстро и точно</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --dark: #1a1a2e;
+    --mid: #16213e;
+    --accent: #e94560;
+    --light: #f5f5f0;
+    --muted: #8a8a9a;
+    --radius: 12px;
+    --gap: clamp(40px, 6vw, 80px);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    background: var(--light);
+    color: var(--dark);
+    line-height: 1.6;
+    font-size: 16px;
+  }
+
+  /* DEMO BANNER */
+  .demo-bar {
+    background: var(--dark);
+    color: #fff;
+    text-align: center;
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    padding: 8px 16px;
+    opacity: 0.85;
+  }
+  .demo-bar span { color: var(--accent); font-weight: 600; }
+
+  /* NAV */
+  nav {
+    background: #fff;
+    border-bottom: 1px solid #eee;
+    padding: 18px clamp(20px, 5vw, 80px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .logo {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--dark);
+    letter-spacing: -0.03em;
+  }
+  .logo span { color: var(--accent); }
+  nav a {
+    color: var(--dark);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 10px 20px;
+    background: var(--accent);
+    color: #fff;
+    border-radius: 50px;
+    transition: opacity .2s;
+  }
+  nav a:hover { opacity: .85; }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, var(--dark) 0%, var(--mid) 60%, #0f3460 100%);
+    color: #fff;
+    padding: var(--gap) clamp(20px, 5vw, 80px);
+    min-height: 88vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -100px; right: -100px;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(233,69,96,.25) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; left: 10%;
+    width: 350px; height: 350px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(15,52,96,.6) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-inner { max-width: 720px; position: relative; z-index: 1; }
+  .hero-tag {
+    display: inline-block;
+    background: rgba(233,69,96,.2);
+    border: 1px solid rgba(233,69,96,.4);
+    color: #e9a0ae;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 50px;
+    margin-bottom: 28px;
+  }
+  .hero h1 {
+    font-size: clamp(32px, 5vw, 60px);
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin-bottom: 24px;
+  }
+  .hero h1 em {
+    font-style: normal;
+    color: var(--accent);
+  }
+  .hero p {
+    font-size: clamp(16px, 2vw, 19px);
+    color: rgba(255,255,255,.75);
+    max-width: 560px;
+    margin-bottom: 40px;
+    line-height: 1.7;
+  }
+  .hero-cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: center;
+  }
+  .btn-primary {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    text-decoration: none;
+    padding: 16px 36px;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    transition: transform .2s, box-shadow .2s;
+    box-shadow: 0 8px 30px rgba(233,69,96,.4);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(233,69,96,.5); }
+  .hero-note { color: rgba(255,255,255,.45); font-size: 13px; }
+
+  .hero-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px;
+    margin-top: 60px;
+    padding-top: 40px;
+    border-top: 1px solid rgba(255,255,255,.1);
+  }
+  .stat strong {
+    display: block;
+    font-size: 36px;
+    font-weight: 900;
+    color: var(--accent);
+    letter-spacing: -0.03em;
+  }
+  .stat span { font-size: 13px; color: rgba(255,255,255,.55); }
+
+  /* SECTION */
+  section { padding: var(--gap) clamp(20px, 5vw, 80px); }
+  .section-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-size: clamp(24px, 3.5vw, 40px);
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin-bottom: 16px;
+    color: var(--dark);
+  }
+  .section-sub {
+    font-size: 16px;
+    color: var(--muted);
+    max-width: 500px;
+    line-height: 1.7;
+  }
+
+  /* BENEFITS */
+  .benefits { background: #fff; }
+  .benefits-head { margin-bottom: 48px; }
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+  }
+  .card {
+    background: var(--light);
+    border-radius: var(--radius);
+    padding: 32px 28px;
+    border: 1px solid #ebebeb;
+    transition: transform .2s, box-shadow .2s;
+  }
+  .card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,.08); }
+  .card-icon {
+    font-size: 36px;
+    margin-bottom: 20px;
+    display: block;
+  }
+  .card h3 {
+    font-size: 18px;
+    font-weight: 800;
+    margin-bottom: 10px;
+    color: var(--dark);
+  }
+  .card p { font-size: 14px; color: var(--muted); line-height: 1.65; }
+
+  /* WHAT'S INCLUDED */
+  .included { background: var(--dark); color: #fff; }
+  .included .section-title { color: #fff; }
+  .included .section-sub { color: rgba(255,255,255,.55); }
+  .included-head { margin-bottom: 48px; }
+  .incl-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .incl-item {
+    background: rgba(255,255,255,.05);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: var(--radius);
+    padding: 28px 24px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    transition: background .2s;
+  }
+  .incl-item:hover { background: rgba(255,255,255,.09); }
+  .incl-check {
+    flex-shrink: 0;
+    width: 28px; height: 28px;
+    background: var(--accent);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: #fff;
+    font-weight: 700;
+    margin-top: 2px;
+  }
+  .incl-item h4 { font-size: 15px; font-weight: 700; margin-bottom: 6px; color: #fff; }
+  .incl-item p { font-size: 13px; color: rgba(255,255,255,.5); line-height: 1.6; }
+
+  /* HOW IT WORKS */
+  .how { background: var(--light); }
+  .how-head { margin-bottom: 48px; }
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0;
+    position: relative;
+  }
+  .steps::before {
+    content: '';
+    position: absolute;
+    top: 32px; left: 48px; right: 48px; height: 2px;
+    background: linear-gradient(to right, var(--accent), rgba(233,69,96,.2));
+    z-index: 0;
+  }
+  .step {
+    text-align: center;
+    padding: 0 20px 32px;
+    position: relative;
+    z-index: 1;
+  }
+  .step-num {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    background: #fff;
+    border: 3px solid var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--accent);
+    box-shadow: 0 4px 20px rgba(233,69,96,.2);
+  }
+  .step h3 { font-size: 16px; font-weight: 800; margin-bottom: 8px; color: var(--dark); }
+  .step p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+  /* PRICES */
+  .prices { background: #fff; }
+  .prices-head { margin-bottom: 48px; }
+  .price-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+    max-width: 900px;
+  }
+  .price-card {
+    border: 2px solid #ebebeb;
+    border-radius: var(--radius);
+    padding: 36px 28px;
+    transition: border-color .2s, transform .2s;
+  }
+  .price-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+  .price-card.featured {
+    border-color: var(--accent);
+    background: linear-gradient(135deg, rgba(233,69,96,.04) 0%, #fff 100%);
+  }
+  .price-badge {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 50px;
+    margin-bottom: 16px;
+  }
+  .price-name { font-size: 18px; font-weight: 800; margin-bottom: 6px; color: var(--dark); }
+  .price-desc { font-size: 13px; color: var(--muted); margin-bottom: 24px; line-height: 1.6; }
+  .price-val {
+    font-size: 38px;
+    font-weight: 900;
+    color: var(--dark);
+    letter-spacing: -0.03em;
+    margin-bottom: 4px;
+  }
+  .price-val span { font-size: 16px; color: var(--muted); font-weight: 400; }
+  .price-period { font-size: 12px; color: var(--muted); margin-bottom: 28px; }
+  .price-list { list-style: none; margin-bottom: 28px; }
+  .price-list li {
+    font-size: 14px;
+    color: var(--dark);
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .price-list li::before { content: '✓'; color: var(--accent); font-weight: 700; flex-shrink: 0; }
+  .btn-outline {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 13px;
+    border: 2px solid var(--accent);
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--accent);
+    cursor: pointer;
+    background: transparent;
+    text-decoration: none;
+    transition: background .2s, color .2s;
+  }
+  .btn-outline:hover, .price-card.featured .btn-outline {
+    background: var(--accent);
+    color: #fff;
+  }
+
+  /* REVIEW */
+  .review { background: var(--light); }
+  .review-inner {
+    max-width: 700px;
+    background: #fff;
+    border-radius: 20px;
+    padding: clamp(32px, 5vw, 60px);
+    box-shadow: 0 8px 40px rgba(0,0,0,.07);
+  }
+  .stars { font-size: 22px; margin-bottom: 20px; letter-spacing: 2px; }
+  .review-text {
+    font-size: clamp(16px, 2vw, 20px);
+    line-height: 1.7;
+    color: var(--dark);
+    font-style: italic;
+    margin-bottom: 28px;
+  }
+  .review-text::before { content: '\201C'; font-size: 48px; color: var(--accent); line-height: 0; vertical-align: -18px; margin-right: 4px; }
+  .reviewer {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+  }
+  .reviewer-avatar {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), #f7934c);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+  }
+  .reviewer-name { font-weight: 800; font-size: 15px; color: var(--dark); }
+  .reviewer-role { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+  /* FORM */
+  .form-section { background: var(--dark); }
+  .form-section .section-title { color: #fff; }
+  .form-section .section-sub { color: rgba(255,255,255,.55); }
+  .form-head { margin-bottom: 40px; }
+  .form-inner {
+    background: rgba(255,255,255,.05);
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 20px;
+    padding: clamp(28px, 4vw, 52px);
+    max-width: 640px;
+  }
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  @media (max-width: 540px) {
+    .form-row { grid-template-columns: 1fr; }
+  }
+  .form-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+  .form-group label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.5);
+  }
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-size: 15px;
+    color: #fff;
+    outline: none;
+    transition: border-color .2s;
+    font-family: inherit;
+    resize: vertical;
+  }
+  .form-group input::placeholder,
+  .form-group textarea::placeholder { color: rgba(255,255,255,.3); }
+  .form-group input:focus,
+  .form-group textarea:focus,
+  .form-group select:focus { border-color: var(--accent); }
+  .form-group select { color: rgba(255,255,255,.7); }
+  .form-group select option { background: var(--dark); color: #fff; }
+  .form-submit { margin-top: 8px; width: 100%; padding: 18px; font-size: 16px; }
+  .form-privacy {
+    text-align: center;
+    font-size: 12px;
+    color: rgba(255,255,255,.3);
+    margin-top: 16px;
+    line-height: 1.6;
+  }
+
+  /* FOOTER */
+  footer {
+    background: #111;
+    color: rgba(255,255,255,.5);
+    padding: 40px clamp(20px, 5vw, 80px);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    justify-content: space-between;
+    align-items: center;
+  }
+  footer .logo { color: #fff; }
+  .footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .footer-links a {
+    color: rgba(255,255,255,.4);
+    text-decoration: none;
+    font-size: 13px;
+    transition: color .2s;
+  }
+  .footer-links a:hover { color: var(--accent); }
+  .footer-copy { font-size: 12px; }
+
+  /* RESPONSIVE */
+  @media (max-width: 680px) {
+    .steps::before { display: none; }
+    .steps { grid-template-columns: 1fr; gap: 24px; }
+    .hero-stats { gap: 20px; }
+  }
+  @media (max-width: 480px) {
+    nav a { padding: 9px 16px; font-size: 13px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- DEMO BANNER -->
+<div class="demo-bar">
+  Демо-набросок · <span>studio Алёны</span> · не финал — черновик под обсуждение
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">web<span>.</span>studio</div>
+  <a href="#form">Обсудить проект</a>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-tag">Тильда · адаптация · 3 дня</div>
+    <h1>Перенесём ваш сайт<br>на Тильду — <em>точь-в-точь</em><br>с вашим брендом</h1>
+    <p>Скопируем структуру и дизайн, заменим цвета, логотипы и тексты на ваши.
+       Загрузим весь каталог товаров — и сдадим за 3 дня.</p>
+    <div class="hero-cta">
+      <a href="#form" class="btn-primary">Хочу такой же сайт</a>
+      <span class="hero-note">Без предоплаты — сначала покажем результат</span>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><strong>3</strong><span>дня до сдачи</span></div>
+      <div class="stat"><strong>100%</strong><span>соответствие оригиналу</span></div>
+      <div class="stat"><strong>Тильда</strong><span>платформа без кода</span></div>
+    </div>
+  </div>
+</header>
+
+<!-- BENEFITS -->
+<section class="benefits">
+  <div class="benefits-head">
+    <div class="section-label">Почему выбирают нас</div>
+    <h2 class="section-title">Всё, что вам нужно,<br>в одном заказе</h2>
+    <p class="section-sub">Не нужно нанимать дизайнера, верстальщика и менеджера контента отдельно — мы делаем всё под ключ.</p>
+  </div>
+  <div class="cards">
+    <div class="card">
+      <span class="card-icon">🎨</span>
+      <h3>Ваши цвета и фирменный стиль</h3>
+      <p>Полностью адаптируем дизайн под вашу цветовую палитру, шрифты и логотип. Сайт будет выглядеть как родной.</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">🛍️</span>
+      <h3>Каталог товаров с оригинала</h3>
+      <p>Перенесём весь каталог с исходного сайта. В будущем сможете самостоятельно добавлять новые позиции прямо в Тильде.</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">⚡</span>
+      <h3>Срок — 3 рабочих дня</h3>
+      <p>Чёткий дедлайн без переносов. После согласования начинаем сразу — и сдаём в срок.</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">🔧</span>
+      <h3>Тильда — редактируете сами</h3>
+      <p>После сдачи вы управляете сайтом без программиста: меняете тексты, фото, цены прямо в конструкторе.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT'S INCLUDED -->
+<section class="included">
+  <div class="included-head">
+    <div class="section-label">Что входит в работу</div>
+    <h2 class="section-title">Полная адаптация<br>под ваш бренд</h2>
+    <p class="section-sub">Берём за основу оригинальный сайт и превращаем его в ваш — от структуры до последней кнопки.</p>
+  </div>
+  <div class="incl-grid">
+    <div class="incl-item">
+      <div class="incl-check">✓</div>
+      <div>
+        <h4>Копия структуры и блоков</h4>
+        <p>Воссоздаём все разделы, меню, секции в точном соответствии с оригиналом на платформе Тильда.</p>
+      </div>
+    </div>
+    <div class="incl-item">
+      <div class="incl-check">✓</div>
+      <div>
+        <h4>Замена цветовой схемы</h4>
+        <p>Вносим ваши фирменные цвета во все элементы: кнопки, фоны, заголовки, разделители.</p>
+      </div>
+    </div>
+    <div class="incl-item">
+      <div class="incl-check">✓</div>
+      <div>
+        <h4>Установка логотипов и графики</h4>
+        <p>Размещаем ваш логотип, иконки и фирменные изображения везде, где они нужны.</p>
+      </div>
+    </div>
+    <div class="incl-item">
+      <div class="incl-check">✓</div>
+      <div>
+        <h4>Перенос всего каталога</h4>
+        <p>Переносим карточки товаров с описаниями, ценами и фото с исходного сайта в ваш каталог.</p>
+      </div>
+    </div>
+    <div class="incl-item">
+      <div class="incl-check">✓</div>
+      <div>
+        <h4>Замена контактных данных</h4>
+        <p>Прописываем ваши телефоны, адрес, email, ссылки на соцсети во всех нужных местах.</p>
+      </div>
+    </div>
+    <div class="incl-item">
+      <div class="incl-check">✓</div>
+      <div>
+        <h4>Финальная проверка и сдача</h4>
+        <p>Тестируем на мобильных и десктопе, исправляем недочёты — и только тогда сдаём вам.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how">
+  <div class="how-head">
+    <div class="section-label">Как мы работаем</div>
+    <h2 class="section-title">4 шага от заявки<br>до готового сайта</h2>
+    <p class="section-sub">Прозрачный процесс — вы видите результат на каждом этапе и вносите правки до финала.</p>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <h3>Получаем ссылки</h3>
+      <p>Вы отправляете ссылку на оригинальный сайт и ваши материалы: логотип, цвета, данные.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <h3>Копируем структуру</h3>
+      <p>Воссоздаём все блоки и разделы на Тильде — точь-в-точь как у оригинала.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <h3>Адаптируем под вас</h3>
+      <p>Заменяем цвета, логотипы, контакты. Переносим весь каталог товаров.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <h3>Сдаём и передаём</h3>
+      <p>Показываем результат, вносим финальные правки — и передаём полный доступ к проекту.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRICES -->
+<section class="prices">
+  <div class="prices-head">
+    <div class="section-label">Стоимость</div>
+    <h2 class="section-title">Выберите нужный<br>формат</h2>
+    <p class="section-sub">Цена зависит от объёма каталога и сложности исходного сайта.</p>
+  </div>
+  <div class="price-cards">
+    <div class="price-card">
+      <div class="price-name">Базовый</div>
+      <div class="price-desc">Сайт-визитка или лендинг до 5 секций, каталог до 30 товаров.</div>
+      <div class="price-val">от ___ <span>₽</span></div>
+      <div class="price-period">срок — 2–3 дня</div>
+      <ul class="price-list">
+        <li>Копия структуры до 5 блоков</li>
+        <li>Ваши цвета и логотип</li>
+        <li>Каталог до 30 позиций</li>
+        <li>Мобильная адаптация</li>
+      </ul>
+      <a href="#form" class="btn-outline">Выбрать</a>
+    </div>
+    <div class="price-card featured">
+      <div class="price-badge">Популярный</div>
+      <div class="price-name">Полный сайт</div>
+      <div class="price-desc">Многостраничник или магазин с большим каталогом — под ключ.</div>
+      <div class="price-val">от ___ <span>₽</span></div>
+      <div class="price-period">срок — 3 дня</div>
+      <ul class="price-list">
+        <li>Полная копия всех страниц</li>
+        <li>Цвета, логотипы, шрифты</li>
+        <li>Каталог от 30 до 200 товаров</li>
+        <li>Контактные данные и формы</li>
+        <li>Обучение работе с Тильдой</li>
+      </ul>
+      <a href="#form" class="btn-outline">Выбрать</a>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEW -->
+<section class="review">
+  <div class="section-label">Отзыв клиента</div>
+  <div class="review-inner">
+    <div class="stars">⭐⭐⭐⭐⭐</div>
+    <p class="review-text">
+      Сделали копию нашего старого сайта на Тильде за 3 дня — всё 1 в 1, только уже с нашим новым логотипом и цветами. Каталог из 80 товаров перенесли полностью. Очень доволен — теперь сам правлю тексты без программиста.
+    </p>
+    <div class="reviewer">
+      <div class="reviewer-avatar">🙂</div>
+      <div>
+        <div class="reviewer-name">— Placeholder, директор компании</div>
+        <div class="reviewer-role">Заказчик · интернет-магазин</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORM -->
+<section class="form-section" id="form">
+  <div class="form-head">
+    <div class="section-label">Оставить заявку</div>
+    <h2 class="section-title">Пришлите ссылки —<br>рассчитаем за час</h2>
+    <p class="section-sub">Укажите ссылку на оригинальный сайт, и мы бесплатно оценим объём работы.</p>
+  </div>
+  <div class="form-inner">
+    <div class="form-row">
+      <div class="form-group">
+        <label>Ваше имя</label>
+        <input type="text" placeholder="Как вас зовут?">
+      </div>
+      <div class="form-group">
+        <label>Телефон / Telegram</label>
+        <input type="text" placeholder="+7 ___ или @ник">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Ссылка на оригинальный сайт</label>
+      <input type="url" placeholder="https://сайт-который-копируем.ru">
+    </div>
+    <div class="form-group">
+      <label>Объём каталога (примерно)</label>
+      <select>
+        <option value="" disabled selected>Сколько товаров нужно перенести?</option>
+        <option>До 30 товаров</option>
+        <option>30–100 товаров</option>
+        <option>100–300 товаров</option>
+        <option>Больше 300 товаров</option>
+        <option>Каталога нет — только страницы</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Комментарий</label>
+      <textarea rows="3" placeholder="Что важно: особые пожелания, сроки, что нужно изменить по сравнению с оригиналом…"></textarea>
+    </div>
+    <button class="btn-primary form-submit">Отправить заявку на оценку</button>
+    <p class="form-privacy">Нажимая кнопку, вы соглашаетесь на обработку персональных данных.<br>Не передаём третьим лицам. Ответим в течение 1 часа.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo">web<span>.</span>studio</div>
+  <div class="footer-links">
+    <a href="#form">Заявка</a>
+    <a href="#">Портфолио</a>
+    <a href="#">Telegram</a>
+    <a href="mailto:___@___.ru">___@___.ru</a>
+    <a href="tel:+7___">+7 ___</a>
+  </div>
+  <div class="footer-copy">© 2026 · демо-страница · не публикуется</div>
+</footer>
+
+<div style="position:fixed;inset:0;z-index:99998;pointer-events:none;opacity:.10;background-image:url(&quot;data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='420' height='300'><text x='0' y='150' transform='rotate(-28 210 150)' font-family='sans-serif' font-size='22' font-weight='700' fill='%23808080' fill-opacity='0.5'>%D0%94%D0%95%D0%9C%D0%9E%20%C2%B7%20%D0%90%D0%9B%D0%81%D0%9D%D0%90%20%D0%9F%D0%A0%D0%90%D0%A1%D0%9E%D0%9B%D0%9E%D0%92%D0%90%20%C2%B7%20%D0%9E%D0%91%D0%A0%D0%90%D0%97%D0%95%D0%A6</text></svg>&quot;);background-repeat:repeat"></div><div style="position:fixed;left:0;right:0;bottom:0;z-index:99999;pointer-events:none;text-align:center;font:600 12px/1.4 sans-serif;color:#fff;background:rgba(20,24,33,.88);padding:7px 12px">Демо-набросок для оценки · © Алёна Прасолова · не для коммерческого использования · рабочая версия и чистовой дизайн — после старта работы</div></body>
+</html>
