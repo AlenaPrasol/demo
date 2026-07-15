@@ -1,0 +1,570 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Сайт под вас — быстро и точно</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --dark: #12213a;
+    --mid:  #1e3a5f;
+    --accent: #f5a623;
+    --light: #f4f7fb;
+    --text: #2c3e50;
+    --muted: #7f8c8d;
+    --white: #ffffff;
+    --radius: 14px;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+    background: var(--light);
+    color: var(--text);
+    line-height: 1.65;
+  }
+
+  /* DEMO BANNER */
+  .demo-banner {
+    background: var(--accent);
+    color: var(--dark);
+    text-align: center;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 7px 16px;
+  }
+
+  /* NAV */
+  nav {
+    background: var(--dark);
+    padding: 18px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .logo {
+    color: var(--white);
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .logo span { color: var(--accent); }
+  nav a {
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    font-size: 0.9rem;
+    margin-left: 20px;
+    transition: color 0.2s;
+  }
+  nav a:hover { color: var(--accent); }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, var(--dark) 0%, var(--mid) 60%, #254e7a 100%);
+    color: var(--white);
+    padding: 80px 24px 90px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 20% 50%, rgba(245,166,35,0.12) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(255,255,255,0.05) 0%, transparent 40%);
+  }
+  .hero-tag {
+    display: inline-block;
+    background: rgba(245,166,35,0.18);
+    border: 1px solid rgba(245,166,35,0.4);
+    color: var(--accent);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 50px;
+    margin-bottom: 28px;
+    position: relative;
+  }
+  .hero h1 {
+    font-size: clamp(1.9rem, 5vw, 3rem);
+    font-weight: 800;
+    line-height: 1.2;
+    max-width: 680px;
+    margin: 0 auto 20px;
+    position: relative;
+  }
+  .hero h1 em {
+    font-style: normal;
+    color: var(--accent);
+  }
+  .hero p {
+    font-size: 1.05rem;
+    color: rgba(255,255,255,0.78);
+    max-width: 520px;
+    margin: 0 auto 38px;
+    position: relative;
+  }
+  .btn {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--dark);
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 16px 36px;
+    border-radius: 50px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+    position: relative;
+  }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(245,166,35,0.4); }
+  .btn-ghost {
+    background: transparent;
+    border: 2px solid rgba(255,255,255,0.35);
+    color: var(--white);
+    margin-left: 12px;
+  }
+  .btn-ghost:hover { border-color: var(--white); box-shadow: none; }
+
+  .hero-note {
+    margin-top: 22px;
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.45);
+    position: relative;
+  }
+
+  /* SECTION */
+  section { padding: 72px 24px; }
+  .container { max-width: 1060px; margin: 0 auto; }
+  .section-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  h2 {
+    font-size: clamp(1.5rem, 3.5vw, 2.1rem);
+    font-weight: 800;
+    color: var(--dark);
+    line-height: 1.25;
+    margin-bottom: 14px;
+  }
+  .section-sub {
+    font-size: 1rem;
+    color: var(--muted);
+    max-width: 520px;
+    margin-bottom: 48px;
+  }
+
+  /* BENEFITS */
+  .benefits { background: var(--white); }
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+  }
+  .card {
+    background: var(--light);
+    border-radius: var(--radius);
+    padding: 32px 28px;
+    border: 1px solid rgba(18,33,58,0.07);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(18,33,58,0.1); }
+  .card-icon {
+    font-size: 2rem;
+    margin-bottom: 18px;
+    display: block;
+  }
+  .card h3 { font-size: 1.05rem; font-weight: 700; color: var(--dark); margin-bottom: 10px; }
+  .card p { font-size: 0.92rem; color: var(--muted); }
+
+  /* HOW WE WORK */
+  .how { background: var(--light); }
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    counter-reset: step;
+  }
+  .step {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 28px 24px;
+    position: relative;
+    border: 1px solid rgba(18,33,58,0.07);
+  }
+  .step::before {
+    counter-increment: step;
+    content: counter(step);
+    position: absolute;
+    top: -14px;
+    left: 24px;
+    background: var(--accent);
+    color: var(--dark);
+    font-weight: 800;
+    font-size: 0.85rem;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .step h3 { font-size: 0.97rem; font-weight: 700; color: var(--dark); margin-bottom: 8px; }
+  .step p { font-size: 0.88rem; color: var(--muted); }
+
+  /* WHAT INCLUDED */
+  .included { background: var(--dark); color: var(--white); }
+  .included h2 { color: var(--white); }
+  .included .section-sub { color: rgba(255,255,255,0.55); }
+  .services-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+  }
+  .service-item {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: var(--radius);
+    padding: 22px 24px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .service-item .si-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 2px; }
+  .service-item h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 5px; }
+  .service-item p { font-size: 0.85rem; color: rgba(255,255,255,0.55); }
+  .price-block {
+    margin-top: 40px;
+    background: rgba(245,166,35,0.1);
+    border: 1px solid rgba(245,166,35,0.3);
+    border-radius: var(--radius);
+    padding: 28px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .price-block .price-text { font-size: 1rem; color: rgba(255,255,255,0.75); }
+  .price-block .price-num { font-size: 1.7rem; font-weight: 800; color: var(--accent); }
+
+  /* TESTIMONIAL */
+  .testimonial { background: var(--white); }
+  .review-card {
+    max-width: 680px;
+    margin: 0 auto;
+    background: var(--light);
+    border-radius: 20px;
+    padding: 40px 44px;
+    text-align: center;
+    border: 1px solid rgba(18,33,58,0.08);
+  }
+  .stars { font-size: 1.3rem; margin-bottom: 18px; letter-spacing: 4px; }
+  .review-text {
+    font-size: 1.05rem;
+    font-style: italic;
+    color: var(--text);
+    margin-bottom: 24px;
+    line-height: 1.7;
+  }
+  .reviewer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+  }
+  .reviewer-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--mid), var(--accent));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+  }
+  .reviewer-name { font-weight: 700; font-size: 0.95rem; color: var(--dark); }
+  .reviewer-role { font-size: 0.82rem; color: var(--muted); }
+
+  /* FORM */
+  .contact-form { background: var(--light); }
+  .form-wrap {
+    max-width: 640px;
+    margin: 0 auto;
+    background: var(--white);
+    border-radius: 20px;
+    padding: 48px 44px;
+    border: 1px solid rgba(18,33,58,0.08);
+    box-shadow: 0 8px 40px rgba(18,33,58,0.07);
+  }
+  .form-wrap h2 { margin-bottom: 6px; }
+  .form-wrap .section-sub { margin-bottom: 32px; }
+  .form-row { margin-bottom: 18px; }
+  label { display: block; font-size: 0.85rem; font-weight: 600; color: var(--dark); margin-bottom: 7px; }
+  input, textarea, select {
+    width: 100%;
+    background: var(--light);
+    border: 1.5px solid rgba(18,33,58,0.13);
+    border-radius: 10px;
+    padding: 13px 16px;
+    font-size: 0.95rem;
+    color: var(--text);
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  input:focus, textarea:focus, select:focus { border-color: var(--accent); }
+  textarea { min-height: 110px; resize: vertical; }
+  .form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-submit { width: 100%; padding: 16px; font-size: 1rem; border-radius: 50px; margin-top: 8px; }
+  .form-note { font-size: 0.78rem; color: var(--muted); text-align: center; margin-top: 14px; }
+
+  /* FOOTER */
+  footer {
+    background: var(--dark);
+    color: rgba(255,255,255,0.55);
+    text-align: center;
+    padding: 36px 24px;
+    font-size: 0.85rem;
+  }
+  footer strong { color: var(--accent); }
+
+  /* MOBILE */
+  @media (max-width: 600px) {
+    .hero { padding: 56px 20px 64px; }
+    .btn-ghost { margin-left: 0; margin-top: 10px; display: block; }
+    .form-wrap { padding: 32px 22px; }
+    .form-row-2 { grid-template-columns: 1fr; }
+    .review-card { padding: 28px 22px; }
+    .price-block { text-align: center; justify-content: center; }
+    nav .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="demo-banner">Демо-набросок · studio Алёны · не финал</div>
+
+<nav>
+  <div class="logo">Web<span>Copy</span>.pro</div>
+  <div class="nav-links">
+    <a href="#benefits">Что входит</a>
+    <a href="#how">Как работаем</a>
+    <a href="#contact">Заказать</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">✦ Готово за 3–5 дней</div>
+  <h1>Ваш сайт — <em>как тот, что нравится,</em><br>но уже под вас</h1>
+  <p>Берём понравившийся сайт за основу, меняем фото, цвета и тексты — и на выходе вы получаете готовый сайт в вашем стиле, без нуля.</p>
+  <div>
+    <a href="#contact" class="btn">Обсудить проект</a>
+    <a href="#how" class="btn btn-ghost">Как это работает</a>
+  </div>
+  <div class="hero-note">Стоимость от ___ ₽ · Связь: +7 ___</div>
+</div>
+
+<!-- BENEFITS -->
+<section class="benefits" id="benefits">
+  <div class="container">
+    <div class="section-label">Почему выбирают нас</div>
+    <h2>Быстрее с нуля, дешевле агентства</h2>
+    <p class="section-sub">Не нужно придумывать структуру и дизайн — берём работающий образец и адаптируем под вас.</p>
+    <div class="grid-3">
+      <div class="card">
+        <span class="card-icon">🎯</span>
+        <h3>Точное попадание в стиль</h3>
+        <p>Вы показываете пример — мы повторяем структуру и ощущение, но делаем его полностью вашим: ваш цвет, ваш голос, ваши фото.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">⚡</span>
+        <h3>Срок 3–5 рабочих дней</h3>
+        <p>Не надо ждать месяц. Большая часть работы уже сделана за вас — нам остаётся адаптировать, а не изобретать.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">✏️</span>
+        <h3>Тексты переписываем вручную</h3>
+        <p>Никакого Copy-Paste чужого контента. Формулировки — новые, уникальные, под вашу аудиторию и нишу.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">🖼️</span>
+        <h3>Фото и графику меняем полностью</h3>
+        <p>Загружаете ваши материалы или говорите тематику — подбираем подходящие изображения в единой стилистике.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">🎨</span>
+        <h3>Цвета и шрифты — по вашему бренду</h3>
+        <p>Хотите другую палитру? Укажите цвета или покажите логотип — всё оформление переделаем под ваш стиль.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">📱</span>
+        <h3>Адаптив под мобильные</h3>
+        <p>Сайт корректно отображается на телефоне, планшете и десктопе — проверяем на всех устройствах перед сдачей.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW WE WORK -->
+<section class="how" id="how">
+  <div class="container">
+    <div class="section-label">Процесс работы</div>
+    <h2>4 шага — и сайт готов</h2>
+    <p class="section-sub">Простая схема без лишних согласований и бюрократии.</p>
+    <div class="steps">
+      <div class="step">
+        <h3>Вы присылаете пример</h3>
+        <p>Ссылка на сайт, который нравится. Объясняете, что менять: цвета, нишу, персонажа — всё на словах.</p>
+      </div>
+      <div class="step">
+        <h3>Мы уточняем детали</h3>
+        <p>Задаём 3–5 вопросов о вашей аудитории, сфере и пожеланиях. Договариваемся о сроках и стоимости.</p>
+      </div>
+      <div class="step">
+        <h3>Делаем и показываем</h3>
+        <p>Через 3–5 дней — первый вариант. Смотрите, даёте правки. Вносим до 2 итераций правок бесплатно.</p>
+      </div>
+      <div class="step">
+        <h3>Передаём готовый файл</h3>
+        <p>Отдаём все файлы сайта, помогаем загрузить на хостинг. Сайт работает — вы довольны.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INCLUDED -->
+<section class="included">
+  <div class="container">
+    <div class="section-label">Что входит в работу</div>
+    <h2>Полный пакет адаптации</h2>
+    <p class="section-sub">Одна цена — и всё включено. Никаких скрытых доплат.</p>
+    <div class="services-list">
+      <div class="service-item">
+        <div class="si-icon">🔄</div>
+        <div>
+          <h4>Копирование структуры</h4>
+          <p>Точно воспроизводим секции, блоки и логику оригинального сайта.</p>
+        </div>
+      </div>
+      <div class="service-item">
+        <div class="si-icon">📝</div>
+        <div>
+          <h4>Переработка всех текстов</h4>
+          <p>Уникальные формулировки под вашу нишу — не клонируем чужой контент.</p>
+        </div>
+      </div>
+      <div class="service-item">
+        <div class="si-icon">🖼️</div>
+        <div>
+          <h4>Замена изображений</h4>
+          <p>Ваши фото или подобранные тематические — полностью обновляем визуал.</p>
+        </div>
+      </div>
+      <div class="service-item">
+        <div class="si-icon">🎨</div>
+        <div>
+          <h4>Смена цветовой схемы</h4>
+          <p>Меняем палитру и шрифты под ваш бренд или предпочтения.</p>
+        </div>
+      </div>
+      <div class="service-item">
+        <div class="si-icon">📱</div>
+        <div>
+          <h4>Адаптив и кроссбраузерность</h4>
+          <p>Проверяем на разных устройствах и браузерах — всё выглядит аккуратно.</p>
+        </div>
+      </div>
+      <div class="service-item">
+        <div class="si-icon">🚀</div>
+        <div>
+          <h4>Помощь с публикацией</h4>
+          <p>Помогаем залить сайт на хостинг и настроить домен — не бросаем на полпути.</p>
+        </div>
+      </div>
+    </div>
+    <div class="price-block">
+      <div>
+        <div class="price-text">Стоимость адаптации сайта</div>
+        <div class="price-num">от ___ ₽</div>
+      </div>
+      <a href="#contact" class="btn">Получить точную цену</a>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<section class="testimonial">
+  <div class="container">
+    <div class="section-label" style="text-align:center">Отзывы клиентов</div>
+    <h2 style="text-align:center;margin-bottom:36px">Что говорят те, кто уже заказал</h2>
+    <div class="review-card">
+      <div class="stars">★★★★★</div>
+      <div class="review-text">
+        «Показала пример сайта своей конкурентки и попросила сделать похожий, но в моих цветах и со своими текстами. Результат пришёл через 4 дня — выглядит профессионально, всё аккуратно, сделали пару правок по моим пожеланиям. Очень довольна!»
+      </div>
+      <div class="reviewer">
+        <div class="reviewer-avatar">👩</div>
+        <div>
+          <div class="reviewer-name">___ [имя заказчика]</div>
+          <div class="reviewer-role">___ [ниша / город] — заглушка</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORM -->
+<section class="contact-form" id="contact">
+  <div class="container">
+    <div class="form-wrap">
+      <div class="section-label">Оставить заявку</div>
+      <h2>Давайте обсудим ваш проект</h2>
+      <p class="section-sub">Пришлите ссылку на сайт-образец — рассчитаем цену и сроки за час.</p>
+      <div class="form-row-2">
+        <div class="form-row">
+          <label for="name">Ваше имя</label>
+          <input type="text" id="name" placeholder="Как к вам обращаться">
+        </div>
+        <div class="form-row">
+          <label for="contact">Telegram / телефон</label>
+          <input type="text" id="contact" placeholder="@username или +7 ___">
+        </div>
+      </div>
+      <div class="form-row">
+        <label for="site">Ссылка на сайт-образец</label>
+        <input type="url" id="site" placeholder="https://...">
+      </div>
+      <div class="form-row">
+        <label for="task">Что нужно изменить</label>
+        <textarea id="task" placeholder="Опишите: какие цвета, ниша, что заменить — любые детали помогут точнее рассчитать стоимость"></textarea>
+      </div>
+      <button class="btn form-submit" type="button">Отправить заявку</button>
+      <div class="form-note">Ответим в течение нескольких часов · Без спама и навязчивых звонков</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 &nbsp;·&nbsp; <strong>WebCopy.pro</strong> &nbsp;·&nbsp; Адаптация сайтов под ваш проект</p>
+  <p style="margin-top:8px">+7 ___ &nbsp;·&nbsp; @___ в Telegram &nbsp;·&nbsp; ответим быстро</p>
+  <p style="margin-top:14px;font-size:0.75rem;opacity:0.5">Демо-страница · сделано студией Алёны · не финал</p>
+</footer>
+
+<div style="position:fixed;inset:0;z-index:99998;pointer-events:none;opacity:.10;background-image:url(&quot;data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='420' height='300'><text x='0' y='150' transform='rotate(-28 210 150)' font-family='sans-serif' font-size='22' font-weight='700' fill='%23808080' fill-opacity='0.5'>%D0%94%D0%95%D0%9C%D0%9E%20%C2%B7%20%D0%90%D0%9B%D0%81%D0%9D%D0%90%20%D0%9F%D0%A0%D0%90%D0%A1%D0%9E%D0%9B%D0%9E%D0%92%D0%90%20%C2%B7%20%D0%9E%D0%91%D0%A0%D0%90%D0%97%D0%95%D0%A6</text></svg>&quot;);background-repeat:repeat"></div><div style="position:fixed;left:0;right:0;bottom:0;z-index:99999;pointer-events:none;text-align:center;font:600 12px/1.4 sans-serif;color:#fff;background:rgba(20,24,33,.88);padding:7px 12px">Демо-набросок для оценки · © Алёна Прасолова · не для коммерческого использования · рабочая версия и чистовой дизайн — после старта работы</div></body>
+</html>
