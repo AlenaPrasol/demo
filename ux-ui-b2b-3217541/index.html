@@ -1,0 +1,793 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UX-аудит B2B-сайта — найдём всё, что мешает клиентам покупать</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --dark: #1a1f2e;
+    --mid: #2d3448;
+    --light: #f5f6fa;
+    --white: #ffffff;
+    --accent: #e8621a;
+    --accent2: #f0892e;
+    --text: #3d4258;
+    --muted: #8890a8;
+    --radius: 12px;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    background: var(--light);
+    color: var(--text);
+    line-height: 1.65;
+    font-size: 16px;
+  }
+
+  /* DEMO BANNER */
+  .demo-bar {
+    background: var(--dark);
+    color: var(--muted);
+    text-align: center;
+    font-size: 12px;
+    padding: 8px 16px;
+    letter-spacing: 0.04em;
+  }
+  .demo-bar span { color: var(--accent2); }
+
+  /* HEADER / HERO */
+  .hero {
+    background: linear-gradient(135deg, var(--dark) 0%, var(--mid) 60%, #3a2a1a 100%);
+    color: var(--white);
+    padding: 80px 24px 90px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -80px;
+    width: 420px; height: 420px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(232,98,26,0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -100px; left: -60px;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(240,137,46,0.1) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-inner {
+    max-width: 760px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(232,98,26,0.2);
+    border: 1px solid rgba(232,98,26,0.4);
+    color: var(--accent2);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 20px;
+    margin-bottom: 28px;
+    letter-spacing: 0.03em;
+  }
+  .hero h1 {
+    font-size: clamp(28px, 5vw, 48px);
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 22px;
+    letter-spacing: -0.02em;
+  }
+  .hero h1 em {
+    font-style: normal;
+    color: var(--accent2);
+  }
+  .hero p {
+    font-size: clamp(16px, 2.5vw, 19px);
+    color: rgba(255,255,255,0.75);
+    max-width: 560px;
+    margin-bottom: 40px;
+    line-height: 1.7;
+  }
+  .hero-cta {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: var(--white);
+    font-size: 17px;
+    font-weight: 700;
+    padding: 16px 36px;
+    border-radius: 50px;
+    text-decoration: none;
+    box-shadow: 0 8px 28px rgba(232,98,26,0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+    border: none;
+  }
+  .hero-cta:hover { transform: translateY(-2px); box-shadow: 0 12px 36px rgba(232,98,26,0.5); }
+
+  .hero-stats {
+    display: flex;
+    gap: 40px;
+    margin-top: 56px;
+    padding-top: 40px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    flex-wrap: wrap;
+  }
+  .stat-item { }
+  .stat-num {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--accent2);
+    line-height: 1;
+    display: block;
+  }
+  .stat-label {
+    font-size: 13px;
+    color: rgba(255,255,255,0.55);
+    margin-top: 4px;
+  }
+
+  /* PROBLEM SECTION */
+  .section {
+    padding: 80px 24px;
+  }
+  .section-inner {
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  .section-tag {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-size: clamp(22px, 4vw, 36px);
+    font-weight: 800;
+    color: var(--dark);
+    line-height: 1.25;
+    margin-bottom: 16px;
+    letter-spacing: -0.02em;
+  }
+  .section-sub {
+    font-size: 17px;
+    color: var(--muted);
+    max-width: 560px;
+    margin-bottom: 56px;
+    line-height: 1.7;
+  }
+
+  /* PROBLEMS GRID */
+  .problem-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+  }
+  .problem-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 28px;
+    border-left: 4px solid #e84545;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+  }
+  .problem-icon {
+    font-size: 28px;
+    margin-bottom: 14px;
+    display: block;
+  }
+  .problem-card h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 8px;
+  }
+  .problem-card p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* BENEFITS */
+  .benefits-bg {
+    background: var(--white);
+  }
+  .benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 24px;
+  }
+  .benefit-card {
+    padding: 32px 28px;
+    border-radius: var(--radius);
+    background: var(--light);
+    position: relative;
+    overflow: hidden;
+  }
+  .benefit-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+  }
+  .benefit-num {
+    font-size: 42px;
+    font-weight: 900;
+    color: rgba(232,98,26,0.12);
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+  .benefit-card h3 {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 10px;
+    line-height: 1.3;
+  }
+  .benefit-card p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  /* HOW WE WORK */
+  .steps-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    max-width: 700px;
+  }
+  .step {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 24px;
+    padding: 32px 0;
+    border-bottom: 1px solid #eaedf5;
+    align-items: start;
+  }
+  .step:last-child { border-bottom: none; }
+  .step-num {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: var(--white);
+    font-size: 20px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 4px 16px rgba(232,98,26,0.3);
+  }
+  .step-content h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 8px;
+    margin-top: 14px;
+  }
+  .step-content p {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+  .step-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    background: rgba(232,98,26,0.08);
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 8px;
+  }
+
+  /* WHAT'S INCLUDED */
+  .deliverables-bg {
+    background: var(--dark);
+    color: var(--white);
+  }
+  .deliverables-bg .section-title { color: var(--white); }
+  .deliverables-bg .section-sub { color: rgba(255,255,255,0.55); }
+  .deliverables-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+  }
+  .deliverable-item {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: var(--radius);
+    padding: 28px;
+  }
+  .deliverable-item .di-icon {
+    font-size: 32px;
+    margin-bottom: 16px;
+    display: block;
+  }
+  .deliverable-item h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--white);
+  }
+  .deliverable-item p {
+    font-size: 14px;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.6;
+  }
+
+  /* REVIEW */
+  .review-bg {
+    background: var(--white);
+  }
+  .review-card {
+    max-width: 680px;
+    margin: 0 auto;
+    background: var(--light);
+    border-radius: 20px;
+    padding: 48px;
+    position: relative;
+  }
+  .review-card::before {
+    content: '«';
+    position: absolute;
+    top: 20px;
+    left: 36px;
+    font-size: 80px;
+    color: var(--accent2);
+    opacity: 0.2;
+    font-family: Georgia, serif;
+    line-height: 1;
+  }
+  .review-text {
+    font-size: 18px;
+    color: var(--dark);
+    line-height: 1.7;
+    font-style: italic;
+    margin-bottom: 32px;
+    position: relative;
+    z-index: 1;
+  }
+  .review-author {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .review-avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #5a6fd6, #8fa3f0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+  .review-name {
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--dark);
+  }
+  .review-meta {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+  .review-stars {
+    color: #f5a623;
+    font-size: 16px;
+    margin-top: 4px;
+  }
+
+  /* FORM */
+  .form-bg {
+    background: linear-gradient(135deg, var(--mid), var(--dark));
+  }
+  .form-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  .form-left .section-title { color: var(--white); }
+  .form-left .section-sub { color: rgba(255,255,255,0.55); margin-bottom: 0; }
+  .form-perks {
+    list-style: none;
+    margin-top: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .form-perks li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 15px;
+    color: rgba(255,255,255,0.7);
+  }
+  .form-perks li::before {
+    content: '✓';
+    width: 22px;
+    height: 22px;
+    background: rgba(232,98,26,0.25);
+    border: 1px solid var(--accent);
+    border-radius: 50%;
+    color: var(--accent2);
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .form-card {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  }
+  .form-card h3 {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--dark);
+    margin-bottom: 8px;
+  }
+  .form-card p {
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 28px;
+  }
+  .form-group {
+    margin-bottom: 16px;
+  }
+  .form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1.5px solid #dde0ec;
+    border-radius: 10px;
+    font-size: 15px;
+    color: var(--dark);
+    background: var(--light);
+    font-family: inherit;
+    transition: border-color 0.2s;
+    appearance: none;
+    -webkit-appearance: none;
+    outline: none;
+  }
+  .form-group input:focus,
+  .form-group textarea:focus,
+  .form-group select:focus {
+    border-color: var(--accent);
+    background: var(--white);
+  }
+  .form-group textarea { height: 90px; resize: none; }
+  .form-submit {
+    width: 100%;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: var(--white);
+    font-size: 16px;
+    font-weight: 700;
+    padding: 16px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    margin-top: 8px;
+    box-shadow: 0 6px 20px rgba(232,98,26,0.35);
+    transition: transform 0.2s, box-shadow 0.2s;
+    font-family: inherit;
+  }
+  .form-submit:hover { transform: translateY(-1px); box-shadow: 0 10px 28px rgba(232,98,26,0.45); }
+  .form-note {
+    font-size: 12px;
+    color: var(--muted);
+    text-align: center;
+    margin-top: 12px;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--dark);
+    color: rgba(255,255,255,0.45);
+    text-align: center;
+    padding: 36px 24px;
+    font-size: 13px;
+    line-height: 1.7;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+  footer strong { color: rgba(255,255,255,0.7); }
+  footer a { color: var(--accent2); text-decoration: none; }
+
+  /* RESPONSIVE */
+  @media (max-width: 700px) {
+    .hero { padding: 56px 20px 64px; }
+    .hero-stats { gap: 24px; }
+    .section { padding: 56px 20px; }
+    .form-wrap { grid-template-columns: 1fr; gap: 36px; }
+    .form-left { text-align: center; }
+    .form-perks { align-items: flex-start; }
+    .form-card { padding: 28px 20px; }
+    .review-card { padding: 32px 24px; }
+    .step { grid-template-columns: 44px 1fr; gap: 16px; }
+    .step-num { width: 44px; height: 44px; font-size: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- DEMO BANNER -->
+<div class="demo-bar">
+  Демо-набросок · <span>studio Алёны</span> · не финал — черновик под вашу задачу
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">UX/UI Аудит · B2B-сайты</div>
+    <h1>Найдём всё, что мешает<br>вашим клиентам <em>покупать</em></h1>
+    <p>Проведём юзабилити-тестирование вашего интернет-магазина. Выявим критические ошибки, логические тупики и барьеры в пути B2B-покупателя — от каталога до оформления КП.</p>
+    <button class="hero-cta" onclick="document.getElementById('form').scrollIntoView({behavior:'smooth'})">
+      Заказать аудит сайта
+    </button>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <span class="stat-num">48 ч</span>
+        <div class="stat-label">срок базового аудита</div>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">от ___ ₽</span>
+        <div class="stat-label">стоимость аудита</div>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">30+</span>
+        <div class="stat-label">точек проверки в чеклисте</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEMS -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-tag">Знакомая картина?</div>
+    <h2 class="section-title">Типичные барьеры в B2B-магазине,<br>которые съедают заявки</h2>
+    <p class="section-sub">Покупатель заходит на сайт, не понимает, как заказать оптом — и уходит к конкуренту.</p>
+    <div class="problem-grid">
+      <div class="problem-card">
+        <span class="problem-icon">🔍</span>
+        <h3>Товар не найти</h3>
+        <p>Фильтры не работают, категории перепутаны, поиск выдаёт случайные результаты. Клиент теряется и закрывает вкладку.</p>
+      </div>
+      <div class="problem-card">
+        <span class="problem-icon">📋</span>
+        <h3>КП не заказать</h3>
+        <p>Кнопка «Запросить коммерческое предложение» спрятана или вовсе отсутствует. Форма требует регистрацию из 8 шагов.</p>
+      </div>
+      <div class="problem-card">
+        <span class="problem-icon">🛒</span>
+        <h3>Корзина ломается</h3>
+        <p>Оптовые количества не вводятся, нет указания минимального заказа, при переходе к оплате корзина обнуляется.</p>
+      </div>
+      <div class="problem-card">
+        <span class="problem-icon">📱</span>
+        <h3>Мобилка не работает</h3>
+        <p>Таблицы характеристик вылезают за экран, кнопки слишком маленькие, менеджер не может показать товар с телефона.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BENEFITS -->
+<section class="section benefits-bg">
+  <div class="section-inner">
+    <div class="section-tag">Что вы получите</div>
+    <h2 class="section-title">Аудит — это не отчёт ради отчёта</h2>
+    <p class="section-sub">Каждый вывод привязан к конкретному месту в интерфейсе и снабжён рекомендацией по исправлению.</p>
+    <div class="benefits-grid">
+      <div class="benefit-card">
+        <div class="benefit-num">01</div>
+        <h3>Карта критических ошибок</h3>
+        <p>Список проблем, ранжированных по приоритету: что исправить прямо сейчас, что — во вторую очередь, а что — только при редизайне.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-num">02</div>
+        <h3>Скриншоты с аннотациями</h3>
+        <p>Каждая проблема проиллюстрирована экраном с пометками — передайте разработчику, и он поймёт без звонка.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-num">03</div>
+        <h3>Анализ пути B2B-клиента</h3>
+        <p>Проверяем весь сценарий: вход с рекламы → поиск товара → просмотр карточки → добавление в корзину → запрос КП.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-num">04</div>
+        <h3>Конкретные рекомендации</h3>
+        <p>Не «улучшите UX», а «добавьте кнопку "Запросить КП" в шапку карточки товара рядом с ценой».</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW WE WORK -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-tag">Как проходит аудит</div>
+    <h2 class="section-title">Четыре этапа — от брифа<br>до готового отчёта</h2>
+    <div class="steps-list">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-tag">День 1</div>
+          <h3>Бриф и цели</h3>
+          <p>Выясняем, кто ваш B2B-клиент, как он обычно ищет и заказывает товар, какие задачи ставим перед аудитом. Договариваемся о формате отчёта.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-tag">День 1–2</div>
+          <h3>Тестирование интерфейса</h3>
+          <p>Проходим сайт по чеклисту из 30+ точек: навигация, поиск, фильтры, карточки товаров, корзина, форма КП, мобильная версия, скорость.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-tag">День 2</div>
+          <h3>Сценарное тестирование</h3>
+          <p>Симулируем реального B2B-покупателя: ищем металлическую полку под конкретный запрос, пробуем заказать 10 штук, запрашиваем КП — фиксируем все тупики.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-tag">День 2–3</div>
+          <h3>Отчёт и разбор</h3>
+          <p>Готовим документ с ошибками, скриншотами и приоритетами. Проводим 30-минутный онлайн-разбор — отвечаем на вопросы и помогаем расставить задачи команде.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DELIVERABLES -->
+<section class="section deliverables-bg">
+  <div class="section-inner">
+    <div class="section-tag" style="color: var(--accent2)">Что войдёт в отчёт</div>
+    <h2 class="section-title">Аудит металлической мебели: что проверяем</h2>
+    <p class="section-sub">Фокус — на пути оптового покупателя и конверсии в заявку.</p>
+    <div class="deliverables-grid">
+      <div class="deliverable-item">
+        <span class="di-icon">🏗️</span>
+        <h3>Структура каталога</h3>
+        <p>Логика категорий, фильтры по материалу / размеру / нагрузке, поиск по артикулу и названию.</p>
+      </div>
+      <div class="deliverable-item">
+        <span class="di-icon">📄</span>
+        <h3>Карточка товара</h3>
+        <p>Полнота характеристик, наличие технических документов, кнопки действий для оптового клиента.</p>
+      </div>
+      <div class="deliverable-item">
+        <span class="di-icon">💼</span>
+        <h3>Запрос КП и оптовая корзина</h3>
+        <p>Путь от «выбрал товар» до «отправил заявку менеджеру» — каждый шаг под лупой.</p>
+      </div>
+      <div class="deliverable-item">
+        <span class="di-icon">📱</span>
+        <h3>Мобильная версия</h3>
+        <p>Таблицы, кнопки, форма заявки и навигация на экране смартфона — критично для выездных менеджеров.</p>
+      </div>
+      <div class="deliverable-item">
+        <span class="di-icon">⚡</span>
+        <h3>Скорость и технические сбои</h3>
+        <p>Медленная загрузка каталога, битые ссылки, 404-страницы в меню и некорректные редиректы.</p>
+      </div>
+      <div class="deliverable-item">
+        <span class="di-icon">🎯</span>
+        <h3>Доверие и конверсия</h3>
+        <p>Отзывы, гарантии, реквизиты, контакты менеджера — что убеждает B2B оставить заявку.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEW -->
+<section class="section review-bg">
+  <div class="section-inner" style="text-align:center">
+    <div class="section-tag" style="display:inline-block">Что говорят клиенты</div>
+    <h2 class="section-title" style="margin-bottom:48px">Отзыв о похожем проекте</h2>
+    <div class="review-card">
+      <p class="review-text">
+        Думали, что сайт работает нормально — трафик есть, а заявок мало. После аудита оказалось: кнопка «Запросить КП» была спрятана под несколькими скроллами, а мобильная форма вообще не отправлялась. Исправили за неделю — конверсия выросла вдвое.
+      </p>
+      <div class="review-author">
+        <div class="review-avatar">🏢</div>
+        <div>
+          <div class="review-name">Алексей М.</div>
+          <div class="review-meta">Руководитель отдела продаж, оптовый поставщик</div>
+          <div class="review-stars">★★★★★</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORM -->
+<section class="section form-bg" id="form">
+  <div class="form-wrap">
+    <div class="form-left">
+      <div class="section-tag" style="color: var(--accent2)">Заказать аудит</div>
+      <h2 class="section-title" style="color: var(--white)">Пришлите ссылку —<br>начнём в течение дня</h2>
+      <p class="section-sub">Оставьте заявку, и мы свяжемся для уточнения задачи и стоимости.</p>
+      <ul class="form-perks">
+        <li>Отвечаем в рабочее время до 2 часов</li>
+        <li>Первичная консультация бесплатно</li>
+        <li>Отчёт — в PDF + интерактивный файл</li>
+        <li>NDA по запросу без доплат</li>
+      </ul>
+    </div>
+    <div class="form-card">
+      <h3>Заявка на аудит</h3>
+      <p>Расскажите о задаче — оценим объём и стоимость</p>
+      <div class="form-group">
+        <label>Ваше имя</label>
+        <input type="text" placeholder="Иван Иванов">
+      </div>
+      <div class="form-group">
+        <label>Телефон или Telegram</label>
+        <input type="text" placeholder="+7 ___ ___ __ __">
+      </div>
+      <div class="form-group">
+        <label>Ссылка на сайт для аудита</label>
+        <input type="text" placeholder="https://ваш-сайт.ru">
+      </div>
+      <div class="form-group">
+        <label>Что беспокоит больше всего?</label>
+        <textarea placeholder="Например: мало заявок с оптовой корзины, клиенты не находят нужную категорию..."></textarea>
+      </div>
+      <button class="form-submit">Отправить заявку на аудит</button>
+      <p class="form-note">Нажимая кнопку, вы соглашаетесь с политикой обработки данных</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <strong>UX-аудит B2B-сайтов</strong><br>
+  Телефон: <a href="tel:+7000000000">+7 ___</a> &nbsp;·&nbsp; Email: <a href="mailto:info@example.ru">info@___</a><br><br>
+  <span style="font-size:11px; color: rgba(255,255,255,0.25)">
+    Демо-набросок, подготовленный студией Алёны Прасол · Тексты и структура адаптированы под задачу клиента · Не финальный дизайн
+  </span>
+</footer>
+
+<div style="position:fixed;inset:0;z-index:99998;pointer-events:none;opacity:.10;background-image:url(&quot;data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='420' height='300'><text x='0' y='150' transform='rotate(-28 210 150)' font-family='sans-serif' font-size='22' font-weight='700' fill='%23808080' fill-opacity='0.5'>%D0%94%D0%95%D0%9C%D0%9E%20%C2%B7%20%D0%90%D0%9B%D0%81%D0%9D%D0%90%20%D0%9F%D0%A0%D0%90%D0%A1%D0%9E%D0%9B%D0%9E%D0%92%D0%90%20%C2%B7%20%D0%9E%D0%91%D0%A0%D0%90%D0%97%D0%95%D0%A6</text></svg>&quot;);background-repeat:repeat"></div><div style="position:fixed;left:0;right:0;bottom:0;z-index:99999;pointer-events:none;text-align:center;font:600 12px/1.4 sans-serif;color:#fff;background:rgba(20,24,33,.88);padding:7px 12px">Демо-набросок для оценки · © Алёна Прасолова · не для коммерческого использования · рабочая версия и чистовой дизайн — после старта работы</div></body>
+</html>
